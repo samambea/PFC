@@ -17,12 +17,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()  // Desabilitar CSRF, se necessário para o seu caso
+                .csrf().disable()
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/usuarios/**").authenticated() // Substitui o antMatchers
-                        .anyRequest().permitAll() // Permite acesso a outros endpoints sem autenticação
+                        .requestMatchers("/usuarios/**").authenticated()
+                        .anyRequest().permitAll()
                 )
-                .httpBasic();  // Habilita autenticação básica
+                .httpBasic();
 
         return http.build();
     }
@@ -31,7 +31,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         return new InMemoryUserDetailsManager(
                 User.withUsername("user")
-                        .password("{noop}password") // {noop} para evitar criptografar a senha
+                        .password("{noop}password")
                         .roles("USER")
                         .build()
         );
