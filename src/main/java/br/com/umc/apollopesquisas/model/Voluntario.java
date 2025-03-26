@@ -34,4 +34,15 @@ public class Voluntario extends Usuario {
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
+    public void participarPesquisa(int pesquisaId) {
+        System.out.println("Voluntário " + voluntarioId + " participou da pesquisa " + pesquisaId);
+    }
+
+    public void listarParticipacoes(int voluntarioId) {
+        System.out.println("Listando pesquisas para o voluntário " + voluntarioId);
+    }
+
+    public void listarAgendamentos(int voluntarioId) {
+        System.out.println("Listando agendamentos para o voluntário " + voluntarioId);
+    }
 }

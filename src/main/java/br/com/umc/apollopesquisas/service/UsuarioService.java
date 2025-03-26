@@ -28,12 +28,12 @@ public class UsuarioService {
     }
 
     public boolean deleteById(int id) {
-        Optional<Usuario> usuario = usuarioRepository.findById(id);  // Verifica se o usuário existe
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isPresent()) {
-            usuarioRepository.deleteById(id);  // Exclui o usuário se encontrado
-            return true;  // Retorna true se a exclusão foi bem-sucedida
+            usuarioRepository.deleteById(id);
+            return true;
         }
-        return false;  // Retorna false se o usuário não foi encontrado
+        return false;
     }
 }
 

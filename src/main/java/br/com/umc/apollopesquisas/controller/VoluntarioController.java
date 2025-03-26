@@ -17,25 +17,25 @@ public class VoluntarioController {
     @Autowired
     private VoluntarioRepository voluntarioRepository;
 
-    // Criar um novo voluntário (POST)
+
     @PostMapping
     public Voluntario criarVoluntario(@RequestBody Voluntario voluntario) {
         return voluntarioRepository.save(voluntario);
     }
 
-    // Listar todos os voluntários (GET)
+
     @GetMapping
     public List<Voluntario> listarVoluntarios() {
         return voluntarioRepository.findAll();
     }
 
-    // Buscar voluntário por ID (GET)
+
     @GetMapping("/{id}")
     public Optional<Voluntario> buscarPorId(@PathVariable int id) {
         return voluntarioRepository.findById(id);
     }
 
-    // Atualizar voluntário (PUT)
+
     @PutMapping("/{id}")
     public Voluntario atualizarVoluntario(@PathVariable int id, @RequestBody Voluntario voluntario) {
         voluntario.setVoluntarioId(id);

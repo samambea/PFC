@@ -1,6 +1,5 @@
 package br.com.umc.apollopesquisas.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -15,21 +14,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 })
 public abstract class Usuario {
 
-
-    private int id;
+    private int usuarioId;
     private String nome;
     private String email;
     private String senha;
     private String categoria;
     private String token;
 
-
     public Usuario() {
     }
 
-
-    public Usuario(int id, String nome, String email, String senha, String categoria, String token) {
-        this.id = id;
+    public Usuario(int usuarioId, String nome, String email, String senha, String categoria, String token) {
+        this.usuarioId = usuarioId;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -37,13 +33,12 @@ public abstract class Usuario {
         this.token = token;
     }
 
-    // Getters e Setters
-    public int getId() {
-        return id;
+    public int getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public String getNome() {
@@ -84,5 +79,25 @@ public abstract class Usuario {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public boolean login(String email, String senha) {
+        if (this.email.equals(email) && this.senha.equals(senha)) {
+            System.out.println("Usuário " + email + " realizou login.");
+            return true;
+        }
+        System.out.println("Falha no login para " + email);
+        return false;
+    }
+
+
+    public void logout() {
+
+        System.out.println("Usuário " + email + " realizou logout.");
+    }
+
+    public void esqueciSenha(String email) {
+
+        System.out.println("Solicitação de redefinição de senha enviada para " + email);
     }
 }
