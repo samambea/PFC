@@ -1,7 +1,7 @@
 package br.com.umc.apollopesquisas.controller;
 
 import br.com.umc.apollopesquisas.model.Voluntario;
-import br.com.umc.apollopesquisas.service.VoluntarioService;
+import br.com.umc.apollopesquisas.repository.VoluntarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,45 +15,39 @@ import java.util.Optional;
 public class VoluntarioController {
 
     @Autowired
-    private VoluntarioService voluntarioService;
+    private VoluntarioRepository voluntarioRepository;
 
-    @GetMapping
-    public List<Voluntario> getAllVoluntarios() {
-        return voluntarioService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Voluntario> getVoluntarioById(@PathVariable int id) {
-        Optional<Voluntario> voluntario = voluntarioService.findById(id);
-        return voluntario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
-
+    // Criar um novo voluntário (POST)
     @PostMapping
-    public ResponseEntity<Voluntario> createVoluntario(@RequestBody Voluntario voluntario) {
-        Voluntario savedVoluntario = voluntarioService.save(voluntario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedVoluntario);
+    public Voluntario criarVoluntario(@RequestBody Voluntario voluntario) {
+        return voluntarioRepository.save(voluntario);
     }
 
+    // Listar todos os voluntários (GET)
+    @GetMapping
+    public List<Voluntario> listarVoluntarios() {
+        return voluntarioRepository.findAll();
+    }
+
+    // Buscar voluntário por ID (GET)
+    @GetMapping("/{id}")
+    public Optional<Voluntario> buscarPorId(@PathVariable int id) {
+        return voluntarioRepository.findById(id);
+    }
+
+    // Atualizar voluntário (PUT)
     @PutMapping("/{id}")
-    public ResponseEntity<Voluntario> updateVoluntario(@PathVariable int id, @RequestBody Voluntario voluntario) {
-        Optional<Voluntario> existingVoluntario = voluntarioService.findById(id);
-        if (existingVoluntario.isPresent()) {
-            voluntario.setId(id);
-            Voluntario updatedVoluntario = voluntarioService.save(voluntario);
-            return ResponseEntity.ok(updatedVoluntario);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public Voluntario atualizarVoluntario(@PathVariable int id, @RequestBody Voluntario voluntario) {
+        voluntario.setVoluntarioId(id);
+        return voluntarioRepository.save(voluntario);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteVoluntario(@PathVariable int id) {
-        boolean isDeleted = voluntarioService.deleteById(id);
-
-        if (isDeleted) {
-            return ResponseEntity.status(HttpStatus.OK).body("Voluntário excluído com sucesso.");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Voluntário não encontrado.");
+    public ResponseEntity<String> delete(@PathVariable int id) {
+        if (voluntarioRepository.existsById(id)) {
+            voluntarioRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Voluntário excluído com sucesso");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Voluntário não encontrado");
     }
-
 }

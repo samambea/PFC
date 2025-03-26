@@ -22,6 +22,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
+
+
 		<!-- Dependência para Jakarta Servlet -->
 		<dependency>
 			<groupId>jakarta.servlet</groupId>

@@ -4,38 +4,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "voluntarios")
-public class Voluntario {
+public class Voluntario extends Usuario {
 
     @Id
-    private int id;
-    private String nome;
-    private String email;
+    private int voluntarioId;
     private String telefone;
     private String endereco;
 
-    // Getters e Setters
-    public int getId() {
-        return id;
+    public int getVoluntarioId() {
+        return voluntarioId;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setVoluntarioId(int voluntarioId) {
+        this.voluntarioId = voluntarioId;
     }
 
     public String getTelefone() {

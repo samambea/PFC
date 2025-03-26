@@ -1,7 +1,7 @@
 package br.com.umc.apollopesquisas.controller;
 
 import br.com.umc.apollopesquisas.model.Pesquisador;
-import br.com.umc.apollopesquisas.service.PesquisadorService;
+import br.com.umc.apollopesquisas.repository.PesquisadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,44 +15,43 @@ import java.util.Optional;
 public class PesquisadorController {
 
     @Autowired
-    private PesquisadorService pesquisadorService;
+    private PesquisadorRepository pesquisadorRepository;
 
-    @GetMapping
-    public List<Pesquisador> getAllPesquisadores() {
-        return pesquisadorService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Pesquisador> getPesquisadorById(@PathVariable int id) {
-        Optional<Pesquisador> pesquisador = pesquisadorService.findById(id);
-        return pesquisador.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
-
+    // Criar um novo pesquisador (POST)
     @PostMapping
-    public ResponseEntity<Pesquisador> createPesquisador(@RequestBody Pesquisador pesquisador) {
-        Pesquisador savedPesquisador = pesquisadorService.save(pesquisador);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedPesquisador);
+    public Pesquisador criarPesquisador(@RequestBody Pesquisador pesquisador) {
+        return pesquisadorRepository.save(pesquisador);
     }
 
+    // Listar todos os pesquisadores (GET)
+    @GetMapping
+    public List<Pesquisador> listarPesquisadores() {
+        return pesquisadorRepository.findAll();
+    }
+
+    // Buscar pesquisador por ID (GET)
+    @GetMapping("/{id}")
+    public Optional<Pesquisador> buscarPorId(@PathVariable int id) {
+        return pesquisadorRepository.findById(id);
+    }
+
+    // Atualizar pesquisador (PUT)
     @PutMapping("/{id}")
-    public ResponseEntity<Pesquisador> updatePesquisador(@PathVariable int id, @RequestBody Pesquisador pesquisador) {
-        Optional<Pesquisador> existingPesquisador = pesquisadorService.findById(id);
-        if (existingPesquisador.isPresent()) {
-            pesquisador.setId(id);
-            Pesquisador updatedPesquisador = pesquisadorService.save(pesquisador);
-            return ResponseEntity.ok(updatedPesquisador);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public Pesquisador atualizarPesquisador(@PathVariable int id, @RequestBody Pesquisador pesquisador) {
+        pesquisador.setPesquisadorId(id);
+        return pesquisadorRepository.save(pesquisador);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePesquisador(@PathVariable int id) {
-        boolean isDeleted = pesquisadorService.deleteById(id);
-
-        if (isDeleted) {
-            return ResponseEntity.status(HttpStatus.OK).body("Pesquisador excluído com sucesso.");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pesquisador não encontrado.");
+    public ResponseEntity<String> delete(@PathVariable("id") int id) {
+        if (pesquisadorRepository.existsById(id)) {
+            pesquisadorRepository.deleteById(id);
+            // Retorna uma resposta com a mensagem de sucesso
+            return ResponseEntity.status(HttpStatus.OK).body("Pesquisador excluído com sucesso");
         }
+        // Se o ID não for encontrado, retorna uma mensagem de erro
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pesquisador não encontrado");
     }
+
+
 }
