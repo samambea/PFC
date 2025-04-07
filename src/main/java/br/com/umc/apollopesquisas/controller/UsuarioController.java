@@ -25,18 +25,18 @@ public class UsuarioController {
 
     @GetMapping
     public ResponseEntity<List<Usuario>> getAll() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
-        return ResponseEntity.ok(usuarios);
+        return ResponseEntity.ok(usuarioRepository.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getById(@PathVariable int id) {
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
-        return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    public ResponseEntity<Usuario> getById(@PathVariable String id) {
+        return usuarioRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> update(@PathVariable int id, @RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> update(@PathVariable String id, @RequestBody Usuario usuario) {
         if (usuarioRepository.existsById(id)) {
             usuario.setUsuarioId(id);
             Usuario updatedUsuario = usuarioRepository.save(usuario);
@@ -46,28 +46,26 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable int id) {
+    public ResponseEntity<String> delete(@PathVariable String id) {
         if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Usuário excluído com sucesso");
+            return ResponseEntity.ok("Usuário excluído com sucesso");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Usuario usuario) {
-        Optional<Usuario> usuarioEncontrado = usuarioRepository.findByEmail(usuario.getEmail());
-
-        if (usuarioEncontrado.isPresent() && usuarioEncontrado.get().login(usuario.getEmail(), usuario.getSenha())) {
+        Optional<Usuario> encontrado = usuarioRepository.findByEmail(usuario.getEmail());
+        if (encontrado.isPresent() && encontrado.get().login(usuario.getEmail(), usuario.getSenha())) {
             return ResponseEntity.ok("Login realizado com sucesso");
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos");
     }
 
     @PostMapping("/logout/{id}")
-    public ResponseEntity<String> logout(@PathVariable int id) {
+    public ResponseEntity<String> logout(@PathVariable String id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
-
         if (usuario.isPresent()) {
             usuario.get().logout();
             return ResponseEntity.ok("Logout realizado com sucesso");
@@ -78,7 +76,6 @@ public class UsuarioController {
     @PostMapping("/esqueci-senha")
     public ResponseEntity<String> esqueciSenha(@RequestParam String email) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-
         if (usuario.isPresent()) {
             usuario.get().esqueciSenha(email);
             return ResponseEntity.ok("Solicitação de recuperação de senha enviada para " + email);

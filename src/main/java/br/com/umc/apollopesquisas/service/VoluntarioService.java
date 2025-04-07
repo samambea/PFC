@@ -18,7 +18,7 @@ public class VoluntarioService {
         return voluntarioRepository.findAll();
     }
 
-    public Optional<Voluntario> findById(int id) {
+    public Optional<Voluntario> findById(String id) {
         return voluntarioRepository.findById(id);
     }
 
@@ -26,9 +26,8 @@ public class VoluntarioService {
         return voluntarioRepository.save(voluntario);
     }
 
-    public boolean deleteById(int id) {
-        Optional<Voluntario> voluntario = voluntarioRepository.findById(id);
-        if (voluntario.isPresent()) {
+    public boolean deleteById(String id) {
+        if (voluntarioRepository.existsById(id)) {
             voluntarioRepository.deleteById(id);
             return true;
         }

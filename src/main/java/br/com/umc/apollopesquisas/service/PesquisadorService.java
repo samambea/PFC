@@ -14,25 +14,26 @@ public class PesquisadorService {
     @Autowired
     private PesquisadorRepository pesquisadorRepository;
 
-
-    public List<Pesquisador> findAll() {
+    public List<Pesquisador> listarTodos() {
         return pesquisadorRepository.findAll();
     }
 
-
-    public Optional<Pesquisador> findById(int id) {
+    public Optional<Pesquisador> buscarPorId(String id) {
         return pesquisadorRepository.findById(id);
     }
 
+    public Pesquisador salvar(Pesquisador pesquisador) {
+        return pesquisadorRepository.save(pesquisador);
+    }
 
-    public Pesquisador save(Pesquisador pesquisador) {
+    public Pesquisador atualizar(String id, Pesquisador pesquisador) {
+        pesquisador.setUsuarioId(id);
         return pesquisadorRepository.save(pesquisador);
     }
 
 
-    public boolean deleteById(int id) {
-        Optional<Pesquisador> pesquisador = pesquisadorRepository.findById(id);
-        if (pesquisador.isPresent()) {
+    public boolean deletar(String id) {
+        if (pesquisadorRepository.existsById(id)) {
             pesquisadorRepository.deleteById(id);
             return true;
         }

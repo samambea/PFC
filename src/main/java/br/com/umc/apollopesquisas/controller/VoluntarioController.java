@@ -3,7 +3,6 @@ package br.com.umc.apollopesquisas.controller;
 import br.com.umc.apollopesquisas.model.Voluntario;
 import br.com.umc.apollopesquisas.repository.VoluntarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,37 +16,34 @@ public class VoluntarioController {
     @Autowired
     private VoluntarioRepository voluntarioRepository;
 
-
     @PostMapping
-    public Voluntario criarVoluntario(@RequestBody Voluntario voluntario) {
+    public Voluntario criar(@RequestBody Voluntario voluntario) {
         return voluntarioRepository.save(voluntario);
     }
 
-
     @GetMapping
-    public List<Voluntario> listarVoluntarios() {
+    public List<Voluntario> listarTodos() {
         return voluntarioRepository.findAll();
     }
 
-
     @GetMapping("/{id}")
-    public Optional<Voluntario> buscarPorId(@PathVariable int id) {
-        return voluntarioRepository.findById(id);
+    public ResponseEntity<Voluntario> buscarPorId(@PathVariable String id) {
+        return voluntarioRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-
     @PutMapping("/{id}")
-    public Voluntario atualizarVoluntario(@PathVariable int id, @RequestBody Voluntario voluntario) {
-        voluntario.setVoluntarioId(id);
-        return voluntarioRepository.save(voluntario);
+    public ResponseEntity<Voluntario> atualizar(@PathVariable String id, @RequestBody Voluntario voluntario) {
+        if (!voluntarioRepository.existsById(id)) return ResponseEntity.notFound().build();
+        voluntario.setUsuarioId(id);
+        return ResponseEntity.ok(voluntarioRepository.save(voluntario));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable int id) {
-        if (voluntarioRepository.existsById(id)) {
-            voluntarioRepository.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Voluntário excluído com sucesso");
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Voluntário não encontrado");
+    public ResponseEntity<Void> deletar(@PathVariable String id) {
+        if (!voluntarioRepository.existsById(id)) return ResponseEntity.notFound().build();
+        voluntarioRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

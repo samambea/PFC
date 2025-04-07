@@ -3,6 +3,7 @@ package br.com.umc.apollopesquisas.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "usuarios")
@@ -14,17 +15,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 })
 public abstract class Usuario {
 
-    private int usuarioId;
+    @Id
+    private String usuarioId;
     private String nome;
     private String email;
     private String senha;
     private String categoria;
     private String token;
 
-    public Usuario() {
-    }
+    public Usuario() {}
 
-    public Usuario(int usuarioId, String nome, String email, String senha, String categoria, String token) {
+    public Usuario(String usuarioId, String nome, String email, String senha, String categoria, String token) {
         this.usuarioId = usuarioId;
         this.nome = nome;
         this.email = email;
@@ -33,11 +34,11 @@ public abstract class Usuario {
         this.token = token;
     }
 
-    public int getUsuarioId() {
+    public String getUsuarioId() {
         return usuarioId;
     }
 
-    public void setUsuarioId(int usuarioId) {
+    public void setUsuarioId(String usuarioId) {
         this.usuarioId = usuarioId;
     }
 
@@ -82,22 +83,14 @@ public abstract class Usuario {
     }
 
     public boolean login(String email, String senha) {
-        if (this.email.equals(email) && this.senha.equals(senha)) {
-            System.out.println("Usuário " + email + " realizou login.");
-            return true;
-        }
-        System.out.println("Falha no login para " + email);
-        return false;
+        return this.email.equals(email) && this.senha.equals(senha);
     }
 
-
     public void logout() {
-
         System.out.println("Usuário " + email + " realizou logout.");
     }
 
     public void esqueciSenha(String email) {
-
         System.out.println("Solicitação de redefinição de senha enviada para " + email);
     }
 }

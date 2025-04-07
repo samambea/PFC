@@ -1,6 +1,5 @@
 package br.com.umc.apollopesquisas.service;
 
-
 import br.com.umc.apollopesquisas.model.Usuario;
 import br.com.umc.apollopesquisas.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Optional<Usuario> findById(int id) {
+    public Optional<Usuario> findById(String id) {
         return usuarioRepository.findById(id);
     }
 
@@ -27,13 +26,11 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public boolean deleteById(int id) {
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
-        if (usuario.isPresent()) {
+    public boolean deleteById(String id) {
+        if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);
             return true;
         }
         return false;
     }
 }
-
