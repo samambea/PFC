@@ -1,5 +1,6 @@
 package br.com.umc.apollopesquisas.controller;
 
+import br.com.umc.apollopesquisas.dto.LoginRequest;
 import br.com.umc.apollopesquisas.model.Usuario;
 import br.com.umc.apollopesquisas.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,14 +55,18 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
     }
 
+
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Usuario usuario) {
-        Optional<Usuario> encontrado = usuarioRepository.findByEmail(usuario.getEmail());
-        if (encontrado.isPresent() && encontrado.get().login(usuario.getEmail(), usuario.getSenha())) {
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+        Optional<Usuario> encontrado = usuarioRepository.findByEmail(loginRequest.getEmail());
+
+        if (encontrado.isPresent() && encontrado.get().login(loginRequest.getEmail(), loginRequest.getSenha())) {
             return ResponseEntity.ok("Login realizado com sucesso");
         }
+
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos");
     }
+
 
     @PostMapping("/logout/{id}")
     public ResponseEntity<String> logout(@PathVariable String id) {

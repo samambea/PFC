@@ -1,8 +1,7 @@
 package br.com.umc.apollopesquisas.controller;
 
 import br.com.umc.apollopesquisas.model.Pesquisa;
-import br.com.umc.apollopesquisas.model.StatusPesquisa;
-import br.com.umc.apollopesquisas.repository.PesquisaRepository;
+import br.com.umc.apollopesquisas.service.PesquisaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,52 +13,40 @@ import java.util.List;
 public class PesquisaController {
 
     @Autowired
-    private PesquisaRepository pesquisaRepository;
+    private PesquisaService pesquisaService;
 
     @PostMapping
     public Pesquisa criar(@RequestBody Pesquisa pesquisa) {
-        if (pesquisa.getStatusPesquisa() == null) {
-            pesquisa.setStatusPesquisa(StatusPesquisa.ABERTA);
-        }
-        return pesquisaRepository.save(pesquisa);
+        return pesquisaService.criar(pesquisa);
     }
 
     @GetMapping
     public List<Pesquisa> listarTodas() {
-        return pesquisaRepository.findAll();
+        return pesquisaService.listarTodas();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Pesquisa> buscarPorId(@PathVariable String id) {
-        return pesquisaRepository.findById(id)
+    @GetMapping("/{pesquisaId}")
+    public ResponseEntity<Pesquisa> buscarPorId(@PathVariable String pesquisaId) {
+        return pesquisaService.buscarPorId(pesquisaId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Pesquisa> atualizar(@PathVariable String id, @RequestBody Pesquisa novaPesquisa) {
-        return pesquisaRepository.findById(id)
-                .map(p -> {
-                    novaPesquisa.setUsuarioId(id);
-                    return ResponseEntity.ok(pesquisaRepository.save(novaPesquisa));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    @PutMapping("/{pesquisaId}")
+    public ResponseEntity<Pesquisa> atualizar(@PathVariable String pesquisaId, @RequestBody Pesquisa novaPesquisa) {
+        Pesquisa atualizada = pesquisaService.atualizar(pesquisaId, novaPesquisa);
+        if (atualizada != null) {
+            return ResponseEntity.ok(atualizada);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable String id) {
-        if (!pesquisaRepository.existsById(id)) return ResponseEntity.notFound().build();
-        pesquisaRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PatchMapping("/{id}/fechar")
-    public ResponseEntity<Pesquisa> fechar(@PathVariable String id) {
-        return pesquisaRepository.findById(id)
-                .map(p -> {
-                    p.setStatusPesquisa(StatusPesquisa.CONCLUIDA);
-                    return ResponseEntity.ok(pesquisaRepository.save(p));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    @DeleteMapping("/{pesquisaId}")
+    public ResponseEntity<String> deletar(@PathVariable String pesquisaId) {
+        if (pesquisaService.deletar(pesquisaId)) {
+            return ResponseEntity.ok("Pesquisa excluída com sucesso");
+        }
+        return ResponseEntity.status(404).body("Pesquisa não encontrada");
     }
 }

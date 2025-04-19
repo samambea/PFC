@@ -41,9 +41,12 @@ public class VoluntarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable String id) {
-        if (!voluntarioRepository.existsById(id)) return ResponseEntity.notFound().build();
+    public ResponseEntity<String> deletar(@PathVariable String id) {
+        if (!voluntarioRepository.existsById(id)) {
+            return ResponseEntity.status(404).body("Voluntário não encontrado");
+        }
         voluntarioRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Voluntário excluído com sucesso");
     }
+
 }

@@ -1,11 +1,14 @@
 package br.com.umc.apollopesquisas.model;
 
-
+import br.com.umc.apollopesquisas.enums.StatusPesquisa;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "pesquisas")
 public class Pesquisa {
 
+    @Id
+    private String pesquisaId;
     private String usuarioId;
     private String nomePesquisa;
     private String descricao;
@@ -16,6 +19,13 @@ public class Pesquisa {
     private String criteriosInclusaoExclusao;
     private StatusPesquisa statusPesquisa;
 
+    public String getPesquisaId() {
+        return pesquisaId;
+    }
+
+    public void setPesquisaId(String pesquisaId) {
+        this.pesquisaId = pesquisaId;
+    }
 
     public String getUsuarioId() {
         return usuarioId;
@@ -24,8 +34,6 @@ public class Pesquisa {
     public void setUsuarioId(String usuarioId) {
         this.usuarioId = usuarioId;
     }
-
-
 
     public String getNomePesquisa() {
         return nomePesquisa;
