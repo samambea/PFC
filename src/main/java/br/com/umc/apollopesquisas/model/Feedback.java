@@ -11,7 +11,7 @@ public class Feedback {
     private int nota;
     private String comentario;
 
-    // Getters e Setters
+
     public String getFeedbackId() {
         return feedbackId;
     }

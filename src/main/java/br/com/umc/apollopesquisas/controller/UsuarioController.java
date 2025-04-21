@@ -1,61 +1,73 @@
 package br.com.umc.apollopesquisas.controller;
 
+import br.com.umc.apollopesquisas.model.Pesquisador;
 import br.com.umc.apollopesquisas.model.Usuario;
-import br.com.umc.apollopesquisas.service.UsuarioService;
+import br.com.umc.apollopesquisas.model.Voluntario;
+import br.com.umc.apollopesquisas.repository.PesquisadorRepository;
+import br.com.umc.apollopesquisas.repository.VoluntarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.Optional;
-
-@RestController
-@RequestMapping("/usuarios")
+@Controller
+@RequestMapping("/auth")
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private VoluntarioRepository voluntarioRepository;
 
-    @GetMapping
-    public List<Usuario> getAllUsuarios() {
-        return usuarioService.findAll();
-    }
+    @Autowired
+    private PesquisadorRepository pesquisadorRepository;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer id) {
-        Optional<Usuario> usuario = usuarioService.findById(id);
-        return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    @PostMapping
-    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
-        Usuario savedUsuario = usuarioService.save(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUsuario);
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
-        Optional<Usuario> existingUsuario = usuarioService.findById(id);
-        if (existingUsuario.isPresent()) {
-            usuario.setId(id);
-            Usuario updatedUsuario = usuarioService.save(usuario);
-            return ResponseEntity.ok(updatedUsuario);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUsuario(@PathVariable Integer id) {
-        boolean isDeleted = usuarioService.deleteById(id);
-
-        if (isDeleted) {
-            return ResponseEntity.status(HttpStatus.OK).body("Usuário excluído com sucesso.");
+    @GetMapping("/usuarios/cadastro")
+    public String cadastroForm(Model model, @RequestParam(name = "tipo", required = false, defaultValue = "voluntario") String tipo) {
+        Usuario usuario;
+        if ("pesquisador".equals(tipo)) {
+            usuario = new Pesquisador();
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado.");
+            usuario = new Voluntario();
         }
+
+        model.addAttribute("usuario", usuario);
+        return "cadastro";
     }
 
 
-}
+    @GetMapping("/cadastro/pesquisador")
+    public String cadastroPesquisador(Model model) {
+        model.addAttribute("usuario", new Pesquisador());
+        return "cadastro-pesquisador";
+    }
 
+
+    @PostMapping("/cadastro/pesquisador")
+    public String cadastrarPesquisador(@ModelAttribute Pesquisador pesquisador, RedirectAttributes redirectAttributes) {
+        pesquisador.setSenha(passwordEncoder.encode(pesquisador.getSenha()));
+        pesquisadorRepository.save(pesquisador);
+        redirectAttributes.addFlashAttribute("successMessage", "Cadastro de pesquisador realizado com sucesso!");
+        return "redirect:/auth/login";
+    }
+
+
+    @GetMapping("/cadastro/voluntario")
+    public String cadastroVoluntario(Model model) {
+        model.addAttribute("usuario", new Voluntario());
+        return "cadastro-voluntario";
+    }
+
+
+    @PostMapping("/cadastro/voluntario")
+    public String cadastrarVoluntario(@ModelAttribute Voluntario voluntario, RedirectAttributes redirectAttributes) {
+        voluntario.setSenha(passwordEncoder.encode(voluntario.getSenha()));
+        voluntarioRepository.save(voluntario);
+        redirectAttributes.addFlashAttribute("successMessage", "Cadastro de voluntário realizado com sucesso!");
+        return "redirect:/auth/login";
+    }
+}

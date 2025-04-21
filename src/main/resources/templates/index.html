@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home - Apollo Pesquisas</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #2AA184;
+            margin-bottom: 1.5rem;
+        }
+
+        a.button {
+            display: block;
+            text-decoration: none;
+            background-color: #2AA184;
+            color: white;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        a.button:hover {
+            background-color: #249073;
+        }
+
+        a.logout {
+            font-size: 14px;
+            margin-top: 1rem;
+            display: inline-block;
+            color: #888;
+            text-decoration: none;
+        }
+
+        a.logout:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Bem-vindo à Apollo Pesquisas!</h1>
+
+    <a href="/auth/cadastro/voluntario" class="button">Cadastrar Voluntário</a>
+    <a href="/auth/cadastro/pesquisador" class="button">Cadastrar Pesquisador</a>
+    <a href="/auth/login" class="button">Login</a>
+    <a href="/logout" class="logout">Sair</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Usuários</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2AA184;
+            margin: 0;
+        }
+
+        .btn-logout {
+            background-color: #fdfdfd;
+            color: #d64545;
+            border: 2px solid #d64545;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background-color: #d64545;
+            color: white;
+        }
+
+        h2 {
+            color: #444;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+
+        table {
+            width: 100%;
+            max-width: 900px;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        th {
+            background-color: #2AA184;
+            color: white;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-edit {
+            background-color: #f0fdfa;
+            color: #2AA184;
+            margin-right: 6px;
+        }
+
+        .btn-edit:hover {
+            background-color: #d9f4ec;
+        }
+
+        .btn-delete {
+            background-color: #fdecea;
+            color: #d64545;
+        }
+
+        .btn-delete:hover {
+            background-color: #f9d5d3;
+        }
+
+        .action-buttons {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Bem-vindo, Admin!</h1>
+    <a href="/index.html" class="btn-logout">Sair</a>
+</div>
+
+<h2>Usuários cadastrados na Apollo Pesquisas</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Tipo</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="usuario : ${usuarios}">
+        <td th:text="${usuario.nome}">Nome</td>
+        <td th:text="${usuario.email}">Email</td>
+        <td th:text="${usuario.tipo}">Tipo</td>
+        <td class="action-buttons">
+            <a th:href="@{${usuario.tipo == 'voluntario'} ?
+                '/admin/usuarios/editar-voluntario/' + ${usuario.usuarioId} :
+                '/admin/usuarios/editar-pesquisador/' + ${usuario.usuarioId}}"
+               class="btn btn-edit">Editar</a>
+
+            <a th:href="@{'/admin/usuarios/deletar/' + ${usuario.usuarioId}}"
+               class="btn btn-delete"
+               onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

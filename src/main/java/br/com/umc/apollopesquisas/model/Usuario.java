@@ -20,19 +20,14 @@ public abstract class Usuario {
     private String nome;
     private String email;
     private String senha;
-    private String categoria;
-    private String token;
+    private String role;
+    private String tipo;
+
+
+
 
     public Usuario() {}
 
-    public Usuario(String usuarioId, String nome, String email, String senha, String categoria, String token) {
-        this.usuarioId = usuarioId;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.categoria = categoria;
-        this.token = token;
-    }
 
     public String getUsuarioId() {
         return usuarioId;
@@ -41,6 +36,7 @@ public abstract class Usuario {
     public void setUsuarioId(String usuarioId) {
         this.usuarioId = usuarioId;
     }
+
 
     public String getNome() {
         return nome;
@@ -66,21 +62,22 @@ public abstract class Usuario {
         this.senha = senha;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public String getRole() {
+        return role;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setRole(String role) {
+        this.role = role;
+    }
+    public String getTipo() {
+        return tipo;
     }
 
-    public String getToken() {
-        return token;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+
 
     public boolean login(String email, String senha) {
         return this.email.equals(email) && this.senha.equals(senha);
@@ -93,6 +90,4 @@ public abstract class Usuario {
     public void esqueciSenha(String email) {
         System.out.println("Solicitação de redefinição de senha enviada para " + email);
     }
-
-    public abstract void setId(Integer id);
 }

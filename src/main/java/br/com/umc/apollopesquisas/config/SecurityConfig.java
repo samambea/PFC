@@ -1,56 +1,71 @@
 package br.com.umc.apollopesquisas.config;
 
-
+import br.com.umc.apollopesquisas.model.Usuario;
+import br.com.umc.apollopesquisas.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private CustomAuthSuccessHandler customAuthSuccessHandler;
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, UsuarioRepository usuarioRepository) throws Exception {
         http
-                .csrf().disable()
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/usuarios/**").authenticated()
-                        .anyRequest().permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/",
+                                "/auth/login",
+                                "/auth/cadastro",
+                                "/auth/cadastro/voluntario/**",
+                                "/auth/cadastro/pesquisador/**",
+                                "/usuarios/cadastro",
+                                "/css/**", "/js/**", "/images/**"
+                        ).permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
-                .formLogin()
-                .loginPage("/login")  // URL customizada para o formulário de login
-                .permitAll()
-                .and()
-                .httpBasic(); // Pode ser removido se você estiver apenas usando o formulário de login
+                .formLogin(form -> form
+                        .loginPage("/auth/login")
+                        .successHandler(customAuthSuccessHandler)
+                        .failureUrl("/auth/login?error=true")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/auth/login?logout")
+                        .permitAll()
+                )
+                .userDetailsService(userDetailsService(usuarioRepository));
 
         return http.build();
     }
 
+    @Bean
+    public UserDetailsService userDetailsService(UsuarioRepository usuarioRepository) {
+        return username -> {
+            Usuario usuario = usuarioRepository.findByEmail(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
+
+            String role = usuario.getRole() != null ? usuario.getRole().toUpperCase() : "USER";
+
+            return User.builder()
+                    .username(usuario.getEmail())
+                    .password(usuario.getSenha())
+                    .roles(role)
+                    .build();
+        };
+    }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager(
-                User.withUsername("user")
-                        .password("{noop}password") // {noop} para evitar criptografar a senha
-                        .roles("USER")
-                        .build()
-        );
-
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-
-
-        @Bean
-        public BCryptPasswordEncoder passwordEncoder() {
-            return new BCryptPasswordEncoder();
-        }
-    }
-
-
-
-
+}

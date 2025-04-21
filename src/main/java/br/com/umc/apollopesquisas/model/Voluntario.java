@@ -2,12 +2,16 @@ package br.com.umc.apollopesquisas.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "voluntarios")
+@Document(collection = "usuarios")
 public class Voluntario extends Usuario {
-
 
     private String telefone;
     private String endereco;
+
+    public Voluntario() {
+        this.setTipo("voluntario");
+        this.setRole("USER");
+    }
 
     public String getTelefone() {
         return telefone;
