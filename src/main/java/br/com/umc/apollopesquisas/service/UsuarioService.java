@@ -18,7 +18,7 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Optional<Usuario> findById(String id) {
+    public Optional<Usuario> findById(Integer id) {
         return usuarioRepository.findById(id);
     }
 
@@ -26,7 +26,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public boolean deleteById(String id) {
+    public boolean deleteById(Integer id) {
         if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);
             return true;

@@ -93,4 +93,6 @@ public abstract class Usuario {
     public void esqueciSenha(String email) {
         System.out.println("Solicitação de redefinição de senha enviada para " + email);
     }
+
+    public abstract void setId(Integer id);
 }
