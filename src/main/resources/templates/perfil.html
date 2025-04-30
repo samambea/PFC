@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Perfil - Apollo Pesquisas</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f2f4f3;
+        }
+        .navbar {
+            background-color: #2AA184;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .navbar .profile-button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .sidebar {
+            background-color: #2AA184;
+            width: 220px;
+            min-height: calc(100vh - 60px);
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar a {
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+        .sidebar a.active, .sidebar a:hover {
+            background-color: #d6e9e7;
+            color: #000;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .content {
+            flex: 1;
+            padding: 40px;
+        }
+        .main {
+            display: flex;
+        }
+        .profile-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .profile-card .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: repeating-linear-gradient(45deg, #cceeee, #cceeee 10px, #b8dada 10px, #b8dada 20px);
+        }
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .profile-info .name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+        }
+        .profile-info .detail {
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="logo">Apollo Pesquisas</div>
+    <!-- Alterado para um link para a página home.html -->
+    <a href="/home" class="profile-button">Tela Inicial</a>
+</div>
+
+<div class="main">
+    <div class="sidebar">
+        <a href="#" class="active">Meu Perfil</a>
+        <a href="participacoes">Minhas Participações</a>
+        <a href="#">Minha Agenda</a>
+    </div>
+    <div class="content">
+        <div class="profile-card">
+            <div class="avatar"></div>
+            <div class="profile-info">
+                <div class="name" th:text="${usuario.nome}">Nome Completo</div>
+                <div class="detail">
+                    <span th:text="'Contato: ' + ${usuario.contato}">Contato</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

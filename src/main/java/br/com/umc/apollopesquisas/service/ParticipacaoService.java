@@ -14,24 +14,33 @@ public class ParticipacaoService {
     @Autowired
     private ParticipacaoRepository participacaoRepository;
 
+
     public Participacao criar(Participacao participacao) {
         return participacaoRepository.save(participacao);
     }
+
 
     public List<Participacao> listarTodos() {
         return participacaoRepository.findAll();
     }
 
+
     public Optional<Participacao> buscarPorId(String id) {
         return participacaoRepository.findById(id);
     }
 
-    public Participacao atualizar(String id, Participacao novo) {
-        return participacaoRepository.findById(id).map(p -> {
-            novo.setParticipacaoId(id);
-            return participacaoRepository.save(novo);
-        }).orElse(null);
+
+    public Participacao atualizar(String id, Participacao novaParticipacao) {
+        Optional<Participacao> participacaoExistente = participacaoRepository.findById(id);
+
+        if (participacaoExistente.isPresent()) {
+            novaParticipacao.setParticipacaoId(id);
+            return participacaoRepository.save(novaParticipacao);
+        } else {
+            return null;
+        }
     }
+
 
     public boolean deletar(String id) {
         if (participacaoRepository.existsById(id)) {
@@ -40,8 +49,11 @@ public class ParticipacaoService {
         }
         return false;
     }
+
+
     public List<Participacao> buscarPorUsuarioId(String usuarioId) {
         return participacaoRepository.findByUsuarioId(usuarioId);
     }
+
 
 }

@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>br.com.umc.apollopesquisas</groupId>
 	<artifactId>apollo.pesquisas</artifactId>
@@ -15,7 +15,7 @@
 	<description>apollo pesquisas</description>
 	<properties>
 		<java.version>21</java.version>
-		<spring-boot.version>3.4.3</spring-boot.version> <!-- Atualize para a versão correta do Spring Boot -->
+		<spring-boot.version>3.4.3</spring-boot.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -24,16 +24,24 @@
 		</dependency>
 
 
-		<!-- Dependência para Jakarta Servlet -->
+
 		<dependency>
 			<groupId>jakarta.servlet</groupId>
 			<artifactId>jakarta.servlet-api</artifactId>
-			<version>6.0.0</version> <!-- Use a versão mais recente -->
+			<version>6.0.0</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId> <!-- Sem versão aqui, o Spring Boot irá usar a versão 3.4.3 -->
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -69,7 +77,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>6.0.0</version> <!-- Ou a versão mais recente -->
+			<version>6.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -79,14 +87,14 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>6.0.0</version> <!-- Ou versão superior -->
+			<version>6.0.0</version>
 		</dependency>
 
-		<!-- Dependência Spring Security OAuth2, caso você utilize -->
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-oauth2-client</artifactId>
-			<version>6.0.0</version> <!-- Ou versão superior -->
+			<version>6.0.0</version>
 		</dependency>
 	</dependencies>
 

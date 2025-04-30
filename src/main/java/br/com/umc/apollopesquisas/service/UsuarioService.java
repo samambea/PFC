@@ -37,4 +37,9 @@ public class UsuarioService {
     public boolean existsById(String id) {
         return usuarioRepository.existsById(id);
     }
+
+
+    public Optional<Usuario> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
 }

@@ -11,6 +11,23 @@
             background-color: #f0f4f8;
         }
 
+        .navbar {
+            background-color: #2e7d64;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+            font-size: 1em;
+        }
+
         .container {
             max-width: 800px;
             margin: 60px auto;
@@ -50,10 +67,24 @@
     </style>
 </head>
 <body>
+
+
+<div class="navbar">
+    <div class="logo">
+        Apollo Pesquisas
+    </div>
+    <div class="menu">
+        <a href="/perfil">Meu Perfil</a>
+        <a href="/perfil/editar">Editar Perfil</a>
+        <a href="/logout">Sair</a>
+    </div>
+</div>
+
+
 <div class="container">
     <h1>Bem-vindo ao Apollo Pesquisas</h1>
     <p>Essa é a página inicial do sistema. Aqui você pode navegar pelas funcionalidades disponíveis.</p>
-    <a href="/logout" class="button">Sair</a>
 </div>
+
 </body>
 </html>

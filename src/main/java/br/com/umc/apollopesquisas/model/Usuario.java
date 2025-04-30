@@ -22,6 +22,7 @@ public abstract class Usuario {
     private String senha;
     private String role;
     private String tipo;
+    private int contato;
 
 
 
@@ -78,6 +79,13 @@ public abstract class Usuario {
     }
 
 
+    public int getContato() {
+        return contato;
+    }
+
+    public void setContato(int contato) {
+        this.contato = contato;
+    }
 
     public boolean login(String email, String senha) {
         return this.email.equals(email) && this.senha.equals(senha);

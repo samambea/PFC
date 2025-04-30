@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface ParticipacaoRepository extends MongoRepository<Participacao, String> {
+
+
     List<Participacao> findByUsuarioId(String usuarioId);
+
 
 }
