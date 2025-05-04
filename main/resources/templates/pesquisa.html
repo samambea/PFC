@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Pesquisa - Apollo Pesquisas</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #e6f2f1;
+      color: #333;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .left {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .ellipse {
+      width: 260px;
+      height: 180px;
+      background: repeating-linear-gradient(
+              45deg,
+              #cceeee,
+              #cceeee 10px,
+              #b8dada 10px,
+              #b8dada 20px
+      );
+      border-radius: 50% / 40%;
+      margin: 0 auto 2rem;
+    }
+
+    .left p {
+      max-width: 400px;
+      margin: 0 auto;
+      font-size: 16px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .right {
+      width: 100%;
+      max-width: 900px;
+      background-color: #2AA184;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      color: white;
+      box-sizing: border-box;
+      margin: 0 20px;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .row input, .row select, .row textarea {
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    .row input:focus, .row select:focus, .row textarea:focus {
+      border-color: #2AA184;
+      outline: none;
+    }
+
+    textarea {
+      resize: none;
+      min-height: 100px;
+      height: auto;
+      font-size: 14px;
+      padding: 1rem;
+    }
+
+    label {
+      font-size: 14px;
+      text-align: left;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+
+    button {
+      background-color: white;
+      color: #2AA184;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 1.5rem;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e6f3f1;
+    }
+
+    .terms {
+      font-size: 12px;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .home-icon {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+    }
+
+    .home-icon img {
+      width: 28px;
+    }
+
+    .message {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+
+    .resultado {
+      margin-top: 1rem;
+      background-color: #fff;
+      color: #333;
+      padding: 0.8rem;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* Estilo para os campos Descrição e Objetivo */
+    .full-width {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .full-width textarea {
+      resize: vertical;
+      min-height: 100px;
+      height: auto;
+      font-size: 14px;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Manter o layout e espaçamento consistente */
+    .full-width label {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      .right {
+        padding: 1rem;
+      }
+
+      .container {
+        padding: 10px;
+        justify-content: center;
+      }
+
+      .left {
+        min-width: 100%;
+        text-align: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .ellipse {
+        width: 220px;
+        height: 160px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .left {
+        min-width: 100%;
+        text-align: center;
+      }
+
+      .logo {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .ellipse {
+        width: 200px;
+        height: 140px;
+      }
+
+      .right {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="home-icon">
+  <a href="/">
+    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home">
+  </a>
+</div>
+
+<div class="container">
+  <div class="left">
+    <div class="ellipse"></div>
+    <p>
+      Cadastre sua pesquisa de forma simples e eficiente. Organize todas as informações de forma clara e objetiva.
+    </p>
+  </div>
+  <div class="right">
+    <div class="logo">
+      <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
+    </div>
+
+    <div th:if="${mensagem}" class="message">
+      <p th:text="${mensagem}"></p>
+    </div>
+
+    <form th:action="@{/pesquisas}" th:object="${pesquisa}" method="post">
+      <div class="row">
+        <div>
+          <label for="nomePesquisa">Nome da Pesquisa:</label>
+          <input type="text" th:field="*{nomePesquisa}" id="nomePesquisa" required />
+        </div>
+        <div>
+          <label for="instituicao">Instituição:</label>
+          <input type="text" th:field="*{instituicao}" id="instituicao" required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="areaDaPesquisa">Área da Pesquisa:</label>
+          <input type="text" th:field="*{areaDaPesquisa}" id="areaDaPesquisa" required />
+        </div>
+        <div>
+          <label for="pesquisadorResponsavel">Pesquisador Responsável:</label>
+          <input type="text" th:field="*{pesquisadorResponsavel}" id="pesquisadorResponsavel" required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="criteriosInclusaoExclusao">Critérios de Inclusão/Exclusão:</label>
+          <input type="text" th:field="*{criteriosInclusaoExclusao}" id="criteriosInclusaoExclusao" required />
+        </div>
+        <div>
+          <label for="statusPesquisa">Status da Pesquisa:</label>
+          <select th:field="*{statusPesquisa}" id="statusPesquisa" required>
+            <option value="PENDENTE">Pendente</option>
+            <option value="EM_ANDAMENTO">Em andamento</option>
+            <option value="FINALIZADA">Finalizada</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="full-width">
+        <label for="descricao">Descrição:</label>
+        <textarea th:field="*{descricao}" id="descricao" required></textarea>
+      </div>
+
+      <div class="full-width">
+        <label for="objetivo">Objetivo:</label>
+        <textarea th:field="*{objetivo}" id="objetivo" required></textarea>
+      </div>
+
+      <button type="submit">Cadastrar Pesquisa</button>
+    </form>
+
+    <div class="resultado" th:if="${pesquisa.resultado}" th:text="${pesquisa.resultado}"></div>
+  </div>
+</div>
+</body>
+</html>

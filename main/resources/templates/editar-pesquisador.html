@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Voluntário</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            background-color: #2AA184;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 2px solid #1f7a56;
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        header img {
+            width: 30px;
+            height: 30px;
+        }
+
+        header .home-button {
+            position: absolute;
+            left: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        header .home-button img {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1);
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: #fff;
+            color: #333;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-top: 6rem;
+            box-sizing: border-box;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 24px;
+            font-weight: bold;
+            color: #2AA184;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        label {
+            font-size: 14px;
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            margin-top: 4px;
+            padding: 0.5rem;
+            border: 1px solid #ccc; /* Adicionando a borda simples */
+            border-radius: 6px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: white;
+            color: #2AA184;
+            padding: 0.7rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 320px;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        button svg.spinner {
+            display: none;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            animation: rotate 1s linear infinite;
+        }
+
+        button span {
+            display: inline-block;
+            transition: opacity 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e6f3f1;
+        }
+
+        button:disabled {
+            background-color: #e6f3f1;
+            color: #999;
+        }
+
+        button:disabled span {
+            opacity: 0;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 1.5rem;
+            }
+
+            .form-container h2 {
+                font-size: 20px;
+            }
+
+            input, button {
+                font-size: 16px;
+                padding: 0.7rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <button class="home-button" onclick="window.location.href='/'">
+        <img src="/images/home.png" alt="Voltar para Home">
+    </button>
+    <div class="logo">
+        <img src="/images/logo-apollo.png" alt="Logo Apollo">
+        Apollo Pesquisas
+    </div>
+</header>
+
+<div class="form-container">
+    <h2>Editar Pesquisador</h2>
+    <form th:action="@{/admin/usuarios/salvar-pesquisador}" th:object="${usuario}" method="post">
+        <input type="hidden" th:field="*{usuarioId}" />
+
+        <label for="nome">Nome:</label>
+        <input type="text" th:field="*{nome}" id="nome" aria-label="Nome do pesquisador" required />
+
+        <label for="email">Email:</label>
+        <input type="email" th:field="*{email}" id="email" aria-label="Email do pesquisador" required />
+
+        <label for="crm">CRM:</label>
+        <input type="text" th:field="*{crm}" id="crm" aria-label="CRM do pesquisador" required />
+
+        <label for="especialidade">Especialidade:</label>
+        <input type="text" th:field="*{especialidade}" id="especialidade" aria-label="Especialidade do pesquisador" required />
+
+        <label for="areaDePesquisa">Área de Pesquisa:</label>
+        <input type="text" th:field="*{areaDePesquisa}" id="areaDePesquisa" aria-label="Área de pesquisa do pesquisador" required />
+
+        <label for="contato">Contato:</label>
+        <input type="text" th:field="*{contato}" id="contato" aria-label="Contato do pesquisador" required />
+
+        <button type="submit">
+            <svg class="spinner" xmlns="http://www.w3.org/2000/svg" fill="#2AA184" viewBox="0 0 100 101">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591..." />
+            </svg>
+            <span>Salvar</span>
+        </button>
+    </form>
+</div>
+
+<script>
+    let isFormDirty = false;
+
+    document.querySelector("form").addEventListener("input", () => {
+        isFormDirty = true;
+    });
+
+    window.addEventListener("beforeunload", (event) => {
+        if (isFormDirty) {
+            const message = "Você tem alterações não salvas. Tem certeza de que deseja sair?";
+            event.returnValue = message;
+            return message;
+        }
+    });
+
+    document.querySelector("form").addEventListener("submit", function () {
+        const botao = this.querySelector('button[type="submit"]');
+        const spinner = botao.querySelector('.spinner');
+        const texto = botao.querySelector('span');
+
+        botao.disabled = true;
+        spinner.style.display = "inline-block";
+        texto.textContent = "Salvando...";
+    });
+</script>
+</body>
+</html>

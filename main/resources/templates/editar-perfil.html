@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Perfil - Apollo Pesquisas</title>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f7f7f7; }
+        .container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        .card { background-color: #2AA184; color: white; padding: 2rem; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); width: 100%; max-width: 400px; }
+        .card h2 { margin-bottom: 1rem; text-align: center; }
+        label { display: block; margin-bottom: 0.5rem; font-size: 14px; }
+        input { width: 100%; padding: 0.5rem; margin-bottom: 1rem; border-radius: 6px; border: none; font-size: 14px; }
+        button { width: 100%; background-color: white; color: #2AA184; font-weight: bold; padding: 0.7rem; border: none; border-radius: 6px; cursor: pointer; }
+        button:hover { background-color: #e6f3f1; }
+        .home-link { position: absolute; top: 1rem; left: 1rem; }
+        .home-link img { width: 28px; }
+    </style>
+</head>
+<body>
+
+<div class="home-link">
+    <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home"></a>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h2>Editar Perfil</h2>
+
+        <form th:action="@{/perfil/editar}" th:object="${editarPerfil}" method="post">
+            <label for="nome">Nome</label>
+            <input type="text" th:field="*{nome}" id="nome" required/>
+
+            <label for="senha">Senha (deixe em branco para não alterar)</label>
+            <input type="password" th:field="*{senha}" id="senha"/>
+
+            <button type="submit">Salvar Alterações</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

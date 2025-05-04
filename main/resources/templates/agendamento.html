@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamento - Apollo Pesquisas</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e6f2f1;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .left {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .ellipse {
+            width: 260px;
+            height: 180px;
+            background: repeating-linear-gradient(
+                    45deg,
+                    #cceeee,
+                    #cceeee 10px,
+                    #b8dada 10px,
+                    #b8dada 20px
+            );
+            border-radius: 50% / 40%;
+            margin: 0 auto 2rem;
+        }
+
+        .left p {
+            max-width: 400px;
+            margin: 0 auto;
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .right {
+            width: 100%;
+            max-width: 420px;
+            background-color: #2AA184;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            color: white;
+            box-sizing: border-box;
+            margin: 0 20px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        label {
+            font-size: 14px;
+            text-align: left;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        input, select {
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #2AA184;
+            outline: none;
+        }
+
+        .row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .row input {
+            flex: 1;
+            min-width: 100%;
+        }
+
+        button {
+            background-color: white;
+            color: #2AA184;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 1.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e6f3f1;
+        }
+
+        .terms {
+            font-size: 12px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .home-icon {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+        }
+
+        .home-icon img {
+            width: 28px;
+        }
+
+        .message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .resultado {
+            margin-top: 1rem;
+            background-color: #fff;
+            color: #333;
+            padding: 0.8rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="home-icon">
+    <a href="/">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home">
+    </a>
+</div>
+
+<div class="container">
+    <div class="left">
+        <div class="ellipse"></div>
+        <p>
+            Agende entrevistas de forma simples e rápida. Garanta a organização das suas pesquisas com eficiência!
+        </p>
+    </div>
+    <div class="right">
+        <div class="logo">
+            <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
+        </div>
+
+        <div th:if="${mensagem}" class="message">
+            <p th:text="${mensagem}"></p>
+        </div>
+
+        <form th:action="@{/agendamentos}" th:object="${agendamento}" method="post">
+            <label for="tipo">Tipo:</label>
+            <select th:field="*{tipo}" id="tipo" required>
+                <option value="">Selecione</option>
+                <option value="Entrevista">Entrevista</option>
+                <option value="Reunião">Reunião</option>
+                <option value="Outro">Outro</option>
+            </select>
+
+            <label for="data">Data do Agendamento:</label>
+            <input type="date" th:field="*{data}" id="data" required />
+
+            <label for="horario">Horário:</label>
+            <input type="time" th:field="*{horario}" id="horario" required />
+
+            <label for="local">Local do Agendamento:</label>
+            <input type="text" th:field="*{local}" id="local" required />
+
+            <button type="submit">Agendar</button>
+        </form>
+
+        <div class="resultado" th:if="${agendamento.resultado}" th:text="${agendamento.resultado}"></div>
+    </div>
+</div>
+</body>
+</html>

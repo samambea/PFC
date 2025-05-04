@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas Participações - Apollo Pesquisas</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f2f4f3;
+        }
+        .navbar {
+            background-color: #2AA184;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .navbar .profile-button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .sidebar {
+            background-color: #2AA184;
+            width: 220px;
+            min-height: calc(100vh - 60px);
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar a {
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+        .sidebar a.active, .sidebar a:hover {
+            background-color: #d6e9e7;
+            color: #000;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .main {
+            display: flex;
+        }
+        .content {
+            flex: 1;
+            padding: 40px;
+        }
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #0f241b;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.2);
+        }
+        th, td {
+            text-align: left;
+            padding: 16px;
+            font-size: 16px;
+        }
+        th {
+            background-color: #f7f7f7;
+            color: #0f241b;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #e6f3f1;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="logo">Apollo Pesquisas</div>
+    <button class="profile-button">Meu Perfil</button>
+</div>
+
+<div class="main">
+    <div class="sidebar">
+        <a href="/perfil">Meu Perfil</a>
+        <a href="/participacoes" class="active">Minhas Participações</a>
+        <a href="/agenda">Minha Agenda</a>
+    </div>
+
+    <div class="content">
+        <div class="title">Minhas Participações</div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Data Inscrição</th>
+                <th>Pesquisa</th>
+                <th>Status</th>
+                <th>Feedback</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="participacao : ${participacoes}">
+                <td th:text="${#dates.format(participacao.dataInscricao, 'dd/MM/yyyy')}">02/07/2024</td>
+                <td th:text="${participacao.pesquisa}">Pesquisa Exemplo 1: Avaliando o Teste...</td>
+                <td th:text="${participacao.statusParticipacao}">Em progresso</td>
+                <td th:text="${participacao.feedback != null ? participacao.feedback : 'Nenhum'}">Nenhum</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

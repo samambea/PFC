@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Apollo Pesquisas - Login</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left {
+            width: 50%;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .ellipse {
+            width: 380px;
+            height: 280px;
+            background: repeating-linear-gradient(
+                45deg,
+                #cceeee,
+                #cceeee 10px,
+                #b8dada 10px,
+                #b8dada 20px
+            );
+            border-radius: 50% / 40%;
+            margin: 0 auto 1rem;
+        }
+
+        .left p {
+            max-width: 400px;
+            margin: 0 auto;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .right {
+            width: 400px;
+            background-color: #2AA184;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            color: white;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .logo::before {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: url('/') no-repeat center center;
+            background-size: contain;
+            top: -40px;
+            left: calc(50% - 30px);
+        }
+        .logo {
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-img {
+            width: 180px;
+            display: block;
+            margin: 0 auto;
+        }
+
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 0.7rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: white;
+            color: #26A69A;
+            padding: 0.7rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .register {
+            margin-top: 1rem;
+            font-size: 14px;
+        }
+
+        .register a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .home-icon {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+        }
+
+        .home-icon img {
+            width: 30px;
+        }
+    </style>
+</head>
+<body>
+<div th:if="${successMessage}" class="alert success">
+    <p th:text="${successMessage}"></p>
+</div>
+
+<div class="home-icon">
+    <a href="/">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home">
+    </a>
+</div>
+
+
+<div class="container">
+    <div class="left">
+        <div class="ellipse"></div>
+        <p>
+            A pesquisa começa com um login.
+        </p>
+    </div>
+    <div class="right">
+        <div class="logo">
+            <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" class="logo-img"></div>
+        <form th:action="@{/auth/login}" method="post">
+        <input type="text" name="username" placeholder="E-mail"/>
+            <input type="password" name="password" placeholder="Senha"/>
+            <button type="submit">Acessar Minha Conta</button>
+            <div th:if="${param.error}">
+                <p style="color: red;">E-mail ou senha inválidos</p>
+            </div>
+            <div th:if="${param.logout}">
+                <p style="color: green;">Logout realizado com sucesso.</p>
+            </div>
+        </form>
+        <div class="register">
+            Não tem cadastro? <a href="/">Crie sua conta!</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

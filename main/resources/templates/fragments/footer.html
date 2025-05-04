@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Apollo Pesquisas</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<footer class="bg-white mt-12 border-t border-gray-200" th:fragment="footer">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+        <nav class="flex space-x-8 mb-4 md:mb-0" aria-label="Footer menu">
+            <a href="#" class="text-black hover:underline select-none">Meu Perfil</a>
+            <a href="#" class="text-black hover:underline select-none">Quem Somos</a>
+            <a href="#" class="text-black hover:underline select-none">Termos e Conduta</a>
+            <a href="#" class="text-black hover:underline select-none">LGPD</a>
+        </nav>
+        <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6 text-gray-500 text-sm">
+            <span class="select-none">Copyright © 2025 Apollo Pesquisas - PFC SISTEMAS DE INFORMAÇÃO</span>
+            <div class="flex space-x-4">
+                <a href="#" aria-label="Instagram" class="text-gray-500 hover:text-gray-700">
+                    <i class="fab fa-instagram fa-lg"></i>
+                </a>
+                <a href="#" aria-label="Facebook" class="text-gray-500 hover:text-gray-700">
+                    <i class="fab fa-facebook fa-lg"></i>
+                </a>
+                <a href="#" aria-label="LinkedIn" class="text-gray-500 hover:text-gray-700">
+                    <i class="fab fa-linkedin fa-lg"></i>
+                </a>
+                <a href="#" aria-label="Email" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-envelope fa-lg"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
