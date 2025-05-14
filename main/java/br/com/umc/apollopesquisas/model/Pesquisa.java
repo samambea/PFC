@@ -2,7 +2,11 @@ package br.com.umc.apollopesquisas.model;
 
 import br.com.umc.apollopesquisas.enums.StatusPesquisa;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "pesquisas")
 public class Pesquisa {
@@ -18,6 +22,21 @@ public class Pesquisa {
     private String pesquisadorResponsavel;
     private String criteriosInclusaoExclusao;
     private StatusPesquisa statusPesquisa;
+
+
+    private List<String> participantes = new ArrayList<>();
+    public List<String> getParticipantes() {
+        return participantes;
+    }
+
+    @DBRef
+    private List<Voluntario> voluntariosInscritos = new ArrayList<>();
+
+
+    public void setParticipantes(List<String> participantes) {
+        this.participantes = participantes;
+    }
+
 
     public String getPesquisaId() {
         return pesquisaId;
@@ -98,4 +117,10 @@ public class Pesquisa {
     public void setStatusPesquisa(StatusPesquisa statusPesquisa) {
         this.statusPesquisa = statusPesquisa;
     }
+
+
 }
+
+
+
+

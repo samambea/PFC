@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agenda - Apollo Pesquisas</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f2f4f3;
+        }
+        .navbar {
+            background-color: #2AA184;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        .navbar .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .navbar .profile-button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .sidebar {
+            background-color: #2AA184;
+            width: 220px;
+            min-height: calc(100vh - 60px);
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar a {
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+        .sidebar a.active, .sidebar a:hover {
+            background-color: #d6e9e7;
+            color: #000;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .main {
+            display: flex;
+        }
+        .content {
+            flex: 1;
+            padding: 40px;
+        }
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #0f241b;
+        }
+
+        .agenda-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 60px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .calendar {
+            border: 1px solid #ccc;
+            padding: 25px;
+            border-radius: 12px;
+            width: 280px;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            height: 350px;
+        }
+
+        .calendar-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .calendar-dates {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-dates div {
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            background-color: #f7f7f7;
+            transition: background-color 0.3s;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .calendar-dates div:hover {
+            background-color: #2AA184;
+            color: white;
+        }
+
+        .highlight {
+            background-color: red !important;
+            color: white;
+        }
+
+        .agendamentos-list {
+            flex: 1;
+            margin-top: 10px;
+            max-width: 350px;
+        }
+
+        .agendamento-item {
+            background-color: white;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <div class="logo">Apollo Pesquisas</div>
+    <a href="/home" class="profile-button">Tela Inicial</a>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+    <div class="sidebar">
+        <a href="/perfil">Meu Perfil</a>
+        <a href="/agenda" class="active">Minha Agenda</a>
+    </div>
+
+    <div class="content">
+        <!-- Agenda -->
+        <div class="title">Minha Agenda</div>
+
+        <!-- Agenda Container -->
+        <div class="agenda-container">
+            <div class="calendar">
+                <div class="calendar-header">
+                    <span th:text="${mesAtual} + ' ' + ${anoAtual}"></span>
+                </div>
+                <div class="calendar-days">
+                    <div>D</div><div>S</div><div>T</div><div>Q</div><div>Q</div><div>S</div><div>S</div>
+                </div>
+                <div class="calendar-dates">
+                    <div th:each="dia : ${diasDoMes}" th:text="${dia}"
+                         th:classappend="${diasComAgendamento.contains(dia)} ? 'highlight' : ''">
+                    </div>
+                </div>
+            </div>
+
+            <div class="agendamentos-list">
+                <div th:each="agendamento : ${agendamentos}" class="agendamento-item">
+                    <div>
+                        <strong>Data e horário:</strong>
+                        <strong th:if="${agendamento.dataAgendamento != null}"
+                                th:text="${#temporals.format(agendamento.dataAgendamento, 'dd/MM')} + ' ' + ${agendamento.horario}"></strong>
+                    </div>
+                    <div>
+                        <strong>Pesquisa:</strong>
+                        <span th:text="${agendamento.nomePesquisa}"></span>
+                    </div>
+                    <div>
+                        <strong>Local:</strong>
+                        <span th:text="${agendamento.localAgendamento}"></span>
+                    </div>
+                    <div>
+                        <strong>Responsável:</strong>
+                        <span th:text="${agendamento.pesquisadorEmail}"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

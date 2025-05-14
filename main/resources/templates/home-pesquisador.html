@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Início - Apollo Pesquisas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #2e7d64;
+            color: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu a {
+            color: #fff;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .menu a:hover {
+            text-decoration: underline;
+        }
+
+        .profile-button {
+            border: 1px solid #fff;
+            border-radius: 6px;
+            padding: 6px 12px;
+        }
+
+        .create-button {
+            background-color: #1e5f4c;
+            padding: 10px 20px;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-left: 20px;
+        }
+
+        .create-button:hover {
+            background-color: #144a3a;
+        }
+
+        .container {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: auto;
+            background-color: #fff;
+            margin-top: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-icon {
+            position: relative;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .notification-icon i {
+            font-size: 1.2em;
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-size: 0.75em;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 28px;
+            right: 0;
+            background-color: white;
+            color: #333;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .dropdown .item {
+            padding: 8px 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dropdown .item:last-child {
+            border-bottom: none;
+        }
+
+        h1 {
+            color: #2e7d64;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">Apollo Pesquisas</div>
+    <div class="menu">
+        <a class="profile-button" href="/perfil">Meu Perfil</a>
+        <a class="profile-button" href="/perfil/editar">Editar Perfil</a>
+
+        <a class="create-button" href="pesquisas/nova">
+            <i class="fas fa-plus"></i> Criar Pesquisa
+        </a>
+
+        <a href="/logout">Sair</a>
+
+        <div class="notification-icon" id="notificacaoBtn">
+            <i class="fas fa-bell"></i>
+            <span class="badge" id="notificacaoCount">0</span>
+            <div class="dropdown" id="notificacaoDropdown"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Bem-vindo ao Apollo Pesquisas</h1>
+    <p>Essa é a página inicial do sistema. Aqui você pode navegar pelas funcionalidades disponíveis.</p>
+</div>
+
+<script>
+
+</script>
+
+</body>
+</html>

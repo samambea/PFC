@@ -10,6 +10,7 @@ public class Feedback {
     private String feedbackId;
     private int nota;
     private String comentario;
+    private Participacao participacao;
 
 
     public String getFeedbackId() {
@@ -34,5 +35,13 @@ public class Feedback {
 
     public void setComentario(String comentario) {
         this.comentario = comentario;
+    }
+
+    public Participacao getParticipacao() {
+        return participacao;
+    }
+
+    public void setParticipacao(Participacao participacao) {
+        this.participacao = participacao;
     }
 }

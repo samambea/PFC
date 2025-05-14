@@ -10,8 +10,7 @@ public class Pesquisador extends Usuario {
     private String areaDePesquisa;
 
     public Pesquisador() {
-        this.setTipo("pesquisador");
-        this.setRole("USER");
+        this.setRole("PESQUISADOR");
     }
 
     public String getCrm() {

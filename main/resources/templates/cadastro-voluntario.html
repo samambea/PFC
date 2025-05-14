@@ -7,16 +7,15 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background-color: #e6f2f1;
-            color: #333;
+            background-color: #f7f7f7;
         }
 
         .container {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            padding: 20px;
         }
 
         .left {
@@ -27,37 +26,35 @@
         }
 
         .ellipse {
-            width: 260px;
-            height: 180px;
+            width: 280px;
+            height: 200px;
             background: repeating-linear-gradient(
-                    45deg,
-                    #cceeee,
-                    #cceeee 10px,
-                    #b8dada 10px,
-                    #b8dada 20px
+                45deg,
+                #cceeee,
+                #cceeee 10px,
+                #b8dada 10px,
+                #b8dada 20px
             );
             border-radius: 50% / 40%;
-            margin: 0 auto 2rem;
+            margin: 0 auto 1rem;
         }
 
         .left p {
             max-width: 400px;
             margin: 0 auto;
-            font-size: 16px;
-            color: #555;
-            line-height: 1.5;
+            font-size: 14px;
+            color: #333;
         }
 
         .right {
             width: 100%;
             max-width: 420px;
-            background-color: #2AA184;
+            background-color: #2AA184; /* Cor atualizada */
             border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             color: white;
             box-sizing: border-box;
-            margin: 0 20px;
         }
 
         .logo {
@@ -71,53 +68,43 @@
         form {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         label {
             font-size: 14px;
             text-align: left;
-            margin-bottom: 0.3rem;
-            font-weight: 600;
         }
 
         input,
         select {
-            padding: 0.8rem;
-            border: 1px solid #ccc;
+            padding: 0.5rem;
+            border: none;
             border-radius: 6px;
             font-size: 14px;
             width: 100%;
             box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus {
-            border-color: #2AA184;
-            outline: none;
         }
 
         .row {
             display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .row input {
             flex: 1;
-            min-width: 100%; /* Forçando todos os inputs a ter a mesma largura */
         }
 
         button {
             background-color: white;
             color: #2AA184;
-            padding: 0.8rem;
+            padding: 0.7rem;
             border: none;
             border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
             font-size: 15px;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             transition: background-color 0.3s ease;
         }
 
@@ -126,13 +113,13 @@
         }
 
         .terms {
-            font-size: 12px;
+            font-size: 11px;
             text-align: center;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
 
         .login-link {
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             font-size: 14px;
             text-align: center;
         }
@@ -152,14 +139,6 @@
         .home-icon img {
             width: 28px;
         }
-
-        .message {
-            background-color: #d4edda;
-            color: #155724;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-        }
     </style>
 </head>
 <body>
@@ -173,7 +152,7 @@
     <div class="left">
         <div class="ellipse"></div>
         <p>
-            Você é essencial. Junte-se a nós para transformar o futuro da pesquisa! Criamos oportunidades para aqueles que querem fazer a diferença.
+            Você é essencial. Junte-se a nós.
         </p>
     </div>
     <div class="right">
@@ -181,11 +160,12 @@
             <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
         </div>
 
-        <div th:if="${mensagem}" class="message">
+        <div th:if="${mensagem}" style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 1rem;">
             <p th:text="${mensagem}"></p>
         </div>
 
         <form th:action="@{/auth/cadastro/voluntario}" th:object="${usuario}" method="post">
+
             <label>Nome:</label>
             <input type="text" th:field="*{nome}" required />
 
@@ -208,7 +188,7 @@
                 </div>
             </div>
 
-            <div class="terms">Ao se cadastrar, você está de acordo com os termos e condições da plataforma.</div>
+            <div class="terms">Ao se cadastrar, você precisa concordar com os termos e condições específicos da plataforma para voluntários.</div>
 
             <button type="submit">Criar Conta</button>
 
@@ -219,8 +199,50 @@
             <script th:if="${mensagem}">
                 alert([[${mensagem}]]);
             </script>
+
         </form>
     </div>
+    </div>
 </div>
+<!-- Modal de Termos -->
+<div id="modal-termos" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+background:rgba(0,0,0,0.6); z-index:999; justify-content:center; align-items:center;">
+    <div style="background:white; padding:20px; max-width:600px; border-radius:8px; color:#333;">
+        <h2>Termos e Condições</h2>
+        <div style="max-height:250px; overflow-y:auto; margin-bottom:20px; font-size:14px;">
+            <p>
+                Ao se cadastrar, você concorda com os seguintes termos:
+                <br><br>
+                • Você fornece informações verdadeiras.<br>
+                • A participação é voluntária.<br>
+                • Suas informações serão usadas somente para fins de pesquisa médica.<br>
+                • Você pode sair da plataforma a qualquer momento.<br>
+                • Esta plataforma é apenas um meio de conectar pesquisadores e voluntários.<br>
+            </p>
+        </div>
+        <button onclick="aceitarTermos()" style="margin-right:10px;">Aceitar</button>
+        <button onclick="recusarTermos()">Recusar</button>
+    </div>
+</div>
+
+<script>
+    const form = document.querySelector('form');
+    const modal = document.getElementById('modal-termos');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      modal.style.display = 'flex';
+    });
+
+    function aceitarTermos() {
+      modal.style.display = 'none';
+      form.submit();
+    }
+
+    function recusarTermos() {
+      modal.style.display = 'none';
+    }
+</script>
+
 </body>
 </html>

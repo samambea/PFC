@@ -24,7 +24,6 @@ public class AdminController {
         return "lista-usuarios";
     }
 
-
     @GetMapping("/editar-voluntario/{id}")
     public String editarVoluntario(@PathVariable String id, Model model) {
         Optional<Usuario> usuarioOptional = usuarioService.findById(id);
@@ -43,7 +42,6 @@ public class AdminController {
         return "redirect:/admin/usuarios?success=editado";
     }
 
-
     @GetMapping("/editar-pesquisador/{id}")
     public String editarPesquisador(@PathVariable String id, Model model) {
         Optional<Usuario> usuarioOptional = usuarioService.findById(id);
@@ -61,7 +59,6 @@ public class AdminController {
         usuarioService.save(pesquisador);
         return "redirect:/admin/usuarios?success=editado";
     }
-
 
     @GetMapping("/deletar/{id}")
     public String deletarUsuario(@PathVariable("id") String id) {

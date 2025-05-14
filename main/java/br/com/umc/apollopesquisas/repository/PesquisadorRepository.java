@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PesquisadorRepository extends MongoRepository<Pesquisador, String> {
+    Pesquisador findByEmail(String email);
+
 }

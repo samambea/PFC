@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Pesquisas</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+            padding: 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2e7d64;
+        }
+
+        .btn-voltar {
+            background-color: #f0fdfa;
+            color: #2e7d64;
+            border: 2px solid #2e7d64;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #eaeaea;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2e7d64;
+            color: white;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-edit {
+            background-color: #d0f0e8;
+            color: #2e7d64;
+        }
+
+        .btn-edit:hover {
+            background-color: #c2e6dc;
+        }
+
+        .btn-delete {
+            background-color: #fbd6d4;
+            color: #d64545;
+        }
+
+        .btn-delete:hover {
+            background-color: #f9c9c7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Pesquisas Cadastradas</h1>
+    <a href="/admin/usuarios" class="btn-voltar">Voltar</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Instituição</th>
+        <th>Área</th>
+        <th>Status</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pesquisa : ${pesquisas}">
+        <td th:text="${pesquisa.nomePesquisa}">Nome</td>
+        <td th:text="${pesquisa.instituicao}">Instituição</td>
+        <td th:text="${pesquisa.areaDaPesquisa}">Área</td>
+        <td th:text="${pesquisa.statusPesquisa}">Status</td>
+        <td>
+            <a th:href="@{'/admin/pesquisas/editar/' + ${pesquisa.pesquisaId}}" class="btn btn-edit">Editar</a>
+            <a th:href="@{'/admin/pesquisas/deletar/' + ${pesquisa.pesquisaId}}"
+               class="btn btn-delete"
+               onclick="return confirm('Tem certeza que deseja excluir esta pesquisa?')">Excluir</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

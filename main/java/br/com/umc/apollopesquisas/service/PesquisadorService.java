@@ -39,4 +39,9 @@ public class PesquisadorService {
         }
         return false;
     }
+
+    public Pesquisador buscarPorEmail(String email) {
+        return pesquisadorRepository.findByEmail(email);
+    }
+
 }

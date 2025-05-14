@@ -1,16 +1,26 @@
 package br.com.umc.apollopesquisas.controller;
 
+import br.com.umc.apollopesquisas.model.Pesquisa;
 import br.com.umc.apollopesquisas.model.Pesquisador;
 import br.com.umc.apollopesquisas.model.Usuario;
 import br.com.umc.apollopesquisas.model.Voluntario;
 import br.com.umc.apollopesquisas.repository.PesquisadorRepository;
+import br.com.umc.apollopesquisas.repository.UsuarioRepository;
 import br.com.umc.apollopesquisas.repository.VoluntarioRepository;
+import br.com.umc.apollopesquisas.service.PesquisaService;
+import br.com.umc.apollopesquisas.service.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/auth")
@@ -25,15 +35,27 @@ public class UsuarioController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private PesquisaService pesquisaService;
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
 
     @GetMapping("/usuarios/cadastro")
     public String cadastroForm(Model model, @RequestParam(name = "tipo", required = false, defaultValue = "voluntario") String tipo) {
         Usuario usuario;
         if ("pesquisador".equals(tipo)) {
             usuario = new Pesquisador();
+            usuario.setRole("PESQUISADOR");
         } else {
             usuario = new Voluntario();
+            usuario.setRole("VOLUNTARIO");
         }
+
 
         model.addAttribute("usuario", usuario);
         return "cadastro";
@@ -70,4 +92,45 @@ public class UsuarioController {
         redirectAttributes.addFlashAttribute("successMessage", "Cadastro de voluntário realizado com sucesso!");
         return "redirect:/auth/login";
     }
+
+    @GetMapping("/participacoes")
+    public String minhasParticipacoes(Model model, Principal principal) {
+        String email = principal.getName();
+        Usuario usuario = usuarioService.findByEmail(email).orElse(null);
+
+        if (usuario != null) {
+            List<Pesquisa> pesquisas = pesquisaService.listarParticipacoes(usuario.getUsuarioId());
+            model.addAttribute("pesquisas", pesquisas);
+        }
+
+        return "usuario/participacoes";
+    }
+
+    @PostMapping("/upload-foto")
+    public String uploadFoto(@RequestParam("fotoPerfil") MultipartFile fotoPerfil,
+                             HttpSession session,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+            // Salva imagem no disco
+            String nomeImagem = usuarioService.salvarImagem(fotoPerfil);
+
+            // Atualiza o usuário com o novo nome de imagem
+            usuario.setImagemPerfil(nomeImagem);
+            usuarioRepository.save(usuario);
+
+            // Atualiza sessão
+            session.setAttribute("usuario", usuario);
+
+            redirectAttributes.addFlashAttribute("mensagem", "Foto atualizada com sucesso!");
+        } catch (IOException e) {
+            redirectAttributes.addFlashAttribute("erro", "Erro ao fazer upload: " + e.getMessage());
+        }
+
+        return "redirect:/perfil";
+    }
+
+
+
 }

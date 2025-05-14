@@ -42,9 +42,10 @@ public class AgendamentoController {
         }
     }
 
+
     @DeleteMapping("/{agendamentoId}")
     public ResponseEntity<String> deletar(@PathVariable String agendamentoId) {
-        if (agendamentoService.deletar(agendamentoId)) {
+        if (agendamentoService.deletarPorId(agendamentoId)) {
             return ResponseEntity.ok("Agendamento excluído com sucesso");
         }
         return ResponseEntity.status(404).body("Agendamento não encontrado");

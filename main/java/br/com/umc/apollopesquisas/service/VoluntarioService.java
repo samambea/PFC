@@ -1,5 +1,6 @@
 package br.com.umc.apollopesquisas.service;
 
+import br.com.umc.apollopesquisas.model.Usuario;
 import br.com.umc.apollopesquisas.model.Voluntario;
 import br.com.umc.apollopesquisas.repository.VoluntarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,4 +34,19 @@ public class VoluntarioService {
         }
         return false;
     }
+
+    public Voluntario buscarPorEmail(String email) {
+        return voluntarioRepository.findByEmail(email);
+    }
+
+    public Optional<Voluntario> buscarPorId(String id) {
+        return findById(id);
+    }
+
+    public Optional<Voluntario> encontrarPorUsuario(Usuario usuario) {
+        return voluntarioRepository.findById(usuario.getUsuarioId());
+    }
+
+
+
 }

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Voluntários Inscritos - Apollo Pesquisas</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f2f4f3;
+        }
+
+        .navbar {
+            background-color: #2AA184;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .navbar .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            padding-left: 10px;
+        }
+
+        .navbar .profile-button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .main {
+            display: flex;
+        }
+
+        .sidebar {
+            background-color: #2AA184;
+            width: 220px;
+            min-height: calc(100vh - 60px);
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar a {
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sidebar a.active, .sidebar a:hover {
+            background-color: #d6e9e7;
+            color: #000;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        h1.title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2AA184;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        tr:hover {
+            background-color: #e6f4f1;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .main {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .content table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="logo">Apollo Pesquisas</div>
+    <a href="/home" class="profile-button">Tela Inicial</a>
+</div>
+
+<div class="main">
+    <div class="sidebar">
+        <a href="/perfil">Meu Perfil</a>
+        <a href="/pesquisas/minhas">Minhas Pesquisas</a>
+        <a href="#" class="active">Voluntários Inscritos</a>
+        <a href="/pesquisador/agenda">Minha Agenda</a>
+    </div>
+
+    <div class="content">
+        <h1 class="title">Voluntários Inscritos nas Suas Pesquisas</h1>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Nome do Voluntário</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Pesquisa</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="inscricao : ${inscricoes}">
+                <td th:text="${inscricao.nomeVoluntario}">Nome</td>
+                <td th:text="${inscricao.email}">email@teste.com</td>
+                <td th:text="${inscricao.telefone}">(00) 0000-0000</td>
+                <td th:text="${inscricao.tituloPesquisa}">Título da Pesquisa</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

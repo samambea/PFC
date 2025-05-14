@@ -40,4 +40,10 @@ public class FeedbackService {
         }
         return false;
     }
+
+
+    public Feedback getFeedbackByParticipacaoId(String participacaoId) {
+        return feedbackRepository.findByParticipacaoParticipacaoId(participacaoId)
+                .orElse(null);
+    }
 }

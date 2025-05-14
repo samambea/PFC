@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VoluntarioRepository extends MongoRepository<Voluntario, String> {
+    Voluntario findByEmail(String email);
 }

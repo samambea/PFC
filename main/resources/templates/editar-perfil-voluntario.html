@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Perfil - Voluntário</title>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f7f7f7; }
+        .container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        .card { background-color: #2AA184; color: white; padding: 2rem; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); width: 100%; max-width: 400px; }
+        label, input { display: block; width: 100%; margin-bottom: 1rem; }
+        input { padding: 0.5rem; border-radius: 6px; border: none; }
+        button { background: white; color: #2AA184; border: none; padding: 0.7rem; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h2>Editar Perfil - Voluntário</h2>
+        <form th:action="@{/perfil/editar-voluntario}" th:object="${voluntario}" method="post">
+
+        <label>Nome</label>
+            <input type="text" th:field="*{nome}" required/>
+
+            <label>Email</label>
+            <input type="email" th:field="*{email}" readonly/>
+
+            <label>Telefone</label>
+            <input type="text" th:field="*{telefone}" />
+
+            <label>Endereço</label>
+            <input type="text" th:field="*{endereco}" />
+
+            <label>Senha (deixe em branco para não alterar)</label>
+            <input type="password" th:field="*{senha}" />
+
+            <button type="submit">Salvar Alterações</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

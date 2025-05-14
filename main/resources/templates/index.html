@@ -1,221 +1,281 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br">
 <head>
-    <title>Home - Apollo Pesquisas</title>
     <meta charset="UTF-8">
+    <title>Início - Apollo Pesquisas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Estilos padrão */
+
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f1f3f6;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .header {
+            background-color: #247b63;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #7fffd4;
+        }
+
+        .header-buttons a {
+            margin-left: 10px;
+            padding: 10px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #247b63;
+            border: 2px solid #247b63;
+        }
+
+        .btn-filled {
+            background-color: #111;
+            color: white;
+        }
+
+        .hero {
+            background: #fff;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .evento-destaque {
             display: flex;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            color: #333;
-            padding: 0 20px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .container {
-            background-color: white;
-            padding: 3rem 2rem;
-            border-radius: 16px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 450px;
+            gap: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
             width: 100%;
-            transition: transform 0.3s ease;
-            overflow: hidden;
+            flex-wrap: nowrap;
         }
 
-        .container:hover {
-            transform: translateY(-10px);
+        .evento-imagem-container {
+            flex: 1;
+            max-width: 400px;
         }
 
-        h1 {
-            color: #2AA184;
-            margin-bottom: 2rem;
-            font-size: 2.5rem;
-            font-weight: 700;
+        .evento-imagem-container img {
+            width: 100%;
+            border-radius: 12px;
+            object-fit: cover;
         }
 
-        .title-divider {
-            width: 50px;
-            height: 3px;
-            background-color: #2AA184;
-            margin: 1rem auto;
+        .evento-info {
+            flex: 1;
+            min-width: 280px;
         }
 
-        .button-container {
+        .listings {
             display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 40px;
         }
 
-        a.button {
-            display: block;
-            text-decoration: none;
-            background-color: #2AA184;
-            color: white;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            min-width: 220px;
         }
 
-        a.button:hover {
-            background-color: #249073;
-            transform: scale(1.05);
+        .card small {
+            color: gray;
         }
 
-        a.logout {
-            font-size: 14px;
-            margin-top: 1.5rem;
-            display: inline-block;
-            color: #888;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        a.logout:hover {
-            text-decoration: underline;
-        }
-
-        .footer {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
+        .cta {
+            background-color: #ddeee8;
             text-align: center;
-            font-size: 12px;
-            color: #888;
+            padding: 30px 20px;
         }
 
-        .footer a {
-            color: #2AA184;
+        .cta h2 {
+            margin-top: 0;
+        }
+
+        .btn-cta {
+            margin-top: 15px;
+            padding: 12px 24px;
+            background-color: #247b63;
+            color: white;
+            font-weight: bold;
+            border-radius: 6px;
             text-decoration: none;
-            font-weight: 500;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
+        footer {
+            background-color: #f1f1f1;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
-        .background-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('/images/scientist.jpg'); /* Imagem de fundo */
-            background-size: cover;
-            background-position: center;
-            opacity: 0.1;
-            z-index: -1;
+        .footer-links a {
+            margin-right: 15px;
+            color: #333;
+            text-decoration: none;
         }
 
-        /* Estilos para dark mode */
-        body.dark-mode {
-            background-color: #333;
-            color: #f1f3f6;
+        .footer-social i {
+            margin-left: 15px;
+            color: #333;
         }
 
-        .container.dark-mode {
-            background-color: #444;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-        }
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-        h1.dark-mode {
-            color: #2AA184;
-        }
+            .header-buttons {
+                margin-top: 10px;
+            }
 
-        a.button.dark-mode {
-            background-color: #2AA184;
-        }
+            .evento-destaque {
+                flex-direction: column;
+                text-align: center;
+            }
 
-        a.logout.dark-mode {
-            color: #bbb;
-        }
+            .evento-imagem-container {
+                max-width: 100%;
+            }
 
-        .dark-mode-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: transparent;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 50%;
-        }
+            .evento-info {
+                width: 100%;
+            }
 
-        .dark-mode-toggle img {
-            width: 30px;
-            height: 30px;
-            transition: transform 0.3s ease;
-        }
-
-        .dark-mode-toggle:hover img {
-            transform: scale(1.1);
+            .listings {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="background-image"></div>
-
-<button class="dark-mode-toggle" id="darkModeToggle">
-    <!-- Ícone do sol (light mode) -->
-    <img id="modeIcon" src="images/sun.png" alt="Modo Claro">
-</button>
-
-<div class="container">
-    <h1>Bem-vindo à Apollo Pesquisas!</h1>
-    <div class="title-divider"></div>
-
-    <div class="button-container">
-        <a href="/auth/cadastro/voluntario" class="button">Cadastrar Voluntário</a>
-        <a href="/auth/cadastro/pesquisador" class="button">Cadastrar Pesquisador</a>
-        <a href="/auth/login" class="button">Login</a>
+<header class="header">
+    <div class="logo">Apollo <span>Pesquisas</span></div>
+    <div class="header-buttons">
+        <a href="/login" class="btn-outline">Acesse Sua Conta</a>
+        <a href="/auth/cadastro/voluntario" class="btn-filled">Se Cadastre!</a>
     </div>
+</header>
 
-    <a href="/logout" class="logout">Sair</a>
-</div>
+<section class="hero">
+    <div class="evento-destaque">
+        <div class="evento-imagem-container">
+            <img src="/images/evento.png" alt="Evento">
+        </div>
+        <div class="evento-info">
+            <h2>II Congresso Brasileiro de Medicina e Inovação em Saúde - II MEDCON</h2>
+            <p><i class="fa-regular fa-calendar"></i> 09/06/25 à 12/06/2025 &nbsp;
+                <i class="fa-solid fa-location-dot"></i> Online</p>
+            <p>O objetivo central do nosso evento é promover o avanço e a integração do conhecimento nas áreas da medicina e inovação em saúde, abordando as mais recentes pesquisas e tecnologias que estão transformando o cenário da saúde. </p>
+            <a href="https://ime.events/ii-medcon/sobre#:~:text=%C3%89%20com%20grande%20entusiasmo%20que,Brasileira%20de%20Eventos%20Cient%C3%ADficos%20%2D%20SOBREC"
+               target="_blank"
+               style="display: inline-block; margin-top: 10px; color: #247b63; font-weight: bold; text-decoration: none;">
+                Saiba mais &rarr;
+            </a>
+        </div>
+    </div>
+</section>
 
-<div class="footer">
-    <p>&copy; 2025 Apollo Pesquisas | <a href="/privacy-policy">Política de Privacidade</a></p>
-</div>
+<section class="listings" id="pesquisas-container">
 
+</section>
+
+<section class="cta">
+    <h2>Está promovendo uma pesquisa?</h2>
+    <p>Cadastre-se como pesquisador Apollo e faça a sua listagem!</p>
+    <a class="btn-cta" href="/auth/cadastro/pesquisador">Sou Pesquisador</a>
+</section>
+
+<footer>
+    <div class="footer-links">
+        <a href="#">Quem Somos</a>
+        <a href="#">LGPD</a>
+    </div>
+    <div class="footer-social">
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-whatsapp"></i>
+    </div>
+    <div style="width: 100%; text-align: center; margin-top: 10px; font-size: 0.85em;">
+        Copyright © 2025 Apollo Pesquisas - PFC SISTEMAS DE INFORMAÇÃO
+    </div>
+</footer>
+
+<!-- Script para carregar pesquisas dinamicamente -->
 <script>
-    const toggleButton = document.getElementById('darkModeToggle');
-    const body = document.body;
-    const container = document.querySelector('.container');
-    const h1 = document.querySelector('h1');
-    const logoutLink = document.querySelector('.logout');
-    const buttons = document.querySelectorAll('.button');
-    const modeIcon = document.getElementById('modeIcon');
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch('/pesquisas/api/abertas')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erro ao buscar pesquisas.");
+                }
+                return response.json();
+            })
+            .then(pesquisas => {
+                const container = document.getElementById("pesquisas-container");
+                container.innerHTML = "";
 
-    toggleButton.addEventListener('click', () => {
-        // darkmode e lightmode
-        body.classList.toggle('dark-mode');
-        container.classList.toggle('dark-mode');
-        h1.classList.toggle('dark-mode');
-        logoutLink.classList.toggle('dark-mode');
-        buttons.forEach(button => button.classList.toggle('dark-mode'));
+                if (!pesquisas.length) {
+                    container.innerHTML = "<p>Nenhuma pesquisa aberta no momento.</p>";
+                    return;
+                }
 
-        // trocar ícone de modo claro (sol) e escuro (lua)
-        if (body.classList.contains('dark-mode')) {
-            modeIcon.src = "images/moon.png";  // Lua no dark mode
-            modeIcon.alt = "Modo Escuro";
-        } else {
-            modeIcon.src = "images/sun.png";   // Sol no light mode
-            modeIcon.alt = "Modo Claro";
-        }
+                pesquisas.forEach(p => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <p style="color: #247b63;"><i class="fa-solid fa-flask"></i> ${p.nomePesquisa}</p>
+                        <strong>${p.titulo}</strong>
+                        <small>${p.descricao || "Sem descrição."}</small><br><br>
+                        <button onclick="alertarParticipacao()"
+                                style="background-color: #247b63; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">
+                            Participar
+                        </button>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error("Erro:", error.message);
+                document.getElementById("pesquisas-container").innerHTML = `<p>Erro ao carregar: ${error.message}</p>`;
+            });
     });
+
+    function alertarParticipacao() {
+        alert("Para participar, você precisa fazer login ou se cadastrar.");
+        window.location.href = "/login";
+    }
 </script>
+
 
 </body>
 </html>

@@ -8,11 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "usuarios")
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipo")
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = Pesquisador.class, name = "pesquisador"),
-        @JsonSubTypes.Type(value = Voluntario.class, name = "voluntario")
-})
+
 public abstract class Usuario {
 
     @Id
@@ -21,8 +17,8 @@ public abstract class Usuario {
     private String email;
     private String senha;
     private String role;
-    private String tipo;
-    private int contato;
+    private String telefone;
+    private String imagemPerfil;
 
 
 
@@ -70,22 +66,28 @@ public abstract class Usuario {
     public void setRole(String role) {
         this.role = role;
     }
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
 
 
-    public int getContato() {
-        return contato;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setContato(int contato) {
-        this.contato = contato;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
+
+    public String getImagemPerfil() {
+        return imagemPerfil;
+    }
+
+    public void setImagemPerfil(String imagemPerfil) {
+        this.imagemPerfil = imagemPerfil;
+    }
+
+    public String getId() {
+        return this.usuarioId;
+    }
+
 
     public boolean login(String email, String senha) {
         return this.email.equals(email) && this.senha.equals(senha);

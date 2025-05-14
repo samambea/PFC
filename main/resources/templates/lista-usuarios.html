@@ -4,12 +4,11 @@
     <title>Lista de Usuários</title>
     <meta charset="UTF-8">
     <style>
-        /* Estilo geral */
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: #f7f7f7;
             margin: 0;
-            padding: 20px;
+            padding: 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -22,10 +21,6 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
-            padding: 10px 20px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
         }
 
         .header h1 {
@@ -55,10 +50,8 @@
             margin-top: 0;
             margin-bottom: 30px;
             font-weight: normal;
-            font-size: 1.6em;
         }
 
-        /* Estilos da Tabela */
         table {
             width: 100%;
             max-width: 900px;
@@ -67,7 +60,6 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
             border-radius: 12px;
             overflow: hidden;
-            margin-bottom: 30px;
         }
 
         th, td {
@@ -117,83 +109,20 @@
 
         .action-buttons {
             display: flex;
-            justify-content: flex-start;
         }
-
-        /* Melhorias para responsividade */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            h1 {
-                font-size: 1.6em;
-                margin-bottom: 10px;
-            }
-
-            table {
-                width: 100%;
-                font-size: 0.9em;
-            }
-
-            .btn-logout {
-                width: 100%;
-                margin-top: 10px;
-            }
-
-            .btn {
-                font-size: 13px;
-            }
-
-            th, td {
-                padding: 10px;
-            }
-
-            .btn-edit, .btn-delete {
-                font-size: 13px;
-                padding: 7px 12px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h2 {
-                font-size: 1.4em;
-                text-align: center;
-            }
-
-            .header h1 {
-                font-size: 1.4em;
-            }
-
-            .btn-logout {
-                width: 100%;
-                padding: 12px 0;
-            }
-
-            .action-buttons a {
-                font-size: 12px;
-                padding: 6px 10px;
-            }
-        }
-
     </style>
 </head>
 <body>
 
+
 <div class="header">
     <h1>Bem-vindo, Admin!</h1>
-    <a href="/index.html" class="btn-logout">Sair</a>
+    <div>
+        <a href="/admin/pesquisas" class="btn-logout" style="margin-right: 12px;">Listar Pesquisas</a>
+        <a href="/index.html" class="btn-logout">Sair</a>
+    </div>
 </div>
+
 
 <h2>Usuários cadastrados na Apollo Pesquisas</h2>
 
@@ -210,9 +139,11 @@
     <tr th:each="usuario : ${usuarios}">
         <td th:text="${usuario.nome}">Nome</td>
         <td th:text="${usuario.email}">Email</td>
-        <td th:text="${usuario.tipo}">Tipo</td>
+        <td th:text="${usuario.role}">Tipo</td>
         <td class="action-buttons">
-            <a th:href="@{${usuario.tipo == 'voluntario'} ? '/admin/usuarios/editar-voluntario/' + ${usuario.usuarioId} : '/admin/usuarios/editar-pesquisador/' + ${usuario.usuarioId}}"
+            <a th:href="@{${usuario.role == 'voluntario'} ?
+                '/admin/usuarios/editar-voluntario/' + ${usuario.usuarioId} :
+                '/admin/usuarios/editar-pesquisador/' + ${usuario.usuarioId}}"
                class="btn btn-edit">Editar</a>
 
             <a th:href="@{'/admin/usuarios/deletar/' + ${usuario.usuarioId}}"

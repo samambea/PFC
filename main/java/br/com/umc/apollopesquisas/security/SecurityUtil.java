@@ -9,7 +9,7 @@ public class SecurityUtil {
     public static String getSessionUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
-            return authentication.getName(); // geralmente o username é o email
+            return authentication.getName();
         }
         return null;
     }

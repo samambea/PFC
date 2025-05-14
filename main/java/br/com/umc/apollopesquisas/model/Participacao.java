@@ -2,9 +2,11 @@ package br.com.umc.apollopesquisas.model;
 
 import br.com.umc.apollopesquisas.enums.StatusParticipacao;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Document(collection = "participacoes")
 public class Participacao {
@@ -13,7 +15,13 @@ public class Participacao {
     private String participacaoId;
     private String usuarioId;
     private StatusParticipacao statusParticipacao;
-    private LocalDate dataInscricao;
+    private LocalDateTime dataInscricao;
+    private String pesquisaId;
+    private Feedback feedback;
+    @Transient
+    private Pesquisa pesquisa;
+
+
 
     public String getParticipacaoId() {
         return participacaoId;
@@ -39,11 +47,46 @@ public class Participacao {
         this.statusParticipacao = statusParticipacao;
     }
 
-    public LocalDate getDataInscricao() {
+    public LocalDateTime getDataInscricao() {
         return dataInscricao;
     }
 
-    public void setDataInscricao(LocalDate dataInscricao) {
+    public void setDataInscricao(LocalDateTime dataInscricao) {
         this.dataInscricao = dataInscricao;
+    }
+
+    public String getPesquisaId() {
+        return pesquisaId;
+    }
+
+    public void setPesquisaId(String pesquisaId) {
+        this.pesquisaId = pesquisaId;
+    }
+
+    public Feedback getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
+    }
+
+    public Participacao() {
+
+    }
+
+    public Participacao(Usuario usuario, Pesquisa pesquisa, LocalDateTime dataHora) {
+        this.usuarioId = usuario.getUsuarioId();
+        this.pesquisaId = pesquisa.getPesquisaId();
+        this.dataInscricao = dataHora;
+        this.statusParticipacao = StatusParticipacao.INSCRITO;
+    }
+
+    public Pesquisa getPesquisa() {
+        return pesquisa;
+    }
+
+    public void setPesquisa(Pesquisa pesquisa) {
+        this.pesquisa = pesquisa;
     }
 }
