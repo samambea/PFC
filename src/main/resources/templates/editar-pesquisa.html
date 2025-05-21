@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Pesquisa</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #2e7d64;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .btn-salvar {
+            background-color: #2e7d64;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-salvar:hover {
+            background-color: #256d56;
+        }
+
+        .btn-voltar {
+            display: block;
+            margin-top: 16px;
+            text-align: center;
+            text-decoration: none;
+            color: #2e7d64;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<form th:action="@{'/admin/pesquisas/atualizar/' + ${pesquisa.pesquisaId}}" method="post" th:object="${pesquisa}">
+    <h2>Editar Pesquisa</h2>
+
+    <label for="nomePesquisa">Nome</label>
+    <input type="text" id="nomePesquisa" name="nomePesquisa" th:value="*{nomePesquisa}" required />
+
+    <label for="descricao">Descrição</label>
+    <textarea id="descricao" name="descricao" rows="3" th:text="*{descricao}"></textarea>
+
+    <label for="objetivo">Objetivo</label>
+    <textarea id="objetivo" name="objetivo" rows="2" th:text="*{objetivo}"></textarea>
+
+    <label for="instituicao">Instituição</label>
+    <input type="text" id="instituicao" name="instituicao" th:value="*{instituicao}" required />
+
+    <label for="areaDaPesquisa">Área da Pesquisa</label>
+    <input type="text" id="areaDaPesquisa" name="areaDaPesquisa" th:value="*{areaDaPesquisa}" required />
+
+    <label for="pesquisadorResponsavel">Pesquisador Responsável</label>
+    <input type="text" id="pesquisadorResponsavel" name="pesquisadorResponsavel" th:value="*{pesquisadorResponsavel}" />
+
+    <label for="criteriosInclusaoExclusao">Critérios de Inclusão/Exclusão</label>
+    <textarea id="criteriosInclusaoExclusao" name="criteriosInclusaoExclusao" rows="3" th:text="*{criteriosInclusaoExclusao}"></textarea>
+
+    <label for="statusPesquisa">Status</label>
+    <select id="statusPesquisa" name="statusPesquisa">
+        <option th:each="status : ${T(br.com.umc.apollopesquisas.enums.StatusPesquisa).values()}"
+                th:value="${status}" th:text="${status}"
+                th:selected="${status} == ${pesquisa.statusPesquisa}">ABERTA</option>
+    </select>
+
+    <button type="submit" class="btn-salvar">Salvar Alterações</button>
+    <a href="/admin/pesquisas" class="btn-voltar">Voltar</a>
+</form>
+
+</body>
+</html>

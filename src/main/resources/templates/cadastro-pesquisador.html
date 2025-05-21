@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro Pesquisador - Apollo Pesquisas</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .left {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .ellipse {
+            width: 280px;
+            height: 200px;
+            background: repeating-linear-gradient(45deg, #cceeee, #cceeee 10px, #b8dada 10px, #b8dada 20px);
+            border-radius: 50% / 40%;
+            margin: 0 auto 1rem;
+        }
+
+        .left p {
+            max-width: 400px;
+            margin: 0 auto;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .right {
+            width: 100%;
+            max-width: 420px;
+            background-color: #2AA184;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        label {
+            font-size: 14px;
+            text-align: left;
+        }
+
+        input {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: white;
+            color: #2AA184;
+            padding: 0.7rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e6f3f1;
+        }
+
+        .terms {
+            font-size: 11px;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .login-link {
+            margin-top: 1rem;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .login-link a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .home-icon {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+        }
+
+        .home-icon img {
+            width: 28px;
+        }
+
+        #modal-termos {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            color: black;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .modal-buttons button {
+            background-color: #2AA184;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-buttons button:hover {
+            background-color: #238a70;
+        }
+    </style>
+</head>
+<body>
+<div class="home-icon">
+    <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home"></a>
+</div>
+
+<div class="container">
+    <div class="left">
+        <div class="ellipse"></div>
+        <p>
+            Participe da ciência! Registre-se como pesquisador e contribua com seus estudos.
+        </p>
+    </div>
+    <div class="right">
+        <div class="logo">
+            <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
+        </div>
+
+        <form id="formCadastroPesquisador" th:action="@{/auth/cadastro/pesquisador}" th:object="${usuario}" method="post">
+            <label>Nome:</label>
+            <input type="text" th:field="*{nome}" required />
+
+            <label>E-mail:</label>
+            <input type="email" th:field="*{email}" required />
+
+            <label>Senha:</label>
+            <input type="password" th:field="*{senha}" required />
+
+            <label>CRM:</label>
+            <input type="text" th:field="*{crm}" required />
+
+            <label>Especialidade:</label>
+            <input type="text" th:field="*{especialidade}" required />
+
+            <label>Área de Pesquisa:</label>
+            <input type="text" th:field="*{areaDePesquisa}" required />
+
+                <label>Telefone:</label>
+                <input type="text" th:field="*{telefone}" required />
+
+
+            <div class="terms">Ao se cadastrar, você precisa concordar com os termos e condições específicos da plataforma para pesquisadores.</div>
+
+            <button type="button" onclick="mostrarTermos()">Criar Conta</button>
+
+            <div class="login-link">
+                Já tem uma conta? <a href="/auth/login">Faça seu login!</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Termos -->
+<div id="modal-termos">
+    <div class="modal-content">
+        <h3>Termos e Condições de Cadastro — Pesquisador</h3>
+        <div style="max-height: 300px; overflow-y: auto; margin-top: 1rem;">
+            <p>
+                Ao se cadastrar como pesquisador na plataforma Apollo Pesquisas, você declara e concorda que:
+                <br><br>
+                • É um profissional médico devidamente habilitado e com CRM válido.<br>
+                • As pesquisas cadastradas seguem os princípios éticos da pesquisa com seres humanos, conforme Resolução CNS 466/12.<br>
+                • Você é responsável por garantir o sigilo e a proteção dos dados dos voluntários.<br>
+                • Nenhuma pesquisa envolvendo seres humanos poderá ser conduzida sem a devida aprovação por um Comitê de Ética em Pesquisa (CEP).<br>
+                • A plataforma atua apenas como meio de divulgação e recrutamento, não sendo responsável pela execução dos estudos.<br>
+                • Você pode solicitar a exclusão de sua conta a qualquer momento, mediante solicitação por e-mail.
+            </p>
+        </div>
+        <div class="modal-buttons">
+            <button onclick="aceitarTermos()">Aceitar</button>
+            <button onclick="recusarTermos()">Recusar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function mostrarTermos() {
+        document.getElementById("modal-termos").style.display = "flex";
+    }
+
+    function aceitarTermos() {
+        document.getElementById("modal-termos").style.display = "none";
+        document.getElementById("formCadastroPesquisador").submit();
+    }
+
+    function recusarTermos() {
+        document.getElementById("modal-termos").style.display = "none";
+        alert("Você precisa aceitar os termos para continuar.");
+    }
+</script>
+</body>
+</html>

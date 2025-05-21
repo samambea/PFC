@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Sugestões</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2e7d64;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #1e5f4c;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .button:hover {
+            background-color: #144a3a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #2e7d64;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        td a {
+            color: #1e5f4c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        .link-button {
+            display: inline-block;
+            margin-top: 30px;
+            background-color: #2e7d64;
+            color: #fff;
+            padding: 10px 18px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .link-button:hover {
+            background-color: #1e5f4c;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Sugestões de Pesquisas Médicas</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Categoria</th>
+            <th>Data</th>
+            <th>Email</th>
+            <th>Ações</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sugestao : ${sugestoes}">
+            <td th:text="${sugestao.titulo}"></td>
+            <td th:text="${sugestao.categoria}"></td>
+            <td th:text="${#temporals.format(sugestao.dataCriacao, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${sugestao.email}"></td>
+            <td>
+                <a th:href="@{'/sugestoes/editar/' + ${sugestao.sugestaoId}}">Editar</a> |
+                <a th:href="@{'/sugestoes/excluir/' + ${sugestao.sugestaoId}}" onclick="return confirm('Confirmar exclusão?')">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+           th:href="@{/admin/usuarios/lista-usuarios}"
+           class="link-button">🏠 Voltar para Home</a>
+
+        <a th:if="${#authorization.expression('hasRole(''PESQUISADOR'')')}"
+           th:href="@{/home-pesquisador}"
+           class="link-button">🏠 Voltar para Home</a>
+    </div>
+
+
+</div>
+</body>
+</html>

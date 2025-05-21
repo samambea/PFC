@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2e7d64;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-top: 5px;
+            font-size: 1em;
+        }
+
+        button {
+            background-color: #1e5f4c;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #144a3a;
+        }
+
+        .link-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #2e7d64;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .link-button:hover {
+            background-color: #1e5f4c;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Deixe seu Feedback</h2>
+    <p th:text="${mensagemTeste}">Mensagem padrão</p>
+
+    <form th:action="@{/feedbacks}" method="post" th:object="${feedback}">
+        <label for="nota">Nota (1 a 5):</label>
+        <input type="number" id="nota" name="nota" th:field="*{nota}" min="1" max="5" required>
+
+        <label for="comentario">Comentário:</label>
+        <textarea id="comentario" name="comentario" th:field="*{comentario}" rows="4" required></textarea>
+
+        <label for="nomePesquisa">Nome da Pesquisa:</label>
+        <textarea id="nomePesquisa" name="nomePesquisa" th:field="*{nomePesquisa}" rows="4" required></textarea>
+        <input type="hidden" name="participacaoId" th:value="${participacaoId}" />
+
+
+        <button type="submit">Enviar Feedback</button>
+    </form>
+
+    <a href="/home" class="link-button">🏠 Voltar para Home</a>
+</div>
+
+<script th:if="${success}" th:inline="javascript">
+    alert("Feedback enviado com sucesso!");
+    window.location.href = /*[[@{/home-voluntario}]]*/ "/home-voluntario";
+</script>
+
+</body>
+</html>

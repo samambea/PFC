@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Início - Apollo Pesquisas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #2e7d64;
+            color: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu a {
+            color: #fff;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .menu a:hover {
+            text-decoration: underline;
+        }
+
+        .profile-button {
+            border: 1px solid #fff;
+            border-radius: 6px;
+            padding: 6px 12px;
+        }
+
+        .create-button {
+            background-color: #1e5f4c;
+            padding: 10px 20px;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-left: 20px;
+        }
+
+        .create-button:hover {
+            background-color: #144a3a;
+        }
+
+        .container {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: auto;
+            background-color: #fff;
+            margin-top: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2e7d64;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">Apollo Pesquisas</div>
+    <div class="menu">
+        <a class="profile-button" href="/perfil">Meu Perfil</a>
+        <a class="profile-button" href="/perfil/editar">Editar Perfil</a>
+        <a class="create-button" href="/sugestoes/nova">
+            <i class="fas fa-lightbulb"></i> Enviar Sugestão
+        </a>
+        <a href="/logout">Sair</a>
+    </div>
+</div>
+
+<!-- PARTICIPAÇÕES -->
+<div class="container">
+    <h1>Minhas Participações</h1>
+
+    <th:block th:if="${participacoes != null and participacoes.isEmpty()}">
+        <p>Você ainda não participou de nenhuma pesquisa.</p>
+    </th:block>
+
+    <div th:each="participacao : ${participacoes}" style="margin-bottom: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
+        <div th:if="${participacao.pesquisa != null}">
+            <h3 th:text="${participacao.pesquisa.nomePesquisa}">Título da Pesquisa</h3>
+            <p><strong>Data de Inscrição:</strong>
+                <span th:text="${#temporals.format(participacao.dataInscricao, 'dd/MM/yyyy HH:mm')}">Data</span>
+            </p>
+            <p><strong>Status Participação:</strong>
+                <span th:text="${participacao.statusParticipacao}">Status</span>
+            </p>
+            <p><strong>Status Pesquisa:</strong>
+                <span th:text="${participacao.pesquisa.statusPesquisa}">Status</span>
+                <a th:if="${#strings.toUpperCase(participacao.pesquisa.statusPesquisa) == 'CONCLUIDA' and (participacao.feedback == null or #strings.isEmpty(participacao.feedback))}"
+                   th:href="@{'/feedbacks/form/' + ${participacao.participacaoId}}"
+                   class="create-button"
+                   style="margin-left: 15px; font-size: 0.9em; padding: 5px 10px;">
+                    Dar Feedback
+                </a>
+
+
+            </p>
+
+            <p th:if="${participacao.feedback != null && !#strings.isEmpty(participacao.feedback)}">
+                <strong>Feedback:</strong>
+                <span th:text="${participacao.feedback}">Feedback</span>
+            </p>
+        </div>
+
+        <div th:unless="${participacao.pesquisa != null}">
+            <p><strong>Pesquisa removida ou não disponível.</strong></p>
+        </div>
+    </div>
+</div>
+
+<!-- PESQUISAS DISPONÍVEIS -->
+<div class="container">
+    <h1>Pesquisas Disponíveis</h1>
+
+    <th:block th:if="${pesquisas != null and pesquisas.isEmpty()}">
+        <p>Não há pesquisas disponíveis no momento.</p>
+    </th:block>
+
+    <div th:each="pesquisa : ${pesquisas}"
+         th:if="${pesquisa.statusPesquisa.name() == 'ABERTA'}"
+         style="margin-bottom: 20px; padding: 20px; border: 1px solid #bbb; border-radius: 10px;">
+        <h3 th:text="${pesquisa.nomePesquisa}">Título da Pesquisa</h3>
+        <p th:text="${pesquisa.descricao}">Descrição da pesquisa</p>
+        <p><strong>Objetivo:</strong> <span th:text="${pesquisa.objetivo}">Objetivo</span></p>
+        <p><strong>Instituição:</strong> <span th:text="${pesquisa.instituicao}">Instituição</span></p>
+        <p><strong>Status:</strong> <span th:text="${pesquisa.statusPesquisa}">Status</span></p>
+
+        <form th:action="@{/participar}" method="post">
+            <input type="hidden" name="pesquisaId" th:value="${pesquisa.pesquisaId}" />
+            <button type="submit" class="create-button">Participar</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- Mensagens de alerta -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let msg = /*[[${alertMessage}]]*/ null;
+    if (msg) {
+        alert(msg);
+    }
+    /*]]>*/
+</script>
+
+<script th:if="${success}" th:inline="javascript">
+    alert("Sugestão enviada com sucesso!");
+</script>
+
+</body>
+</html>
