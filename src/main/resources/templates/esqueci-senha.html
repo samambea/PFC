@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Esqueci Minha Senha</title>
     <style>
+        /* Estilização global da página */
         body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Fonte moderna e legível */
+            background-color: #f4f4f4; /* Cor de fundo suave */
             margin: 0;
             padding: 0;
         }
+        /* Container centralizado para o formulário */
         .container {
             max-width: 600px;
             margin: 40px auto;
@@ -18,17 +20,20 @@
             border-radius: 12px;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
         }
+        /* Título do formulário */
         h2 {
             color: #2e7d64;
             text-align: center;
             margin-bottom: 30px;
         }
+        /* Rótulo do campo de e-mail */
         label {
             font-weight: bold;
             display: block;
             margin-top: 15px;
             color: #333;
         }
+        /* Campo de entrada para o e-mail */
         input[type="email"] {
             width: 100%;
             padding: 10px;
@@ -37,6 +42,7 @@
             margin-top: 5px;
             font-size: 1em;
         }
+        /* Botão de envio do formulário */
         button {
             background-color: #1e5f4c;
             color: white;
@@ -49,14 +55,17 @@
             margin-top: 20px;
             width: 100%;
         }
+        /* Efeito hover no botão */
         button:hover {
             background-color: #144a3a;
         }
+        /* Mensagem de sucesso */
         .message {
             color: green;
             text-align: center;
             margin-top: 20px;
         }
+        /* Mensagem de erro */
         .error {
             color: red;
             text-align: center;
@@ -66,13 +75,19 @@
 </head>
 <body>
 <div class="container">
+    <!-- Título da página de recuperação de senha -->
     <h2>Esqueci Minha Senha</h2>
+    <!-- Formulário para envio do e-mail de recuperação -->
     <form th:action="@{/esqueci-senha/enviar}" method="post">
+        <!-- Campo para digitar o e-mail -->
         <label for="email">Digite seu e-mail:</label>
         <input type="email" id="email" name="email" required>
+        <!-- Botão para enviar o link de redefinição de senha -->
         <button type="submit">Enviar link de redefinição</button>
     </form>
+    <!-- Mensagem de sucesso exibida dinamicamente -->
     <div class="message" th:if="${mensagem}" th:text="${mensagem}"></div>
+    <!-- Mensagem de erro exibida dinamicamente -->
     <div class="error" th:if="${erro}" th:text="${erro}"></div>
 </div>
 </body>

@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Cadastro Pesquisador - Apollo Pesquisas</title>
     <style>
+        /* Estilização global da página */
         body {
             margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f7f7f7;
+            font-family: 'Segoe UI', sans-serif; /* Fonte moderna e legível */
+            background-color: #f7f7f7; /* Cor de fundo suave */
         }
 
+        /* Container principal centralizado com flexbox */
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -18,6 +20,7 @@
             height: 100vh;
         }
 
+        /* Coluna da esquerda com ilustração e texto */
         .left {
             flex: 1;
             min-width: 300px;
@@ -25,6 +28,7 @@
             padding: 2rem;
         }
 
+        /* Elipse decorativa */
         .ellipse {
             width: 280px;
             height: 200px;
@@ -33,6 +37,7 @@
             margin: 0 auto 1rem;
         }
 
+        /* Texto explicativo na coluna esquerda */
         .left p {
             max-width: 400px;
             margin: 0 auto;
@@ -40,6 +45,7 @@
             color: #333;
         }
 
+        /* Coluna da direita com o formulário */
         .right {
             width: 100%;
             max-width: 420px;
@@ -51,6 +57,7 @@
             box-sizing: border-box;
         }
 
+        /* Logo da plataforma */
         .logo {
             font-size: 2rem;
             font-weight: bold;
@@ -59,17 +66,20 @@
             line-height: 1.2;
         }
 
+        /* Estilo do formulário */
         form {
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
         }
 
+        /* Rótulos dos campos */
         label {
             font-size: 14px;
             text-align: left;
         }
 
+        /* Campos de entrada do formulário */
         input {
             padding: 0.5rem;
             border: none;
@@ -79,6 +89,7 @@
             box-sizing: border-box;
         }
 
+        /* Botão de criar conta */
         button {
             background-color: white;
             color: #2AA184;
@@ -92,28 +103,33 @@
             transition: background-color 0.3s ease;
         }
 
+        /* Efeito hover no botão */
         button:hover {
             background-color: #e6f3f1;
         }
 
+        /* Texto dos termos de uso */
         .terms {
             font-size: 11px;
             text-align: center;
             margin-top: 0.5rem;
         }
 
+        /* Link para login */
         .login-link {
             margin-top: 1rem;
             font-size: 14px;
             text-align: center;
         }
 
+        /* Estilo do link de login */
         .login-link a {
             color: white;
             font-weight: bold;
             text-decoration: none;
         }
 
+        /* Ícone de home no canto superior esquerdo */
         .home-icon {
             position: absolute;
             top: 1rem;
@@ -124,6 +140,7 @@
             width: 28px;
         }
 
+        /* Modal de termos de uso */
         #modal-termos {
             display: none;
             position: fixed;
@@ -135,6 +152,7 @@
             align-items: center;
         }
 
+        /* Conteúdo do modal */
         .modal-content {
             background: white;
             color: black;
@@ -146,6 +164,7 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
 
+        /* Botões do modal */
         .modal-buttons {
             display: flex;
             justify-content: space-between;
@@ -168,10 +187,12 @@
     </style>
 </head>
 <body>
+<!-- Ícone de home para voltar à página inicial -->
 <div class="home-icon">
     <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home"></a>
 </div>
 
+<!-- Container principal com duas colunas: esquerda (ilustração/texto) e direita (formulário) -->
 <div class="container">
     <div class="left">
         <div class="ellipse"></div>
@@ -181,36 +202,47 @@
     </div>
     <div class="right">
         <div class="logo">
+            <!-- Logo da plataforma -->
             <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
         </div>
 
+        <!-- Formulário de cadastro do pesquisador, vinculado ao objeto 'usuario' do backend -->
         <form id="formCadastroPesquisador" th:action="@{/auth/cadastro/pesquisador}" th:object="${usuario}" method="post">
+            <!-- Campo nome -->
             <label>Nome:</label>
             <input type="text" th:field="*{nome}" required />
 
+            <!-- Campo e-mail -->
             <label>E-mail:</label>
             <input type="email" th:field="*{email}" required />
 
+            <!-- Campo senha -->
             <label>Senha:</label>
             <input type="password" th:field="*{senha}" required />
 
+            <!-- Campo CRM -->
             <label>CRM:</label>
             <input type="text" th:field="*{crm}" required />
 
+            <!-- Campo especialidade -->
             <label>Especialidade:</label>
             <input type="text" th:field="*{especialidade}" required />
 
+            <!-- Campo área de pesquisa -->
             <label>Área de Pesquisa:</label>
             <input type="text" th:field="*{areaDePesquisa}" required />
 
-                <label>Telefone:</label>
-                <input type="text" th:field="*{telefone}" required />
+            <!-- Campo telefone -->
+            <label>Telefone:</label>
+            <input type="text" th:field="*{telefone}" required />
 
-
+            <!-- Texto de aviso sobre os termos -->
             <div class="terms">Ao se cadastrar, você precisa concordar com os termos e condições específicos da plataforma para pesquisadores.</div>
 
+            <!-- Botão que abre o modal de termos antes de submeter o formulário -->
             <button type="button" onclick="mostrarTermos()">Criar Conta</button>
 
+            <!-- Link para login caso já tenha conta -->
             <div class="login-link">
                 Já tem uma conta? <a href="/auth/login">Faça seu login!</a>
             </div>
@@ -218,7 +250,7 @@
     </div>
 </div>
 
-<!-- Modal de Termos -->
+<!-- Modal de Termos de Uso, exibido ao clicar em "Criar Conta" -->
 <div id="modal-termos">
     <div class="modal-content">
         <h3>Termos e Condições de Cadastro — Pesquisador</h3>
@@ -235,22 +267,27 @@
             </p>
         </div>
         <div class="modal-buttons">
+            <!-- Botão para aceitar os termos e submeter o formulário -->
             <button onclick="aceitarTermos()">Aceitar</button>
+            <!-- Botão para recusar os termos e fechar o modal -->
             <button onclick="recusarTermos()">Recusar</button>
         </div>
     </div>
 </div>
 
 <script>
+    // Exibe o modal de termos de uso
     function mostrarTermos() {
         document.getElementById("modal-termos").style.display = "flex";
     }
 
+    // Aceita os termos, fecha o modal e submete o formulário
     function aceitarTermos() {
         document.getElementById("modal-termos").style.display = "none";
         document.getElementById("formCadastroPesquisador").submit();
     }
 
+    // Recusa os termos, fecha o modal e exibe alerta
     function recusarTermos() {
         document.getElementById("modal-termos").style.display = "none";
         alert("Você precisa aceitar os termos para continuar.");

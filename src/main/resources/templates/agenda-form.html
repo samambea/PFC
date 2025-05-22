@@ -2,29 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <!-- Define o título da página dinamicamente com Thymeleaf -->
     <title th:text="${tituloPagina}">Agendamento</title>
     <style>
+        /* Estilo global da página */
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', sans-serif; /* Fonte moderna e legível */
+            background-color: #f4f4f4; /* Cor de fundo suave */
             padding: 40px;
         }
 
+        /* Container centralizado para o formulário */
         .form-container {
-            max-width: 500px;
-            margin: auto;
-            background-color: #fff;
+            max-width: 500px; /* Largura máxima do formulário */
+            margin: auto; /* Centraliza horizontalmente */
+            background-color: #fff; /* Fundo branco */
             padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px; /* Cantos arredondados */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra leve */
         }
 
+        /* Título principal do formulário */
         h1 {
             text-align: center;
             margin-bottom: 30px;
-            color: #2AA184;
+            color: #2AA184; /* Cor personalizada */
         }
 
+        /* Rótulos dos campos */
         label {
             display: block;
             margin-top: 15px;
@@ -32,6 +37,7 @@
             color: #333;
         }
 
+        /* Estilo dos campos de entrada */
         input[type="text"],
         input[type="email"],
         input[type="date"],
@@ -44,6 +50,7 @@
             box-sizing: border-box;
         }
 
+        /* Botões de ação do formulário */
         .btn-submit,
         .btn-back {
             margin-top: 20px;
@@ -60,24 +67,29 @@
             text-decoration: none;
         }
 
+        /* Botão de envio (Salvar) */
         .btn-submit {
             background-color: #2AA184;
             color: white;
         }
 
+        /* Efeito hover para o botão de envio */
         .btn-submit:hover {
             background-color: #248e75;
         }
 
+        /* Botão de voltar */
         .btn-back {
             background-color: #ccc;
             color: #333;
         }
 
+        /* Efeito hover para o botão de voltar */
         .btn-back:hover {
             background-color: #bbb;
         }
 
+        /* Remove outline e sombra dos botões para visual mais limpo */
         button,
         .btn-submit,
         .btn-back {
@@ -85,39 +97,44 @@
             box-shadow: none;
         }
     </style>
-
 </head>
 <body>
 
 <div class="form-container">
+    <!-- Título dinâmico do formulário, definido pelo atributo 'tituloPagina' -->
     <h1 th:text="${tituloPagina}">Novo Agendamento</h1>
 
+    <!-- Formulário de agendamento, vinculado ao objeto 'agendamento' do backend -->
     <form th:action="@{/pesquisador/agenda}" th:object="${agendamento}" method="post">
+        <!-- Campo oculto para o ID do agendamento, usado em edições -->
         <input type="hidden" th:if="${agendamento.agendamentoId != null}" th:field="*{agendamentoId}" />
 
+        <!-- Campo para o e-mail do voluntário -->
         <label for="voluntarioEmail">E-mail do voluntário</label>
         <input type="email" id="voluntarioEmail" th:field="*{voluntarioEmail}" required />
 
+        <!-- Campo para a data do agendamento -->
         <label for="dataAgendamento">Data</label>
         <input type="date" id="dataAgendamento" th:field="*{dataAgendamento}" required />
 
+        <!-- Campo para o horário do agendamento -->
         <label for="horario">Horário</label>
         <input type="time" id="horario" th:field="*{horario}" required />
 
+        <!-- Campo para o local do agendamento -->
         <label for="localAgendamento">Local</label>
         <input type="text" id="localAgendamento" th:field="*{localAgendamento}" required />
 
+        <!-- Campo para o nome da pesquisa associada ao agendamento -->
         <label for="nomePesquisa">Nome da Pesquisa</label>
         <input type="text" id="nomePesquisa" th:field="*{nomePesquisa}" required />
 
+        <!-- Botão para enviar o formulário (salvar agendamento) -->
         <button type="submit" class="btn-submit">Salvar</button>
 
+        <!-- Botão/link para voltar para a agenda do pesquisador -->
         <a th:href="@{/pesquisador/agenda}" class="btn-back">Voltar</a>
     </form>
-
-
-
-
 </div>
 
 </body>

@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Minhas Pesquisas</title>
     <style>
+        /* Estilização global da página */
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
             background-color: #f2f4f3;
         }
 
+        /* Barra de navegação superior */
         .navbar {
             background-color: #2AA184;
             height: 60px;
@@ -36,10 +38,12 @@
             text-decoration: none;
         }
 
+        /* Layout principal: sidebar + conteúdo */
         .main {
             display: flex;
         }
 
+        /* Barra lateral de navegação */
         .sidebar {
             background-color: #2AA184;
             width: 220px;
@@ -56,6 +60,7 @@
             font-weight: 500;
         }
 
+        /* Destaque para o link ativo ou hover */
         .sidebar a.active, .sidebar a:hover {
             background-color: #d6e9e7;
             color: #000;
@@ -63,11 +68,13 @@
             border-bottom-right-radius: 10px;
         }
 
+        /* Área de conteúdo principal */
         .content {
             flex: 1;
             padding: 40px;
         }
 
+        /* Card de cada pesquisa */
         .pesquisa-card {
             background-color: white;
             border-radius: 12px;
@@ -90,46 +97,49 @@
             color: #666;
         }
 
+        /* Botões de ação: editar e excluir */
         .btn-editar, .btn-excluir {
-    padding: 8px 16px;
-    margin-right: 8px;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: background-color 0.3s ease;
-}
+            padding: 8px 16px;
+            margin-right: 8px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease;
+        }
 
-.btn-editar {
-    background-color: #2AA184;
-    color: white;
-}
+        .btn-editar {
+            background-color: #2AA184;
+            color: white;
+        }
 
-.btn-editar:hover {
-    background-color: #218f74;
-}
+        .btn-editar:hover {
+            background-color: #218f74;
+        }
 
-.btn-excluir {
-    background-color: #e74c3c;
-    color: white;
-}
+        .btn-excluir {
+            background-color: #e74c3c;
+            color: white;
+        }
 
-.btn-excluir:hover {
-    background-color: #c0392b;
-}
-
+        .btn-excluir:hover {
+            background-color: #c0392b;
+        }
     </style>
 </head>
 <body>
 
+<!-- Barra de navegação superior com logo e botão para tela inicial -->
 <div class="navbar">
     <div class="logo">Apollo Pesquisas</div>
     <a href="/home" class="profile-button">Tela Inicial</a>
 </div>
 
+<!-- Layout principal: sidebar + conteúdo -->
 <div class="main">
+    <!-- Barra lateral de navegação -->
     <div class="sidebar">
         <a th:href="@{/perfil}" class="active">Meu Perfil</a>
         <a href="#" class="active">Minhas Pesquisas</a>
@@ -137,16 +147,22 @@
         <a href="/pesquisador/agenda">Minha Agenda</a>
     </div>
 
+    <!-- Conteúdo principal: listagem das pesquisas do pesquisador -->
     <div class="content">
         <h1>Minhas Pesquisas Cadastradas</h1>
 
-
+        <!-- Loop Thymeleaf para exibir cada pesquisa cadastrada -->
         <div th:each="pesquisa : ${pesquisas}" class="pesquisa-card">
+            <!-- Nome da pesquisa -->
             <h2 th:text="${pesquisa.nomePesquisa}">Título da Pesquisa</h2>
+            <!-- Descrição da pesquisa -->
             <p th:text="${pesquisa.descricao}">Descrição da pesquisa aqui...</p>
+            <!-- Status da pesquisa -->
             <p class="status">Status: <span th:text="${pesquisa.statusPesquisa}">ABERTA</span></p>
             <div>
+                <!-- Botão para editar a pesquisa -->
                 <a th:href="@{'/pesquisas/' + ${pesquisa.pesquisaId} + '/editar'}" class="btn-editar">Editar</a>
+                <!-- Botão para excluir a pesquisa (com confirmação) -->
                 <form th:action="@{'/pesquisas/' + ${pesquisa.pesquisaId} + '/excluir'}" method="post" style="display:inline;">
                     <button type="submit" class="btn-excluir" onclick="return confirm('Tem certeza de que deseja excluir esta pesquisa?')">Excluir</button>
                 </form>

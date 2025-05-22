@@ -4,15 +4,17 @@
     <title>Editar Pesquisa</title>
     <meta charset="UTF-8">
     <style>
+        /* Estilização global da página */
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f7f7f7;
+            font-family: 'Segoe UI', sans-serif; /* Fonte moderna e legível */
+            background-color: #f7f7f7; /* Cor de fundo suave */
             padding: 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
+        /* Estilo do formulário centralizado */
         form {
             background-color: white;
             padding: 30px;
@@ -22,11 +24,13 @@
             max-width: 600px;
         }
 
+        /* Título do formulário */
         h2 {
             margin-bottom: 20px;
             color: #2e7d64;
         }
 
+        /* Rótulos dos campos */
         label {
             display: block;
             margin-top: 12px;
@@ -34,6 +38,7 @@
             font-weight: bold;
         }
 
+        /* Campos de entrada, textarea e select */
         input, textarea, select {
             width: 100%;
             padding: 10px;
@@ -43,6 +48,7 @@
             font-size: 14px;
         }
 
+        /* Botão de salvar alterações */
         .btn-salvar {
             background-color: #2e7d64;
             color: white;
@@ -54,10 +60,12 @@
             width: 100%;
         }
 
+        /* Efeito hover para o botão de salvar */
         .btn-salvar:hover {
             background-color: #256d56;
         }
 
+        /* Botão de voltar para a lista de pesquisas */
         .btn-voltar {
             display: block;
             margin-top: 16px;
@@ -70,38 +78,51 @@
 </head>
 <body>
 
+<!-- Formulário de edição de pesquisa, vinculado ao objeto 'pesquisa' do backend -->
 <form th:action="@{'/admin/pesquisas/atualizar/' + ${pesquisa.pesquisaId}}" method="post" th:object="${pesquisa}">
+    <!-- Título do formulário -->
     <h2>Editar Pesquisa</h2>
 
+    <!-- Campo para o nome da pesquisa -->
     <label for="nomePesquisa">Nome</label>
     <input type="text" id="nomePesquisa" name="nomePesquisa" th:value="*{nomePesquisa}" required />
 
+    <!-- Campo para descrição da pesquisa -->
     <label for="descricao">Descrição</label>
     <textarea id="descricao" name="descricao" rows="3" th:text="*{descricao}"></textarea>
 
+    <!-- Campo para objetivo da pesquisa -->
     <label for="objetivo">Objetivo</label>
     <textarea id="objetivo" name="objetivo" rows="2" th:text="*{objetivo}"></textarea>
 
+    <!-- Campo para instituição responsável -->
     <label for="instituicao">Instituição</label>
     <input type="text" id="instituicao" name="instituicao" th:value="*{instituicao}" required />
 
+    <!-- Campo para área da pesquisa -->
     <label for="areaDaPesquisa">Área da Pesquisa</label>
     <input type="text" id="areaDaPesquisa" name="areaDaPesquisa" th:value="*{areaDaPesquisa}" required />
 
+    <!-- Campo para pesquisador responsável -->
     <label for="pesquisadorResponsavel">Pesquisador Responsável</label>
     <input type="text" id="pesquisadorResponsavel" name="pesquisadorResponsavel" th:value="*{pesquisadorResponsavel}" />
 
+    <!-- Campo para critérios de inclusão/exclusão -->
     <label for="criteriosInclusaoExclusao">Critérios de Inclusão/Exclusão</label>
     <textarea id="criteriosInclusaoExclusao" name="criteriosInclusaoExclusao" rows="3" th:text="*{criteriosInclusaoExclusao}"></textarea>
 
+    <!-- Campo para selecionar o status da pesquisa -->
     <label for="statusPesquisa">Status</label>
     <select id="statusPesquisa" name="statusPesquisa">
+        <!-- Preenche as opções com os valores do enum StatusPesquisa -->
         <option th:each="status : ${T(br.com.umc.apollopesquisas.enums.StatusPesquisa).values()}"
                 th:value="${status}" th:text="${status}"
                 th:selected="${status} == ${pesquisa.statusPesquisa}">ABERTA</option>
     </select>
 
+    <!-- Botão para salvar as alterações -->
     <button type="submit" class="btn-salvar">Salvar Alterações</button>
+    <!-- Link para voltar para a lista de pesquisas -->
     <a href="/admin/pesquisas" class="btn-voltar">Voltar</a>
 </form>
 

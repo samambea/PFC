@@ -13,75 +13,98 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
-@EnableMethodSecurity
+
+  //Classe de configuração principal do Spring Security.
+  //Define todas as regras de segurança, autenticação e autorização da aplicação.
+
+@Configuration // Marca como classe de configuração Spring
+@EnableWebSecurity // Habilita as funcionalidades de segurança web do Spring Security
+@EnableMethodSecurity // Permite uso de anotações de segurança em métodos (@PreAuthorize, etc.)
 public class SecurityConfig {
 
+    // Handler unificado para tratar sucesso de login
     @Autowired
     private UnifiedLoginSuccessHandler unifiedLoginSuccessHandler;
 
+    // Serviço customizado para carregar detalhes dos usuários durante autenticação
     @Autowired
     private UsuarioDetailsServiceImpl usuarioDetailsService;
+
+
+      //Configuração principal da cadeia de filtros de segurança.
+      //Define todas as regras de autorização, autenticação e proteções da aplicação.
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // CSRF continua ignorando apenas os endpoints de upload
+                // CONFIGURAÇÃO CSRF: Proteção contra Cross-Site Request Forgery
                 .csrf(csrf -> csrf
+                        // Ignora CSRF apenas para endpoints específicos que precisam receber uploads
                         .ignoringRequestMatchers("/perfil/perfil/upload-foto")
                         .ignoringRequestMatchers("/pesquisador/agenda")
                 )
-                // Regras de autorização
+                // REGRAS DE AUTORIZAÇÃO: Define quem pode acessar quais recursos
                 .authorizeHttpRequests(auth -> auth
-                        // Rotas públicas
+                        // ROTAS PÚBLICAS: Acessíveis sem autenticação
                         .requestMatchers(
-                                "/",
-                                "/auth/login",
-                                "/auth/cadastro",
-                                "/auth/cadastro/voluntario/**",
-                                "/auth/cadastro/pesquisador/**",
-                                "/auth/usuarios/cadastro",
-                                "/css/**", "/js/**", "/images/**",
-                                "/api/pesquisas", "/pesquisas/api/**",
-                                "/perfil/perfil/upload-foto",
-                                // novas rotas de esqueci/redefinição de senha
-                                "/esqueci-senha",
-                                "/esqueci-senha/**",
-                                "/redefinir-senha",
-                                "/redefinir-senha/**"
+                                "/",                                    // Página inicial
+                                "/auth/login",                         // Página de login
+                                "/auth/cadastro",                      // Página de cadastro
+                                "/auth/cadastro/voluntario/**",        // Cadastro de voluntários
+                                "/auth/cadastro/pesquisador/**",       // Cadastro de pesquisadores
+                                "/auth/usuarios/cadastro",             // Endpoint de cadastro
+                                "/css/**", "/js/**", "/images/**",     // Recursos estáticos
+                                "/api/pesquisas", "/pesquisas/api/**", // APIs públicas de pesquisas
+                                "/perfil/perfil/upload-foto",          // Upload de foto de perfil
+                                // FUNCIONALIDADE DE RECUPERAÇÃO DE SENHA
+                                "/esqueci-senha",                      // Página "esqueci minha senha"
+                                "/esqueci-senha/**",                   // Rotas relacionadas
+                                "/redefinir-senha",                    // Página de redefinição
+                                "/redefinir-senha/**"                  // Rotas de redefinição
                         ).permitAll()
-                        // Só usuário autenticado pode acessar “Minhas Participações”
+
+                        // ROTA ESPECÍFICA: Requer apenas autenticação (qualquer usuário logado)
                         .requestMatchers("/participacoes/minhas").authenticated()
-                        // Papéis específicos
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/pesquisador/**").hasRole("PESQUISADOR")
-                        .requestMatchers("/voluntario/**").hasRole("VOLUNTARIO")
-                        // Demais endpoints exigem autenticação
+
+                        // CONTROLE POR PAPÉIS/ROLES: Acesso baseado no tipo de usuário
+                        .requestMatchers("/admin/**").hasRole("ADMIN")              // Apenas administradores
+                        .requestMatchers("/pesquisador/**").hasRole("PESQUISADOR")  // Apenas pesquisadores
+                        .requestMatchers("/voluntario/**").hasRole("VOLUNTARIO")    // Apenas voluntários
+
+                        // REGRA PADRÃO: Todas as outras rotas exigem autenticação
                         .anyRequest().authenticated()
                 )
-                // Configuração do login form
+                // CONFIGURAÇÃO DE LOGIN
                 .formLogin(form -> form
-                        .loginPage("/auth/login")
-                        .successHandler(unifiedLoginSuccessHandler)
-                        .failureUrl("/auth/login?error=true")
-                        .permitAll()
+                        .loginPage("/auth/login")                    // Página customizada de login
+                        .successHandler(unifiedLoginSuccessHandler)  // Handler para sucesso de login
+                        .failureUrl("/auth/login?error=true")        // Redirecionamento em caso de erro
+                        .permitAll()                                 // Permite acesso à página de login
                 )
-                // Configuração do logout
+                // CONFIGURAÇÃO DE LOGOUT
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/auth/login?logout")
-                        .permitAll()
+                        .logoutSuccessUrl("/auth/login?logout")      // Redirecionamento após logout
+                        .permitAll()                                 // Permite logout para todos
                 )
-                // Service para carregar usuários
+                // SERVIÇO DE DETALHES DO USUÁRIO: Como carregar informações durante autenticação
                 .userDetailsService(usuarioDetailsService);
 
+        // Constrói e retorna a configuração de segurança
         return http.build();
     }
+
+
+      //Bean para codificação de senhas usando BCrypt.
+      //BCrypt é um algoritmo de hash seguro com salt automático.
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
+      //Bean para gerenciamento de autenticação.
+      //Necessário para processos de autenticação programática.
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {

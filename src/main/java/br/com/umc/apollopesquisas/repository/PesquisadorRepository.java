@@ -6,8 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+// Repositório MongoDB para operações CRUD e consultas específicas sobre Pesquisador.
 @Repository
 public interface PesquisadorRepository extends MongoRepository<Pesquisador, String> {
-    Optional<Pesquisador> findByEmail(String email);
 
+    // Busca um pesquisador pelo seu e-mail.
+    Optional<Pesquisador> findByEmail(String email);
 }

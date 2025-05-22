@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+// Repositório MongoDB para operações CRUD básicas sobre a entidade Notificacao.
 @Repository
 public interface NotificacaoRepository extends MongoRepository<Notificacao, String> {
 
-
-
+// TO BE DONE
 
 }

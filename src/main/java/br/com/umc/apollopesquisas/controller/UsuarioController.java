@@ -1,9 +1,6 @@
 package br.com.umc.apollopesquisas.controller;
 
-import br.com.umc.apollopesquisas.model.Pesquisa;
-import br.com.umc.apollopesquisas.model.Pesquisador;
-import br.com.umc.apollopesquisas.model.Usuario;
-import br.com.umc.apollopesquisas.model.Voluntario;
+import br.com.umc.apollopesquisas.model.*;
 import br.com.umc.apollopesquisas.repository.PesquisadorRepository;
 import br.com.umc.apollopesquisas.repository.UsuarioRepository;
 import br.com.umc.apollopesquisas.repository.VoluntarioRepository;
@@ -22,18 +19,21 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+// Controller responsável pelo cadastro, gerenciamento e operações relacionadas aos usuários,
+// incluindo voluntários e pesquisadores, além do upload de foto de perfil e listagem de participações.
+
 @Controller
 @RequestMapping("/auth")
 public class UsuarioController {
 
     @Autowired
-    VoluntarioRepository voluntarioRepository;
+    private VoluntarioRepository voluntarioRepository;
 
     @Autowired
-    PesquisadorRepository pesquisadorRepository;
+    private PesquisadorRepository pesquisadorRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private PesquisaService pesquisaService;
@@ -44,7 +44,8 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-
+    // Exibe o formulário de cadastro, permitindo escolher entre pesquisador e voluntário.
+    // Cria a instância correta de usuário conforme o parâmetro 'tipo'.
     @GetMapping("/usuarios/cadastro")
     public String cadastroForm(Model model, @RequestParam(name = "tipo", required = false, defaultValue = "voluntario") String tipo) {
         Usuario usuario;
@@ -56,19 +57,19 @@ public class UsuarioController {
             usuario.setRole("VOLUNTARIO");
         }
 
-
         model.addAttribute("usuario", usuario);
         return "cadastro";
     }
 
-
+    // Exibe o formulário específico para cadastro de pesquisador.
     @GetMapping("/cadastro/pesquisador")
     public String cadastroPesquisador(Model model) {
         model.addAttribute("usuario", new Pesquisador());
         return "cadastro-pesquisador";
     }
 
-
+    // Processa o cadastro de pesquisador.
+    // Codifica a senha antes de salvar e adiciona mensagem de sucesso.
     @PostMapping("/cadastro/pesquisador")
     public String cadastrarPesquisador(@ModelAttribute Pesquisador pesquisador, RedirectAttributes redirectAttributes) {
         pesquisador.setSenha(passwordEncoder.encode(pesquisador.getSenha()));
@@ -77,14 +78,15 @@ public class UsuarioController {
         return "redirect:/auth/login";
     }
 
-
+    // Exibe o formulário específico para cadastro de voluntário.
     @GetMapping("/cadastro/voluntario")
     public String cadastroVoluntario(Model model) {
         model.addAttribute("usuario", new Voluntario());
         return "cadastro-voluntario";
     }
 
-
+    // Processa o cadastro de voluntário.
+    // Codifica a senha antes de salvar e adiciona mensagem de sucesso.
     @PostMapping("/cadastro/voluntario")
     public String cadastrarVoluntario(@ModelAttribute Voluntario voluntario, RedirectAttributes redirectAttributes) {
         voluntario.setSenha(passwordEncoder.encode(voluntario.getSenha()));
@@ -93,6 +95,8 @@ public class UsuarioController {
         return "redirect:/auth/login";
     }
 
+    // Exibe a lista de participações do usuário autenticado.
+    // Busca as pesquisas nas quais o usuário está participando e as adiciona ao modelo.
     @GetMapping("/participacoes")
     public String minhasParticipacoes(Model model, Principal principal) {
         String email = principal.getName();
@@ -106,6 +110,8 @@ public class UsuarioController {
         return "usuario/participacoes";
     }
 
+    // Processa o upload da foto de perfil do usuário autenticado.
+    // Salva a imagem, atualiza o usuário no banco e na sessão, e adiciona mensagens de sucesso ou erro.
     @PostMapping("/upload-foto")
     public String uploadFoto(@RequestParam("fotoPerfil") MultipartFile fotoPerfil,
                              HttpSession session,
@@ -127,7 +133,4 @@ public class UsuarioController {
 
         return "redirect:/perfil";
     }
-
-
-
 }

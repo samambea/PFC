@@ -4,44 +4,50 @@
     <meta charset="UTF-8">
     <title>Editar Pesquisador - Apollo Pesquisas</title>
     <style>
+        /* Estilização global da página */
         body {
             margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f7f7f7;
+            font-family: 'Segoe UI', sans-serif; /* Fonte moderna e legível */
+            background-color: #f7f7f7; /* Cor de fundo suave */
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            min-height: 100vh; /* Centraliza verticalmente */
         }
 
+        /* Container do formulário centralizado */
         .form-container {
             width: 100%;
             max-width: 400px;
-            background-color: #2AA184;
+            background-color: #2AA184; /* Cor de fundo do card */
             color: white;
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
         }
 
+        /* Título do formulário */
         .form-container h2 {
             text-align: center;
             margin-bottom: 1.5rem;
             font-size: 22px;
         }
 
+        /* Layout dos campos do formulário */
         form {
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
         }
 
+        /* Rótulos dos campos */
         label {
             font-size: 14px;
             display: flex;
             flex-direction: column;
         }
 
+        /* Campos de entrada */
         input {
             padding: 0.5rem;
             border: none;
@@ -51,6 +57,7 @@
             box-sizing: border-box;
         }
 
+        /* Botão de submit */
         button {
             background-color: white;
             color: #2AA184;
@@ -64,6 +71,7 @@
             margin-top: 1rem;
         }
 
+        /* Efeito hover no botão */
         button:hover {
             background-color: #e6f3f1;
         }
@@ -71,34 +79,44 @@
 </head>
 <body>
 <div class="form-container">
+    <!-- Título da página de edição de pesquisador -->
     <h2>Editar Pesquisador</h2>
+    <!-- Formulário de edição, vinculado ao objeto 'usuario' do backend -->
     <form th:action="@{/admin/usuarios/salvar-pesquisador}" th:object="${usuario}" method="post">
+        <!-- Campo oculto para o ID do usuário (necessário para atualização) -->
         <input type="hidden" th:field="*{usuarioId}" />
 
+        <!-- Campo para o nome do pesquisador -->
         <label>Nome:
             <input type="text" th:field="*{nome}" />
         </label>
 
+        <!-- Campo para o email do pesquisador -->
         <label>Email:
             <input type="email" th:field="*{email}" />
         </label>
 
+        <!-- Campo para o CRM do pesquisador -->
         <label>CRM:
             <input type="text" th:field="*{crm}" />
         </label>
 
+        <!-- Campo para especialidade do pesquisador -->
         <label>Especialidade:
             <input type="text" th:field="*{especialidade}" />
         </label>
 
+        <!-- Campo para área de pesquisa do pesquisador -->
         <label>Área de Pesquisa:
             <input type="text" th:field="*{areaDePesquisa}" />
         </label>
 
+        <!-- Campo para telefone do pesquisador -->
         <label>Telefone:
             <input type="text" th:field="*{telefone}" />
         </label>
 
+        <!-- Botão para salvar as alterações -->
         <button type="submit">Salvar</button>
     </form>
 </div>

@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.security.Principal;
 import java.util.List;
 
-@Controller
+// Controller responsável pelas rotas principais da aplicação.
+// Redireciona usuários para a home correta com base no tipo (pesquisador ou voluntário).
+
+@Controller // Marca como controller MVC que retorna views (páginas HTML)
 public class HomeController {
 
     private final UsuarioService usuarioService;
@@ -34,11 +37,14 @@ public class HomeController {
         this.pesquisaService = pesquisaService;
     }
 
+    // Redireciona para a home correta com base no tipo de usuário.
     @GetMapping("/home")
     public String redirecionarParaHomePorTipo(Model model, Principal principal) {
+        // Busca usuário pelo email
         Usuario usuario = usuarioService.findByEmail(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
+        // Adiciona usuário ao model
         model.addAttribute("usuario", usuario);
 
         // Se for pesquisador, redireciona para sua home
@@ -70,11 +76,13 @@ public class HomeController {
         return "redirect:/login?erro=tipoDesconhecido";
     }
 
+    // Exibe página de login
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
+    // Exibe página de cadastro de usuário
     @GetMapping("/cadastro-usuario")
     public String cadastroUsuario() {
         return "cadastroUsuario";

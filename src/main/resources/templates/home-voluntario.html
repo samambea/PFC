@@ -4,14 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Início - Apollo Pesquisas</title>
+    <!-- Importa ícones do Font Awesome para botões e ícones visuais -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <style>
+        /* Estilização global da página */
         body {
             margin: 0;
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f4f4;
         }
 
+        /* Barra de navegação superior */
         .navbar {
             background-color: #2e7d64;
             color: #fff;
@@ -21,16 +24,19 @@
             align-items: center;
         }
 
+        /* Logo da aplicação */
         .logo {
             font-size: 1.5em;
             font-weight: bold;
         }
 
+        /* Menu de navegação na navbar */
         .menu {
             display: flex;
             align-items: center;
         }
 
+        /* Links do menu */
         .menu a {
             color: #fff;
             margin-left: 20px;
@@ -38,16 +44,19 @@
             font-weight: 500;
         }
 
+        /* Efeito hover nos links do menu */
         .menu a:hover {
             text-decoration: underline;
         }
 
+        /* Botões de perfil */
         .profile-button {
             border: 1px solid #fff;
             border-radius: 6px;
             padding: 6px 12px;
         }
 
+        /* Botões de ação (enviar sugestão, participar, etc) */
         .create-button {
             background-color: #1e5f4c;
             padding: 10px 20px;
@@ -63,6 +72,7 @@
             background-color: #144a3a;
         }
 
+        /* Container principal da página */
         .container {
             padding: 40px 20px;
             max-width: 900px;
@@ -86,35 +96,46 @@
 </head>
 <body>
 
+<!-- Barra de navegação superior com logo e menu -->
 <div class="navbar">
     <div class="logo">Apollo Pesquisas</div>
     <div class="menu">
+        <!-- Botão para acessar o perfil -->
         <a class="profile-button" href="/perfil">Meu Perfil</a>
+        <!-- Botão para editar o perfil -->
         <a class="profile-button" href="/perfil/editar">Editar Perfil</a>
+        <!-- Botão para enviar sugestão -->
         <a class="create-button" href="/sugestoes/nova">
             <i class="fas fa-lightbulb"></i> Enviar Sugestão
         </a>
+        <!-- Botão para logout -->
         <a href="/logout">Sair</a>
     </div>
 </div>
 
-<!-- PARTICIPAÇÕES -->
+<!-- Bloco de participações do usuário -->
 <div class="container">
     <h1>Minhas Participações</h1>
 
+    <!-- Mensagem caso não haja participações -->
     <th:block th:if="${participacoes != null and participacoes.isEmpty()}">
         <p>Você ainda não participou de nenhuma pesquisa.</p>
     </th:block>
 
+    <!-- Lista de participações -->
     <div th:each="participacao : ${participacoes}" style="margin-bottom: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
         <div th:if="${participacao.pesquisa != null}">
+            <!-- Nome da pesquisa -->
             <h3 th:text="${participacao.pesquisa.nomePesquisa}">Título da Pesquisa</h3>
+            <!-- Data de inscrição -->
             <p><strong>Data de Inscrição:</strong>
                 <span th:text="${#temporals.format(participacao.dataInscricao, 'dd/MM/yyyy HH:mm')}">Data</span>
             </p>
+            <!-- Status da participação -->
             <p><strong>Status Participação:</strong>
                 <span th:text="${participacao.statusParticipacao}">Status</span>
             </p>
+            <!-- Status da pesquisa e botão para feedback caso a pesquisa esteja concluída e sem feedback -->
             <p><strong>Status Pesquisa:</strong>
                 <span th:text="${participacao.pesquisa.statusPesquisa}">Status</span>
                 <a th:if="${#strings.toUpperCase(participacao.pesquisa.statusPesquisa) == 'CONCLUIDA' and (participacao.feedback == null or #strings.isEmpty(participacao.feedback))}"
@@ -123,39 +144,44 @@
                    style="margin-left: 15px; font-size: 0.9em; padding: 5px 10px;">
                     Dar Feedback
                 </a>
-
-
             </p>
-
+            <!-- Exibe feedback já enviado -->
             <p th:if="${participacao.feedback != null && !#strings.isEmpty(participacao.feedback)}">
                 <strong>Feedback:</strong>
                 <span th:text="${participacao.feedback}">Feedback</span>
             </p>
         </div>
-
+        <!-- Caso a pesquisa tenha sido removida ou não esteja disponível -->
         <div th:unless="${participacao.pesquisa != null}">
             <p><strong>Pesquisa removida ou não disponível.</strong></p>
         </div>
     </div>
 </div>
 
-<!-- PESQUISAS DISPONÍVEIS -->
+<!-- Bloco de pesquisas disponíveis para participação -->
 <div class="container">
     <h1>Pesquisas Disponíveis</h1>
 
+    <!-- Mensagem caso não haja pesquisas abertas -->
     <th:block th:if="${pesquisas != null and pesquisas.isEmpty()}">
         <p>Não há pesquisas disponíveis no momento.</p>
     </th:block>
 
+    <!-- Lista de pesquisas abertas -->
     <div th:each="pesquisa : ${pesquisas}"
          th:if="${pesquisa.statusPesquisa.name() == 'ABERTA'}"
          style="margin-bottom: 20px; padding: 20px; border: 1px solid #bbb; border-radius: 10px;">
+        <!-- Nome da pesquisa -->
         <h3 th:text="${pesquisa.nomePesquisa}">Título da Pesquisa</h3>
+        <!-- Descrição da pesquisa -->
         <p th:text="${pesquisa.descricao}">Descrição da pesquisa</p>
+        <!-- Objetivo da pesquisa -->
         <p><strong>Objetivo:</strong> <span th:text="${pesquisa.objetivo}">Objetivo</span></p>
+        <!-- Instituição responsável -->
         <p><strong>Instituição:</strong> <span th:text="${pesquisa.instituicao}">Instituição</span></p>
+        <!-- Status da pesquisa -->
         <p><strong>Status:</strong> <span th:text="${pesquisa.statusPesquisa}">Status</span></p>
-
+        <!-- Botão para o usuário participar da pesquisa -->
         <form th:action="@{/participar}" method="post">
             <input type="hidden" name="pesquisaId" th:value="${pesquisa.pesquisaId}" />
             <button type="submit" class="create-button">Participar</button>
@@ -163,8 +189,7 @@
     </div>
 </div>
 
-
-<!-- Mensagens de alerta -->
+<!-- Mensagens de alerta (ex: após alguma ação, como participação ou sugestão enviada) -->
 <script th:inline="javascript">
     /*<![CDATA[*/
     let msg = /*[[${alertMessage}]]*/ null;
@@ -174,6 +199,7 @@
     /*]]>*/
 </script>
 
+<!-- Alerta de sucesso para sugestão enviada -->
 <script th:if="${success}" th:inline="javascript">
     alert("Sugestão enviada com sucesso!");
 </script>

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+// Serviço responsável pela lógica de negócio relacionada a Pesquisa.
 @Service
 public class PesquisaService {
 
@@ -21,20 +22,22 @@ public class PesquisaService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    // Lista todas as pesquisas.
     public List<Pesquisa> listarTodas() {
         return pesquisaRepository.findAll();
     }
 
+    // Busca uma pesquisa pelo ID.
     public Optional<Pesquisa> buscarPorId(String pesquisaId) {
         return pesquisaRepository.findById(pesquisaId);
     }
 
-
-
+    // Cria uma nova pesquisa.
     public Pesquisa criar(Pesquisa pesquisa) {
         return pesquisaRepository.save(pesquisa);
     }
 
+    // Atualiza uma pesquisa existente pelo ID.
     public Pesquisa atualizar(String pesquisaId, Pesquisa novaPesquisa) {
         return pesquisaRepository.findById(pesquisaId).map(p -> {
             novaPesquisa.setPesquisaId(pesquisaId);
@@ -42,6 +45,7 @@ public class PesquisaService {
         }).orElse(null);
     }
 
+    // Deleta uma pesquisa pelo ID.
     public boolean deletarPorId(String pesquisaId) {
         if (pesquisaRepository.existsById(pesquisaId)) {
             pesquisaRepository.deleteById(pesquisaId);
@@ -50,14 +54,17 @@ public class PesquisaService {
         return false;
     }
 
+    // Lista pesquisas criadas por um usuário específico.
     public List<Pesquisa> listarPorUsuarioId(String usuarioId) {
         return pesquisaRepository.findByUsuarioId(usuarioId);
     }
 
+    // Lista pesquisas com status ABERTA (usando enum).
     public List<Pesquisa> listarAbertas() {
         return pesquisaRepository.findByStatusPesquisa(StatusPesquisa.ABERTA);
     }
 
+    // Corrige o campo statusPesquisa de String para enum StatusPesquisa no banco MongoDB.
     public void corrigirStatusPesquisaEnum() {
         List<Document> pesquisas = mongoTemplate.findAll(Document.class, "pesquisas");
 
@@ -80,6 +87,7 @@ public class PesquisaService {
         }
     }
 
+    // Adiciona um usuário à lista de participantes de uma pesquisa.
     public void adicionarParticipacao(String pesquisaId, Usuario usuario) {
         Optional<Pesquisa> optionalPesquisa = pesquisaRepository.findById(pesquisaId);
         if (optionalPesquisa.isPresent()) {
@@ -91,21 +99,25 @@ public class PesquisaService {
         }
     }
 
+    // Lista pesquisas em que o usuário participa.
     public List<Pesquisa> listarParticipacoes(String usuarioId) {
         return pesquisaRepository.findByParticipantesContains(usuarioId);
     }
 
+    // Obtém o título (nome) da pesquisa pelo ID.
     public String obterTituloPesquisaPorId(String pesquisaId) {
         Pesquisa pesquisa = pesquisaRepository.findById(pesquisaId)
                 .orElseThrow(() -> new RuntimeException("Pesquisa não encontrada"));
         return pesquisa.getNomePesquisa();
     }
 
+    // Busca pesquisa pelo ID, lançando exceção se não encontrada.
     public Pesquisa buscarPesquisaPorId(String pesquisaId) {
         return pesquisaRepository.findById(pesquisaId)
                 .orElseThrow(() -> new RuntimeException("Pesquisa não encontrada"));
     }
 
+    // Retorna as pesquisas abertas que o usuário ainda não participa.
     public List<Pesquisa> findPesquisasDisponiveis(String usuarioId) {
         List<Pesquisa> abertas = listarAbertas();
         List<Pesquisa> jaParticipou = listarParticipacoes(usuarioId);
@@ -119,11 +131,9 @@ public class PesquisaService {
                 .toList();
     }
 
+    // Retorna pesquisas com status "ABERTA" (usando String).
+    // Atenção: metodo redundante com listarAbertas() que usa enum.
     public List<Pesquisa> buscarPesquisasDisponiveis() {
         return pesquisaRepository.findByStatusPesquisa("ABERTA");
     }
-
-
-
-
 }

@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Apollo Pesquisas - Login</title>
     <style>
+        /* Estilização global da página */
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
             background-color: #f7f7f7;
         }
 
+        /* Container centralizado para layout flexível */
         .container {
             display: flex;
             height: 100vh;
@@ -17,21 +19,23 @@
             justify-content: center;
         }
 
+        /* Coluna esquerda com ilustração e frase */
         .left {
             width: 50%;
             text-align: center;
             padding: 2rem;
         }
 
+        /* Elipse decorativa */
         .ellipse {
             width: 380px;
             height: 280px;
             background: repeating-linear-gradient(
-                45deg,
-                #cceeee,
-                #cceeee 10px,
-                #b8dada 10px,
-                #b8dada 20px
+                    45deg,
+                    #cceeee,
+                    #cceeee 10px,
+                    #b8dada 10px,
+                    #b8dada 20px
             );
             border-radius: 50% / 40%;
             margin: 0 auto 1rem;
@@ -44,6 +48,7 @@
             color: #333;
         }
 
+        /* Coluna direita com o formulário de login */
         .right {
             width: 400px;
             background-color: #2AA184;
@@ -54,6 +59,7 @@
             text-align: center;
         }
 
+        /* Logo da plataforma */
         .logo {
             font-size: 2rem;
             font-weight: bold;
@@ -61,27 +67,14 @@
             position: relative;
         }
 
-        .logo::before {
-            content: "";
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: url no-repeat center center;
-            background-size: contain;
-            top: -40px;
-            left: calc(50% - 30px);
-        }
-        .logo {
-            margin-bottom: 1.5rem;
-        }
-
+        /* Imagem da logo */
         .logo-img {
             width: 180px;
             display: block;
             margin: 0 auto;
         }
 
-
+        /* Formulário de login */
         form {
             display: flex;
             flex-direction: column;
@@ -89,6 +82,7 @@
             margin-top: 1rem;
         }
 
+        /* Campos de entrada */
         input[type="text"],
         input[type="password"] {
             padding: 0.7rem;
@@ -97,6 +91,7 @@
             font-size: 14px;
         }
 
+        /* Botão de login */
         button {
             background-color: white;
             color: #26A69A;
@@ -108,6 +103,7 @@
             font-size: 14px;
         }
 
+        /* Área de registro e links */
         .register {
             margin-top: 1rem;
             font-size: 14px;
@@ -119,6 +115,7 @@
             text-decoration: none;
         }
 
+        /* Ícone de home no canto superior esquerdo */
         .home-icon {
             position: absolute;
             top: 1rem;
@@ -131,17 +128,19 @@
     </style>
 </head>
 <body>
+<!-- Mensagem de sucesso (ex: cadastro realizado) exibida dinamicamente -->
 <div th:if="${successMessage}" class="alert success">
     <p th:text="${successMessage}"></p>
 </div>
 
+<!-- Ícone de home para voltar à página inicial -->
 <div class="home-icon">
     <a href="/">
         <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home">
     </a>
 </div>
 
-
+<!-- Container principal com duas colunas: esquerda (ilustração/texto) e direita (formulário) -->
 <div class="container">
     <div class="left">
         <div class="ellipse"></div>
@@ -151,22 +150,32 @@
     </div>
     <div class="right">
         <div class="logo">
-            <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" class="logo-img"></div>
+            <!-- Logo da plataforma -->
+            <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" class="logo-img">
+        </div>
+        <!-- Formulário de login -->
         <form th:action="@{/auth/login}" method="post">
-        <input type="text" name="username" placeholder="E-mail"/>
+            <!-- Campo para e-mail do usuário -->
+            <input type="text" name="username" placeholder="E-mail"/>
+            <!-- Campo para senha do usuário -->
             <input type="password" name="password" placeholder="Senha"/>
+            <!-- Botão para submeter o login -->
             <button type="submit">Acessar Minha Conta</button>
+            <!-- Mensagem de erro caso o login seja inválido -->
             <div th:if="${param.error}">
                 <p style="color: red;">E-mail ou senha inválidos</p>
             </div>
+            <!-- Mensagem de sucesso ao realizar logout -->
             <div th:if="${param.logout}">
                 <p style="color: green;">Logout realizado com sucesso.</p>
             </div>
+            <!-- Link para recuperação de senha -->
             <p style="margin-top: 15px; text-align: center;">
                 Esqueceu sua senha?
                 <a th:href="@{/esqueci-senha}" style="color: #2e7d64; font-weight: bold;">Clique aqui!</a>
             </p>
         </form>
+        <!-- Link para cadastro, caso o usuário ainda não tenha conta -->
         <div class="register">
             Não tem cadastro? <a href="/">Crie sua conta!</a>
         </div>

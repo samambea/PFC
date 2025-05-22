@@ -25,27 +25,28 @@ import static org.mockito.Mockito.*;
 public class PesquisaControllerTest {
 
     @Mock
-    private PesquisaService pesquisaService;
+    private PesquisaService pesquisaService; // Serviço responsável pelas operações de pesquisa
 
     @Mock
-    private UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository; // Repositório para buscar usuários
 
     @Mock
-    private Authentication authentication;
+    private Authentication authentication; // Simula autenticação do usuário
 
     @Mock
-    private Model model;
+    private Model model; // Modelo para passagem de atributos para a view
 
     @InjectMocks
-    private PesquisaController pesquisaController;
+    private PesquisaController pesquisaController; // Controlador a ser testado
 
-    private Pesquisa pesquisa;
-    private Usuario usuario;
+    private Pesquisa pesquisa; // Objeto de teste para pesquisa
+    private Usuario usuario;   // Objeto de teste para usuário
 
+    // Inicializa mocks e objetos antes de cada teste
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        
+
         pesquisa = new Pesquisa();
         pesquisa.setPesquisaId("123");
         pesquisa.setNomePesquisa("Pesquisa Teste");
@@ -57,14 +58,16 @@ public class PesquisaControllerTest {
         usuario.setRole("PESQUISADOR");
     }
 
+    // Testa a exibição do formulário para nova pesquisa
     @Test
     void novaPesquisaForm_Success() {
         String viewName = pesquisaController.novaPesquisaForm(model);
-        
+
         assertEquals("form-pesquisa", viewName);
         verify(model).addAttribute(eq("pesquisa"), any(Pesquisa.class));
     }
 
+    // Testa criação de uma nova pesquisa com usuário válido
     @Test
     void criar_Success() {
         when(authentication.getName()).thenReturn("teste@teste.com");
@@ -77,16 +80,18 @@ public class PesquisaControllerTest {
         verify(pesquisaService).criar(pesquisa);
     }
 
+    // Testa criação de pesquisa com usuário não encontrado
     @Test
     void criar_UserNotFound() {
         when(authentication.getName()).thenReturn("naoexiste@teste.com");
         when(usuarioRepository.findByEmail("naoexiste@teste.com")).thenReturn(Optional.empty());
 
-        assertThrows(UsernameNotFoundException.class, () -> 
-            pesquisaController.criar(pesquisa, authentication)
+        assertThrows(UsernameNotFoundException.class, () ->
+                pesquisaController.criar(pesquisa, authentication)
         );
     }
 
+    // Testa listagem de todas as pesquisas
     @Test
     void listarTodas_Success() {
         List<Pesquisa> pesquisas = Arrays.asList(pesquisa);
@@ -98,6 +103,7 @@ public class PesquisaControllerTest {
         verify(model).addAttribute("pesquisas", pesquisas);
     }
 
+    // Testa exibição do formulário de edição para usuário admin
     @Test
     void editarPesquisaForm_AdminSuccess() {
         when(authentication.getName()).thenReturn("admin@teste.com");
@@ -112,6 +118,7 @@ public class PesquisaControllerTest {
         verify(model).addAttribute("pesquisa", pesquisa);
     }
 
+    // Testa exibição do formulário de edição para pesquisador comum
     @Test
     void editarPesquisaForm_PesquisadorSuccess() {
         when(authentication.getName()).thenReturn("teste@teste.com");
@@ -124,6 +131,7 @@ public class PesquisaControllerTest {
         verify(model).addAttribute("pesquisa", pesquisa);
     }
 
+    // Testa atualização de pesquisa por usuário válido
     @Test
     void atualizarPesquisa_Success() {
         when(authentication.getName()).thenReturn("teste@teste.com");
@@ -136,6 +144,7 @@ public class PesquisaControllerTest {
         verify(pesquisaService).atualizar(eq("123"), any(Pesquisa.class));
     }
 
+    // Testa exclusão de pesquisa por usuário válido
     @Test
     void deletar_Success() {
         when(authentication.getName()).thenReturn("teste@teste.com");
@@ -148,6 +157,7 @@ public class PesquisaControllerTest {
         verify(pesquisaService).deletarPorId("123");
     }
 
+    // Testa listagem das pesquisas do pesquisador autenticado
     @Test
     void listarPesquisasDoPesquisador_Success() {
         when(authentication.getName()).thenReturn("teste@teste.com");
@@ -161,6 +171,7 @@ public class PesquisaControllerTest {
         verify(model).addAttribute("pesquisas", pesquisas);
     }
 
+    // Testa listagem das pesquisas abertas via API
     @Test
     void listarAbertas_Success() {
         List<Pesquisa> pesquisas = Arrays.asList(pesquisa);
@@ -172,6 +183,7 @@ public class PesquisaControllerTest {
         verify(pesquisaService).listarAbertas();
     }
 
+    // Testa busca de pesquisa por ID via API com sucesso
     @Test
     void buscarApiPorId_Success() {
         when(pesquisaService.buscarPorId("123")).thenReturn(Optional.of(pesquisa));
@@ -182,6 +194,7 @@ public class PesquisaControllerTest {
         assertEquals(pesquisa, response.getBody());
     }
 
+    // Testa busca de pesquisa por ID via API quando não encontrada
     @Test
     void buscarApiPorId_NotFound() {
         when(pesquisaService.buscarPorId("123")).thenReturn(Optional.empty());
@@ -191,6 +204,7 @@ public class PesquisaControllerTest {
         assertEquals(404, response.getStatusCodeValue());
     }
 
+    // Testa exibição das pesquisas disponíveis para o pesquisador autenticado
     @Test
     void mostrarPesquisasDisponiveis_Success() {
         when(authentication.getName()).thenReturn("teste@teste.com");

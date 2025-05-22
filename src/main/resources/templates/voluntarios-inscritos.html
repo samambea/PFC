@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Voluntários Inscritos - Apollo Pesquisas</title>
     <style>
+        /* Estilização global da página */
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
             background-color: #f2f4f3;
         }
 
+        /* Barra de navegação superior */
         .navbar {
             background-color: #2AA184;
             height: 60px;
@@ -37,10 +39,12 @@
             text-decoration: none;
         }
 
+        /* Layout principal: sidebar + conteúdo */
         .main {
             display: flex;
         }
 
+        /* Barra lateral de navegação */
         .sidebar {
             background-color: #2AA184;
             width: 220px;
@@ -57,6 +61,7 @@
             font-weight: 500;
         }
 
+        /* Destaque para o link ativo ou hover */
         .sidebar a.active, .sidebar a:hover {
             background-color: #d6e9e7;
             color: #000;
@@ -64,11 +69,13 @@
             border-bottom-right-radius: 10px;
         }
 
+        /* Área de conteúdo principal */
         .content {
             flex: 1;
             padding: 40px;
         }
 
+        /* Título da tabela */
         h1.title {
             font-size: 24px;
             font-weight: bold;
@@ -76,6 +83,7 @@
             color: #333;
         }
 
+        /* Tabela de voluntários */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -95,15 +103,17 @@
             color: white;
         }
 
+        /* Linhas alternadas para melhor visualização */
         tr:nth-child(even) {
             background-color: #f8f8f8;
         }
 
+        /* Efeito hover nas linhas da tabela */
         tr:hover {
             background-color: #e6f4f1;
         }
 
-        /* Responsividade */
+        /* Responsividade para telas menores */
         @media (max-width: 768px) {
             .main {
                 flex-direction: column;
@@ -125,12 +135,15 @@
     </style>
 </head>
 <body>
+<!-- Barra de navegação superior com logo e botão para tela inicial -->
 <div class="navbar">
     <div class="logo">Apollo Pesquisas</div>
     <a href="/home" class="profile-button">Tela Inicial</a>
 </div>
 
+<!-- Layout principal: sidebar + conteúdo -->
 <div class="main">
+    <!-- Barra lateral de navegação -->
     <div class="sidebar">
         <a href="/perfil">Meu Perfil</a>
         <a href="/pesquisas/minhas">Minhas Pesquisas</a>
@@ -138,6 +151,7 @@
         <a href="/pesquisador/agenda">Minha Agenda</a>
     </div>
 
+    <!-- Conteúdo principal: tabela de voluntários inscritos -->
     <div class="content">
         <h1 class="title">Voluntários Inscritos nas Suas Pesquisas</h1>
 
@@ -151,10 +165,15 @@
             </tr>
             </thead>
             <tbody>
+            <!-- Loop Thymeleaf para exibir cada inscrição de voluntário -->
             <tr th:each="inscricao : ${inscricoes}">
+                <!-- Nome do voluntário -->
                 <td th:text="${inscricao.nomeVoluntario}">Nome</td>
+                <!-- Email do voluntário -->
                 <td th:text="${inscricao.email}">email@teste.com</td>
+                <!-- Telefone do voluntário -->
                 <td th:text="${inscricao.telefone}">(00) 0000-0000</td>
+                <!-- Título da pesquisa à qual está inscrito -->
                 <td th:text="${inscricao.tituloPesquisa}">Título da Pesquisa</td>
             </tr>
             </tbody>

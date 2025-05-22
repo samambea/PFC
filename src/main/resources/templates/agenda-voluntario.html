@@ -4,24 +4,28 @@
     <meta charset="UTF-8">
     <title>Agenda - Apollo Pesquisas</title>
     <style>
+        /* Estilização global da página */
         body {
             margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f2f4f3;
+            font-family: 'Segoe UI', sans-serif; /* Fonte moderna e legível */
+            background-color: #f2f4f3; /* Cor de fundo suave */
         }
+        /* Barra de navegação superior */
         .navbar {
-            background-color: #2AA184;
+            background-color: #2AA184; /* Cor de fundo personalizada */
             height: 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 20px;
         }
+        /* Logo na navbar */
         .navbar .logo {
             color: white;
             font-weight: bold;
             font-size: 1.5rem;
         }
+        /* Botão de acesso à tela inicial */
         .navbar .profile-button {
             background-color: #000;
             color: #fff;
@@ -32,14 +36,16 @@
             cursor: pointer;
             text-decoration: none;
         }
+        /* Barra lateral de navegação */
         .sidebar {
             background-color: #2AA184;
             width: 220px;
-            min-height: calc(100vh - 60px);
+            min-height: calc(100vh - 60px); /* Altura total menos a navbar */
             padding-top: 20px;
             display: flex;
             flex-direction: column;
         }
+        /* Links da sidebar */
         .sidebar a {
             padding: 15px 20px;
             color: white;
@@ -47,19 +53,23 @@
             display: block;
             font-weight: 500;
         }
+        /* Destaque para o link ativo ou hover */
         .sidebar a.active, .sidebar a:hover {
             background-color: #d6e9e7;
             color: #000;
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
         }
+        /* Layout principal com sidebar e conteúdo */
         .main {
             display: flex;
         }
+        /* Conteúdo principal à direita da sidebar */
         .content {
             flex: 1;
             padding: 40px;
         }
+        /* Título da página */
         .title {
             font-size: 32px;
             font-weight: bold;
@@ -67,6 +77,7 @@
             color: #0f241b;
         }
 
+        /* Container da agenda: calendário e lista de agendamentos lado a lado */
         .agenda-container {
             display: flex;
             justify-content: center;
@@ -76,6 +87,7 @@
             flex-wrap: wrap;
         }
 
+        /* Estilo do calendário */
         .calendar {
             border: 1px solid #ccc;
             padding: 25px;
@@ -86,12 +98,14 @@
             height: 350px;
         }
 
+        /* Cabeçalho do calendário */
         .calendar-header {
             font-weight: bold;
             margin-bottom: 10px;
             font-size: 1.2rem;
         }
 
+        /* Dias da semana no calendário */
         .calendar-days {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -101,12 +115,14 @@
             font-size: 1rem;
         }
 
+        /* Dias do mês no calendário */
         .calendar-dates {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 5px;
         }
 
+        /* Cada célula de dia no calendário */
         .calendar-dates div {
             padding: 10px;
             border-radius: 50%;
@@ -117,22 +133,26 @@
             font-size: 0.95rem;
         }
 
+        /* Efeito hover nos dias do calendário */
         .calendar-dates div:hover {
             background-color: #2AA184;
             color: white;
         }
 
+        /* Destaque para dias com agendamento */
         .highlight {
             background-color: red !important;
             color: white;
         }
 
+        /* Lista de agendamentos ao lado do calendário */
         .agendamentos-list {
             flex: 1;
             margin-top: 10px;
             max-width: 350px;
         }
 
+        /* Item individual de agendamento */
         .agendamento-item {
             background-color: white;
             padding: 12px;
@@ -145,36 +165,41 @@
 </head>
 <body>
 
-<!-- Navbar -->
+<!-- Barra de navegação superior com logo e botão para tela inicial -->
 <div class="navbar">
     <div class="logo">Apollo Pesquisas</div>
     <a href="/home" class="profile-button">Tela Inicial</a>
 </div>
 
-<!-- Main Content -->
+<!-- Layout principal contendo sidebar e conteúdo -->
 <div class="main">
+    <!-- Sidebar de navegação lateral -->
     <div class="sidebar">
         <a href="/perfil">Meu Perfil</a>
         <a href="/agenda" class="active">Minha Agenda</a>
     </div>
 
+    <!-- Conteúdo principal da página -->
     <div class="content">
-        <!-- Agenda -->
+        <!-- Título da página de agenda -->
         <div class="title">Minha Agenda</div>
 
-        <!-- Agenda Container -->
+        <!-- Container da agenda: calendário e lista de agendamentos -->
         <div class="agenda-container">
+            <!-- Calendário mensal -->
             <div class="calendar">
                 <div class="calendar-header">
+                    <!-- Exibe o mês e ano atual dinamicamente -->
                     <span th:text="${mesAtual} + ' ' + ${anoAtual}"></span>
                 </div>
                 <div class="calendar-days">
+                    <!-- Dias da semana: Domingo a Sábado -->
                     <div>D</div><div>S</div><div>T</div><div>Q</div><div>Q</div><div>S</div><div>S</div>
                 </div>
                 <div class="calendar-dates">
-                    <!-- células vazias para offset -->
+                    <!-- Preenche os espaços em branco antes do primeiro dia do mês -->
                     <div th:each="b : ${#numbers.sequence(1, offset)}"></div>
-                    <!-- dias do mês -->
+                    <!-- Exibe os dias do mês, destacando os que têm agendamento -->
                     <div th:each="dia : ${diasDoMes}"
                          th:text="${dia}"
                          th:classappend="${diasComAgendamento.contains(dia)} ? 'highlight'">
@@ -182,10 +207,13 @@
                 </div>
             </div>
 
+            <!-- Lista de agendamentos para o mês selecionado -->
             <div class="agendamentos-list">
+                <!-- Exibe cada agendamento individualmente -->
                 <div th:each="agendamento : ${agendamentos}" class="agendamento-item">
                     <div>
                         <strong>Data e horário:</strong>
+                        <!-- Exibe data e horário formatados, se disponíveis -->
                         <strong th:if="${agendamento.dataAgendamento != null}"
                                 th:text="${#temporals.format(agendamento.dataAgendamento, 'dd/MM')} + ' ' + ${agendamento.horario}"></strong>
                     </div>

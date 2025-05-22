@@ -10,13 +10,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/sugestoes")
+// Controller responsável pelo gerenciamento das sugestões enviadas pelos usuários.
+// Permite listar, criar, editar, atualizar e excluir sugestões.
+
+@Controller // Marca como controller MVC que retorna views (páginas HTML)
+@RequestMapping("/sugestoes") // Prefixo base para todas as rotas deste controller
 public class SugestaoController {
 
     @Autowired
     private SugestaoService sugestaoService;
 
+    // Lista todas as sugestões cadastradas e as adiciona ao modelo para exibição.
     @GetMapping
     public String listar(Model model) {
         List<Sugestao> sugestoes = sugestaoService.listarTodos();
@@ -24,23 +28,23 @@ public class SugestaoController {
         return "sugestoes/listar";
     }
 
+    // Exibe o formulário para criação de uma nova sugestão.
     @GetMapping("/nova")
     public String nova(Model model) {
         model.addAttribute("sugestao", new Sugestao());
         return "sugestoes/form";
     }
 
+    // Processa o envio do formulário de nova sugestão.
+    // Salva a sugestão e adiciona mensagem de sucesso para exibição após redirecionamento.
     @PostMapping
     public String salvar(@ModelAttribute Sugestao sugestao, RedirectAttributes redirectAttributes) {
         sugestaoService.criar(sugestao);
         redirectAttributes.addFlashAttribute("alertMessage", "Sugestão enviada com sucesso!");
         return "redirect:/home";
     }
-//    public String salvar(@ModelAttribute Sugestao sugestao) {
-//        sugestaoService.criar(sugestao);
-//        return "redirect:/sugestoes";
-//    }
 
+    // Exibe o formulário para edição de uma sugestão existente, carregando seus dados.
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable String id, Model model) {
         Sugestao sugestao = sugestaoService.buscarPorId(id).orElseThrow();
@@ -48,12 +52,14 @@ public class SugestaoController {
         return "sugestoes/form";
     }
 
+    // Processa a atualização dos dados de uma sugestão existente.
     @PostMapping("/atualizar/{id}")
     public String atualizar(@PathVariable String id, @ModelAttribute Sugestao sugestao) {
         sugestaoService.atualizar(id, sugestao);
         return "redirect:/sugestoes";
     }
 
+    // Remove uma sugestão pelo ID e redireciona para a listagem.
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable String id) {
         sugestaoService.deletar(id);

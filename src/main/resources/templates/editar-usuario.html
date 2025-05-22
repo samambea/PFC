@@ -5,25 +5,34 @@
     <meta charset="UTF-8">
 </head>
 <body>
+<!-- Título da página de edição de usuário -->
 <h1>Editar Usuário</h1>
+<!-- Formulário de edição, vinculado ao objeto 'usuario' do backend -->
 <form th:action="@{/admin/usuarios/editar}" th:object="${usuario}" method="post">
+    <!-- Campo oculto para o ID do usuário (necessário para atualização) -->
     <input type="hidden" th:field="*{usuarioId}" />
 
+    <!-- Campo para o nome do usuário -->
     <label>Nome:</label>
     <input type="text" th:field="*{nome}" /><br/>
 
+    <!-- Campo para o email do usuário -->
     <label>Email:</label>
     <input type="text" th:field="*{email}" /><br/>
 
+    <!-- Campo para senha do usuário (opcional para alteração) -->
     <label>Senha:</label>
     <input type="password" th:field="*{senha}" /><br/>
 
+    <!-- Campo para tipo de usuário (apenas leitura) -->
     <label>Tipo:</label>
     <input type="text" th:field="*{tipo}" readonly /><br/>
 
+    <!-- Campo para role/permissão do usuário -->
     <label>Role:</label>
     <input type="text" th:field="*{role}" /><br/>
 
+    <!-- Botão para salvar as alterações -->
     <button type="submit">Salvar</button>
 </form>
 </body>

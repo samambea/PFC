@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <title>Perfil Pesquisador - Apollo Pesquisas</title>
     <style>
+        /* Estilização global da página */
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
             background-color: #f2f4f3;
         }
+        /* Barra de navegação superior */
         .navbar {
             background-color: #2AA184;
             height: 60px;
@@ -31,6 +33,7 @@
             font-weight: bold;
             cursor: pointer;
         }
+        /* Barra lateral de navegação */
         .sidebar {
             background-color: #2AA184;
             width: 220px;
@@ -51,6 +54,7 @@
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
         }
+        /* Área de conteúdo principal */
         .content {
             flex: 1;
             padding: 40px;
@@ -58,6 +62,7 @@
         .main {
             display: flex;
         }
+        /* Card de perfil do pesquisador */
         .profile-card {
             background-color: white;
             border-radius: 12px;
@@ -67,6 +72,7 @@
             align-items: center;
             gap: 20px;
         }
+        /* Avatar do usuário */
         .avatar {
             width: 120px;
             height: 120px;
@@ -74,6 +80,7 @@
             object-fit: cover;
             border: 3px solid #ccc;
         }
+        /* Informações do perfil */
         .profile-info {
             display: flex;
             flex-direction: column;
@@ -88,91 +95,101 @@
             font-size: 16px;
             color: #333;
         }
+        /* Container do formulário de upload */
         .upload-container {
-        margin-top: 30px;
-        background: #fff;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
-        width: fit-content;
-    }
-
-    .custom-file-input {
-        display: none;
-    }
-
-    .file-label {
-        background-color: #2AA184;
-        color: white;
-        padding: 10px 18px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        margin-right: 10px;
-        display: inline-block;
-        transition: background 0.3s ease;
-    }
-
-    .file-label:hover {
-        background-color: #239378;
-    }
-
-    .submit-btn {
-        background-color: #000;
-        color: #fff;
-        padding: 10px 18px;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background 0.3s ease;
-    }
-
-    .submit-btn:hover {
-        background-color: #333;
-    }
-
-    .file-name {
-        display: inline-block;
-        margin-top: 10px;
-        color: #333;
-        font-style: italic;
-    }
+            margin-top: 30px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+            width: fit-content;
+        }
+        /* Input de arquivo customizado */
+        .custom-file-input {
+            display: none;
+        }
+        .file-label {
+            background-color: #2AA184;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+            display: inline-block;
+            transition: background 0.3s ease;
+        }
+        .file-label:hover {
+            background-color: #239378;
+        }
+        /* Botão de envio do formulário */
+        .submit-btn {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: #333;
+        }
+        /* Nome do arquivo selecionado */
+        .file-name {
+            display: inline-block;
+            margin-top: 10px;
+            color: #333;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
+<!-- Barra de navegação superior com logo e botão para tela inicial -->
 <div class="navbar">
     <div class="logo">Apollo Pesquisas</div>
     <a href="/home" class="profile-button">Tela Inicial</a>
 </div>
 
+<!-- Layout principal: sidebar + conteúdo -->
 <div class="main">
+    <!-- Barra lateral de navegação -->
     <div class="sidebar">
         <a href="#" class="active">Meu Perfil</a>
         <a href="/pesquisas/minhas">Minhas Pesquisas</a>
         <a href="/perfil/voluntarios-inscritos">Voluntários Inscritos</a>
         <a href="/pesquisador/agenda">Minha Agenda</a>
     </div>
+    <!-- Conteúdo principal do perfil -->
     <div class="content">
+        <!-- Card com informações do perfil do pesquisador -->
         <div class="profile-card">
+            <!-- Foto de perfil do usuário -->
             <img th:src="@{'/imagens/' + ${usuario.imagemPerfil}}" alt="" class="avatar"/>
             <div class="profile-info">
+                <!-- Nome do pesquisador -->
                 <div class="name" th:text="${usuario.nome}">Nome Completo</div>
+                <!-- E-mail de contato -->
                 <div class="detail">
                     <span th:text="'Contato: ' + ${usuario.email}">Contato</span>
                 </div>
             </div>
         </div>
 
-        <!-- Formulário para upload de imagem -->
+        <!-- Formulário para upload de imagem de perfil -->
         <div class="upload-container">
             <form method="post" action="/perfil/perfil/upload-foto" enctype="multipart/form-data">
+                <!-- Botão customizado para selecionar arquivo -->
                 <label class="file-label" for="fotoPerfil">Escolher Imagem</label>
                 <input type="file" id="fotoPerfil" name="fotoPerfil" class="custom-file-input" accept="image/*" required onchange="mostrarNomeArquivo()">
+                <!-- Botão para enviar a imagem -->
                 <button type="submit" class="submit-btn">Enviar</button>
+                <!-- Nome do arquivo selecionado aparece aqui -->
                 <div id="nomeArquivo" class="file-name"></div>
             </form>
         </div>
+        <!-- Script para mostrar o nome do arquivo selecionado -->
         <script>
             function mostrarNomeArquivo() {
                 const input = document.getElementById('fotoPerfil');

@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <title>Feedback</title>
     <style>
+        /* Estilização global da página */
         body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Fonte moderna e legível */
+            background-color: #f4f4f4; /* Cor de fundo suave */
             margin: 0;
             padding: 0;
         }
 
+        /* Container centralizado para o formulário */
         .container {
             max-width: 600px;
             margin: 40px auto;
@@ -20,12 +22,14 @@
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
         }
 
+        /* Título do formulário */
         h2 {
             color: #2e7d64;
             text-align: center;
             margin-bottom: 30px;
         }
 
+        /* Rótulos dos campos */
         label {
             font-weight: bold;
             display: block;
@@ -33,6 +37,7 @@
             color: #333;
         }
 
+        /* Campos de entrada e textarea */
         input[type="number"],
         textarea {
             width: 100%;
@@ -43,6 +48,7 @@
             font-size: 1em;
         }
 
+        /* Botão de envio do formulário */
         button {
             background-color: #1e5f4c;
             color: white;
@@ -56,10 +62,12 @@
             width: 100%;
         }
 
+        /* Efeito hover no botão */
         button:hover {
             background-color: #144a3a;
         }
 
+        /* Botão de link para voltar */
         .link-button {
             display: block;
             text-align: center;
@@ -72,6 +80,7 @@
             font-weight: bold;
         }
 
+        /* Efeito hover no botão de link */
         .link-button:hover {
             background-color: #1e5f4c;
         }
@@ -79,27 +88,37 @@
 </head>
 <body>
 <div class="container">
+    <!-- Título da página de feedback -->
     <h2>Deixe seu Feedback</h2>
+    <!-- Mensagem dinâmica de teste, pode ser usada para avisos ou instruções -->
     <p th:text="${mensagemTeste}">Mensagem padrão</p>
 
+    <!-- Formulário de feedback, vinculado ao objeto 'feedback' do backend -->
     <form th:action="@{/feedbacks}" method="post" th:object="${feedback}">
+        <!-- Campo para nota de 1 a 5 -->
         <label for="nota">Nota (1 a 5):</label>
         <input type="number" id="nota" name="nota" th:field="*{nota}" min="1" max="5" required>
 
+        <!-- Campo para comentário do usuário -->
         <label for="comentario">Comentário:</label>
         <textarea id="comentario" name="comentario" th:field="*{comentario}" rows="4" required></textarea>
 
+        <!-- Campo para nome da pesquisa (pode ser textarea para permitir nomes longos) -->
         <label for="nomePesquisa">Nome da Pesquisa:</label>
         <textarea id="nomePesquisa" name="nomePesquisa" th:field="*{nomePesquisa}" rows="4" required></textarea>
+
+        <!-- Campo oculto para o ID da participação (caso necessário para o backend) -->
         <input type="hidden" name="participacaoId" th:value="${participacaoId}" />
 
-
+        <!-- Botão para enviar o feedback -->
         <button type="submit">Enviar Feedback</button>
     </form>
 
+    <!-- Botão para voltar para a página inicial -->
     <a href="/home" class="link-button">🏠 Voltar para Home</a>
 </div>
 
+<!-- Script para exibir alerta de sucesso e redirecionar, caso o feedback seja enviado -->
 <script th:if="${success}" th:inline="javascript">
     alert("Feedback enviado com sucesso!");
     window.location.href = /*[[@{/home-voluntario}]]*/ "/home-voluntario";

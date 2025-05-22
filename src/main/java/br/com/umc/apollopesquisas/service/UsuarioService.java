@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
+// Serviço responsável pela lógica de negócio relacionada a Usuário.
 @Service
 public class UsuarioService {
 
@@ -25,18 +26,23 @@ public class UsuarioService {
 
     private final String DIRETORIO_IMAGENS = "uploads/imagens/";
 
+    // Retorna todos os usuários cadastrados.
     public List<Usuario> findAll() {
         return usuarioRepository.findAll();
     }
 
+    // Busca um usuário pelo ID.
     public Optional<Usuario> findById(String id) {
         return usuarioRepository.findById(id);
     }
 
+    // Salva ou atualiza um usuário.
     public Usuario save(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
+    // Deleta um usuário pelo ID.
+    // Retorna true se excluído com sucesso, false se não encontrado.
     public boolean deleteById(String id) {
         if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);
@@ -45,14 +51,17 @@ public class UsuarioService {
         return false;
     }
 
+    // Verifica se um usuário existe pelo ID.
     public boolean existsById(String id) {
         return usuarioRepository.existsById(id);
     }
 
+    // Busca um usuário pelo e-mail.
     public Optional<Usuario> findByEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
 
+    // Retorna o usuário atualmente autenticado na sessão.
     public Optional<Usuario> getUsuarioAutenticado() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -66,6 +75,7 @@ public class UsuarioService {
         return findByEmail(email);
     }
 
+    // Salva uma imagem de perfil no diretório configurado e retorna o nome do arquivo salvo.
     public String salvarImagem(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             throw new IOException("Arquivo vazio");
@@ -84,6 +94,7 @@ public class UsuarioService {
         return nomeArquivo;
     }
 
+    // Atualiza a foto de perfil do usuário identificado pelo e-mail.
     public void atualizarFoto(String email, String nomeArquivo) {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
@@ -92,9 +103,9 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
+    // Busca um usuário pelo e-mail, lançando exceção se não encontrado.
     public Usuario buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com email: " + email));
     }
-
 }

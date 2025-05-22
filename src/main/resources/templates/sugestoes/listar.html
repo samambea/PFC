@@ -4,28 +4,32 @@
     <meta charset="UTF-8">
     <title>Lista de Sugestões</title>
     <style>
+        /* Estilo global da página */
         body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Fonte padrão */
+            background-color: #f4f4f4; /* Cor de fundo suave */
             margin: 0;
             padding: 0;
         }
 
+        /* Container centralizado para a tabela de sugestões */
         .container {
-            max-width: 1000px;
-            margin: 40px auto;
+            max-width: 1000px; /* Largura máxima */
+            margin: 40px auto; /* Centraliza vertical e horizontalmente */
             padding: 30px;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            background-color: #fff; /* Fundo branco */
+            border-radius: 12px; /* Cantos arredondados */
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* Sombra leve */
         }
 
+        /* Título principal da página */
         h2 {
-            color: #2e7d64;
+            color: #2e7d64; /* Cor personalizada */
             text-align: center;
             margin-bottom: 20px;
         }
 
+        /* Estilo do botão de ação principal */
         .button {
             display: inline-block;
             background-color: #1e5f4c;
@@ -38,15 +42,18 @@
             margin-bottom: 20px;
         }
 
+        /* Efeito hover no botão */
         .button:hover {
             background-color: #144a3a;
         }
 
+        /* Estilo da tabela de sugestões */
         table {
             width: 100%;
             border-collapse: collapse;
         }
 
+        /* Cabeçalho da tabela */
         th {
             background-color: #2e7d64;
             color: white;
@@ -54,21 +61,25 @@
             text-align: left;
         }
 
+        /* Células da tabela */
         td {
             padding: 12px;
             border-bottom: 1px solid #ccc;
         }
 
+        /* Links de ação dentro da tabela */
         td a {
             color: #1e5f4c;
             text-decoration: none;
             font-weight: bold;
         }
 
+        /* Efeito hover nos links de ação */
         td a:hover {
             text-decoration: underline;
         }
 
+        /* Botão de navegação para voltar */
         .link-button {
             display: inline-block;
             margin-top: 30px;
@@ -80,6 +91,7 @@
             font-weight: bold;
         }
 
+        /* Efeito hover no botão de navegação */
         .link-button:hover {
             background-color: #1e5f4c;
         }
@@ -87,7 +99,9 @@
 </head>
 <body>
 <div class="container">
+    <!-- Título da lista de sugestões -->
     <h2>Sugestões de Pesquisas Médicas</h2>
+    <!-- Tabela que exibe as sugestões -->
     <table>
         <thead>
         <tr>
@@ -96,17 +110,24 @@
             <th>Data</th>
             <th>Email</th>
             <th>Ações</th>
-
         </tr>
         </thead>
         <tbody>
+        <!-- Laço Thymeleaf para exibir cada sugestão da lista -->
         <tr th:each="sugestao : ${sugestoes}">
+            <!-- Exibe o título da sugestão -->
             <td th:text="${sugestao.titulo}"></td>
+            <!-- Exibe a categoria da sugestão -->
             <td th:text="${sugestao.categoria}"></td>
+            <!-- Exibe a data de criação formatada -->
             <td th:text="${#temporals.format(sugestao.dataCriacao, 'dd/MM/yyyy HH:mm')}"></td>
+            <!-- Exibe o e-mail associado à sugestão -->
             <td th:text="${sugestao.email}"></td>
+            <!-- Ações de editar e excluir para cada sugestão -->
             <td>
+                <!-- Link para editar a sugestão -->
                 <a th:href="@{'/sugestoes/editar/' + ${sugestao.sugestaoId}}">Editar</a> |
+                <!-- Link para excluir a sugestão, com confirmação -->
                 <a th:href="@{'/sugestoes/excluir/' + ${sugestao.sugestaoId}}" onclick="return confirm('Confirmar exclusão?')">Excluir</a>
             </td>
         </tr>
@@ -114,16 +135,16 @@
     </table>
 
     <div>
+        <!-- Botão de voltar para Home, visível apenas para ADMIN -->
         <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
            th:href="@{/admin/usuarios/lista-usuarios}"
            class="link-button">🏠 Voltar para Home</a>
 
+        <!-- Botão de voltar para Home, visível apenas para PESQUISADOR -->
         <a th:if="${#authorization.expression('hasRole(''PESQUISADOR'')')}"
            th:href="@{/home-pesquisador}"
            class="link-button">🏠 Voltar para Home</a>
     </div>
-
-
 </div>
 </body>
 </html>

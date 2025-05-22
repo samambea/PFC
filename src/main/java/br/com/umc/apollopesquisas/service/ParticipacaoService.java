@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+// Serviço responsável pela lógica de negócio relacionada a Participação em pesquisas.
 @Service
 public class ParticipacaoService {
 
@@ -33,18 +34,22 @@ public class ParticipacaoService {
     @Autowired
     private UsuarioService usuarioService;
 
+    // Cria uma nova participação.
     public Participacao criar(Participacao participacao) {
         return participacaoRepository.save(participacao);
     }
 
+    // Lista todas as participações.
     public List<Participacao> listarTodos() {
         return participacaoRepository.findAll();
     }
 
+    // Busca uma participação pelo ID.
     public Optional<Participacao> buscarPorId(String id) {
         return participacaoRepository.findById(id);
     }
 
+    // Atualiza uma participação existente pelo ID.
     public Participacao atualizar(String id, Participacao novaParticipacao) {
         Optional<Participacao> participacaoExistente = participacaoRepository.findById(id);
 
@@ -56,6 +61,7 @@ public class ParticipacaoService {
         }
     }
 
+    // Deleta uma participação pelo ID.
     public boolean deletar(String id) {
         if (participacaoRepository.existsById(id)) {
             participacaoRepository.deleteById(id);
@@ -64,9 +70,9 @@ public class ParticipacaoService {
         return false;
     }
 
+    // Busca participações pelo ID do usuário, preenchendo o objeto Pesquisa em cada participação.
     public List<Participacao> buscarPorUsuarioId(String usuarioId) {
         List<Participacao> participacoes = participacaoRepository.findByUsuarioId(usuarioId);
-
 
         for (Participacao participacao : participacoes) {
             Pesquisa pesquisa = pesquisaRepository.findById(participacao.getPesquisaId()).orElse(null);
@@ -76,11 +82,12 @@ public class ParticipacaoService {
         return participacoes;
     }
 
-
+    // Busca uma participação pelo usuário e pesquisa.
     public Optional<Participacao> buscarPorUsuarioEPesquisa(String usuarioId, String pesquisaId) {
         return participacaoRepository.findByUsuarioIdAndPesquisaId(usuarioId, pesquisaId);
     }
 
+    // Registra a participação de um usuário em uma pesquisa pelo e-mail do usuário.
     public void registrarParticipacao(String pesquisaId, String emailUsuario) {
         Usuario usuario = usuarioRepository.findByEmail(emailUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
@@ -95,10 +102,12 @@ public class ParticipacaoService {
         participacaoRepository.save(participacao);
     }
 
+    // Lista participações pelo ID do usuário.
     public List<Participacao> listarParticipacoes(String usuarioId) {
         return participacaoRepository.findByUsuarioId(usuarioId);
     }
 
+    // Salva uma participação associada a uma pesquisa pendente armazenada na sessão HTTP.
     public void salvarParticipacao(HttpServletRequest request, Usuario usuario) {
         // Verifica se existe uma pesquisa pendente na sessão
         Pesquisa pesquisaPendente = (Pesquisa) request.getSession().getAttribute("pesquisaPendentes");
@@ -119,7 +128,7 @@ public class ParticipacaoService {
         }
     }
 
-    //Metodo para listar participações por usuário
+    // Lista participações por email do usuário (usa UsuarioService para buscar ID).
     public List<Participacao> listarParticipacoesPorUsuario(String email) {
         String usuarioId = usuarioService.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"))
@@ -128,18 +137,13 @@ public class ParticipacaoService {
         return participacaoRepository.findByUsuarioId(usuarioId);
     }
 
-    // Metodo para listar participações por email do usuário
+    // Metodo duplicado para listar participações por email do usuário.
     public List<Participacao> listarParticipacoesPorUsuarioEmail(String email) {
-        String usuarioId = usuarioService.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"))
-                .getUsuarioId();
-
-        return participacaoRepository.findByUsuarioId(usuarioId);
+        return listarParticipacoesPorUsuario(email);
     }
 
-    // Metodo para realizar a participação do usuário em uma pesquisa
+    // Realiza a participação do usuário em uma pesquisa, definindo status e data de inscrição.
     public void participarNaPesquisa(String pesquisaId, String usuarioId) {
-        // Lógica para adicionar o usuário à pesquisa
         Participacao participacao = new Participacao();
         participacao.setPesquisaId(pesquisaId);
         participacao.setUsuarioId(usuarioId);
@@ -148,8 +152,8 @@ public class ParticipacaoService {
         participacaoRepository.save(participacao);
     }
 
+    // Busca participações pelo ID do usuário.
     public List<Participacao> buscarPorUsuario(String usuarioId) {
         return participacaoRepository.findByUsuarioId(usuarioId);
     }
-
 }

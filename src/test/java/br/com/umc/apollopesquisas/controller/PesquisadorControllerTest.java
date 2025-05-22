@@ -21,13 +21,14 @@ import static org.mockito.Mockito.*;
 public class PesquisadorControllerTest {
 
     @Mock
-    private PesquisadorRepository pesquisadorRepository;
+    private PesquisadorRepository pesquisadorRepository; // Mock do repositório para simular operações de banco
 
     @InjectMocks
-    private PesquisadorController pesquisadorController;
+    private PesquisadorController pesquisadorController; // Controller a ser testado
 
-    private Pesquisador pesquisador;
+    private Pesquisador pesquisador; // Objeto de teste representando um pesquisador
 
+    // Inicializa mocks e configura objeto de teste antes de cada método
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -40,10 +41,11 @@ public class PesquisadorControllerTest {
         pesquisador.setAreaDePesquisa("Pesquisa Cardíaca");
     }
 
+    // Testa criação de pesquisador com sucesso
     @Test
     void criarPesquisador_Success() {
         when(pesquisadorRepository.save(any(Pesquisador.class))).thenReturn(pesquisador);
-        
+
         Pesquisador result = pesquisadorController.criar(pesquisador);
 
         assertNotNull(result);
@@ -51,6 +53,7 @@ public class PesquisadorControllerTest {
         verify(pesquisadorRepository).save(pesquisador);
     }
 
+    // Testa busca de pesquisador por ID com sucesso
     @Test
     void buscarPesquisadorPorId_Success() {
         when(pesquisadorRepository.findById("123")).thenReturn(Optional.of(pesquisador));
@@ -62,6 +65,7 @@ public class PesquisadorControllerTest {
         verify(pesquisadorRepository).findById("123");
     }
 
+    // Testa busca de pesquisador por ID quando não encontrado
     @Test
     void buscarPesquisadorPorId_NotFound() {
         when(pesquisadorRepository.findById("123")).thenReturn(Optional.empty());
@@ -72,6 +76,7 @@ public class PesquisadorControllerTest {
         verify(pesquisadorRepository).findById("123");
     }
 
+    // Testa listagem de todos os pesquisadores com sucesso
     @Test
     void listarTodos_Success() {
         List<Pesquisador> pesquisadores = Arrays.asList(pesquisador);
@@ -85,6 +90,7 @@ public class PesquisadorControllerTest {
         verify(pesquisadorRepository).findAll();
     }
 
+    // Testa atualização de pesquisador com sucesso
     @Test
     void atualizarPesquisador_Success() {
         when(pesquisadorRepository.existsById("123")).thenReturn(true);
@@ -98,6 +104,7 @@ public class PesquisadorControllerTest {
         verify(pesquisadorRepository).save(pesquisador);
     }
 
+    // Testa atualização de pesquisador quando não encontrado
     @Test
     void atualizarPesquisador_NotFound() {
         when(pesquisadorRepository.existsById("123")).thenReturn(false);
@@ -109,6 +116,7 @@ public class PesquisadorControllerTest {
         verify(pesquisadorRepository, never()).save(any(Pesquisador.class));
     }
 
+    // Testa exclusão de pesquisador com sucesso
     @Test
     void deletarPesquisador_Success() {
         when(pesquisadorRepository.existsById("123")).thenReturn(true);
@@ -121,6 +129,7 @@ public class PesquisadorControllerTest {
         verify(pesquisadorRepository).deleteById("123");
     }
 
+    // Testa exclusão de pesquisador quando não encontrado
     @Test
     void deletarPesquisador_NotFound() {
         when(pesquisadorRepository.existsById("123")).thenReturn(false);

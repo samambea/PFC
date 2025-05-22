@@ -4,16 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Início - Apollo Pesquisas</title>
+    <!-- Importa ícones do Font Awesome para uso nos botões e notificações -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <style>
+        /* Estilização global da página */
         body {
             margin: 0;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Fonte moderna e legível */
+            background-color: #f4f4f4; /* Cor de fundo suave */
         }
 
+        /* Barra de navegação superior */
         .navbar {
-            background-color: #2e7d64;
+            background-color: #2e7d64; /* Cor personalizada */
             color: #fff;
             padding: 15px 30px;
             display: flex;
@@ -21,16 +24,19 @@
             align-items: center;
         }
 
+        /* Logo da aplicação */
         .logo {
             font-size: 1.5em;
             font-weight: bold;
         }
 
+        /* Menu de navegação na navbar */
         .menu {
             display: flex;
             align-items: center;
         }
 
+        /* Links do menu */
         .menu a {
             color: #fff;
             margin-left: 20px;
@@ -38,16 +44,19 @@
             font-weight: 500;
         }
 
+        /* Efeito hover nos links do menu */
         .menu a:hover {
             text-decoration: underline;
         }
 
+        /* Botões de perfil */
         .profile-button {
             border: 1px solid #fff;
             border-radius: 6px;
             padding: 6px 12px;
         }
 
+        /* Botões de ação (criar pesquisa, listar sugestões) */
         .create-button {
             background-color: #1e5f4c;
             padding: 10px 20px;
@@ -59,10 +68,12 @@
             margin-left: 20px;
         }
 
+        /* Efeito hover nos botões de ação */
         .create-button:hover {
             background-color: #144a3a;
         }
 
+        /* Container principal da página */
         .container {
             padding: 40px 20px;
             max-width: 900px;
@@ -73,6 +84,7 @@
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
         }
 
+        /* Ícone de notificações */
         .notification-icon {
             position: relative;
             margin-left: 20px;
@@ -83,6 +95,7 @@
             font-size: 1.2em;
         }
 
+        /* Badge de número de notificações */
         .badge {
             position: absolute;
             top: -8px;
@@ -94,6 +107,7 @@
             font-size: 0.75em;
         }
 
+        /* Dropdown de notificações */
         .dropdown {
             display: none;
             position: absolute;
@@ -117,11 +131,13 @@
             border-bottom: none;
         }
 
+        /* Título principal da página */
         h1 {
             color: #2e7d64;
             text-align: center;
         }
 
+        /* Parágrafo de boas-vindas */
         p {
             text-align: center;
             color: #555;
@@ -130,21 +146,25 @@
 </head>
 <body>
 
+<!-- Barra de navegação superior com logo, menu e notificações -->
 <div class="navbar">
     <div class="logo">Apollo Pesquisas</div>
     <div class="menu">
+        <!-- Botão para acessar o perfil -->
         <a class="profile-button" href="/perfil">Meu Perfil</a>
+        <!-- Botão para editar o perfil -->
         <a class="profile-button" href="/perfil/editar">Editar Perfil</a>
-
+        <!-- Botão para criar nova pesquisa -->
         <a class="create-button" href="pesquisas/nova">
             <i class="fas fa-plus"></i> Criar Pesquisa
         </a>
+        <!-- Botão para listar sugestões -->
         <a class="create-button" href="/sugestoes">
             <i class="fas fa-lightbulb"></i> Listar Sugestões
         </a>
-
+        <!-- Botão para logout -->
         <a href="/logout">Sair</a>
-
+        <!-- Ícone de notificações com badge de quantidade -->
         <div class="notification-icon" id="notificacaoBtn">
             <i class="fas fa-bell"></i>
             <span class="badge" id="notificacaoCount">0</span>
@@ -153,13 +173,15 @@
     </div>
 </div>
 
+<!-- Container principal com mensagem de boas-vindas -->
 <div class="container">
     <h1>Bem-vindo ao Apollo Pesquisas</h1>
     <p>Essa é a página inicial do sistema. Aqui você pode navegar pelas funcionalidades disponíveis.</p>
 </div>
 
 <script>
-
+    // Aqui você pode adicionar scripts para buscar e exibir notificações dinamicamente
+    // Exemplo: manipulação do dropdown de notificações
 </script>
 
 </body>

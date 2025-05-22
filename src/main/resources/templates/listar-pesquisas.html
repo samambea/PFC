@@ -4,12 +4,14 @@
     <title>Lista de Pesquisas</title>
     <meta charset="UTF-8">
     <style>
+        /* Estilização global da página */
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f7f7f7;
+            font-family: 'Segoe UI', sans-serif; /* Fonte moderna e legível */
+            background-color: #f7f7f7; /* Cor de fundo suave */
             padding: 40px;
         }
 
+        /* Cabeçalho da página com título e botão de voltar */
         .header {
             display: flex;
             justify-content: space-between;
@@ -21,6 +23,7 @@
             color: #2e7d64;
         }
 
+        /* Botão de voltar para tela de usuários */
         .btn-voltar {
             background-color: #f0fdfa;
             color: #2e7d64;
@@ -32,6 +35,7 @@
             font-size: 14px;
         }
 
+        /* Tabela de pesquisas */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -52,6 +56,7 @@
             color: white;
         }
 
+        /* Botões de ação */
         .btn {
             padding: 6px 12px;
             font-size: 14px;
@@ -83,11 +88,13 @@
 </head>
 <body>
 
+<!-- Cabeçalho da página com título e botão de voltar -->
 <div class="header">
     <h1>Pesquisas Cadastradas</h1>
     <a href="/admin/usuarios" class="btn-voltar">Voltar</a>
 </div>
 
+<!-- Tabela de listagem das pesquisas -->
 <table>
     <thead>
     <tr>
@@ -99,13 +106,21 @@
     </tr>
     </thead>
     <tbody>
+    <!-- Loop Thymeleaf para exibir cada pesquisa -->
     <tr th:each="pesquisa : ${pesquisas}">
+        <!-- Nome da pesquisa -->
         <td th:text="${pesquisa.nomePesquisa}">Nome</td>
+        <!-- Instituição responsável -->
         <td th:text="${pesquisa.instituicao}">Instituição</td>
+        <!-- Área da pesquisa -->
         <td th:text="${pesquisa.areaDaPesquisa}">Área</td>
+        <!-- Status atual da pesquisa -->
         <td th:text="${pesquisa.statusPesquisa}">Status</td>
+        <!-- Botões de ação: editar e excluir -->
         <td>
+            <!-- Botão para editar a pesquisa -->
             <a th:href="@{'/admin/pesquisas/editar/' + ${pesquisa.pesquisaId}}" class="btn btn-edit">Editar</a>
+            <!-- Botão para excluir a pesquisa, com confirmação -->
             <a th:href="@{'/admin/pesquisas/deletar/' + ${pesquisa.pesquisaId}}"
                class="btn btn-delete"
                onclick="return confirm('Tem certeza que deseja excluir esta pesquisa?')">Excluir</a>

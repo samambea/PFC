@@ -5,12 +5,17 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+// Serviço responsável pelo envio de e-mails, como o link para redefinição de senha.
 @Service
 public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
 
+    // Envia um e-mail para o destinatário com o link para redefinição de senha.
+    // Parâmetros:
+    // - destino: e-mail do usuário que receberá o link.
+    // - token: token único para validação da solicitação de redefinição.
     public void enviarLinkRedefinicao(String destino, String token) {
         String assunto = "Redefinição de Senha - Apollo Pesquisas";
         String link = "http://localhost:8080/redefinir-senha?token=" + token;
@@ -27,4 +32,3 @@ public class EmailService {
         mailSender.send(message);
     }
 }
-

@@ -17,16 +17,18 @@ import static org.mockito.Mockito.when;
 public class VoluntarioControllerTest {
 
     @Mock
-    private VoluntarioRepository voluntarioRepository;
+    private VoluntarioRepository voluntarioRepository; // Mock do repositório de voluntários
 
     @InjectMocks
-    private VoluntarioController voluntarioController;
+    private VoluntarioController voluntarioController; // Controlador a ser testado
 
+    // Inicializa os mocks antes de cada teste
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    // Testa salvar voluntário com sucesso
     @Test
     void salveVoluntario_Success() {
         Voluntario voluntario = new Voluntario();
@@ -38,6 +40,7 @@ public class VoluntarioControllerTest {
         verify(voluntarioRepository).save(voluntario);
     }
 
+    // Testa criação de voluntário com sucesso, incluindo endereço
     @Test
     void criarVoluntario_Success() {
         Voluntario voluntario = new Voluntario();
@@ -53,6 +56,7 @@ public class VoluntarioControllerTest {
         verify(voluntarioRepository).save(voluntario);
     }
 
+    // Testa criação de voluntário com nome nulo
     @Test
     void criarVoluntario_NullName() {
         Voluntario voluntario = new Voluntario();
@@ -66,6 +70,7 @@ public class VoluntarioControllerTest {
         verify(voluntarioRepository).save(voluntario);
     }
 
+    // Testa falha ao salvar voluntário no repositório (exceção)
     @Test
     void criarVoluntario_RepositoryFailure() {
         Voluntario voluntario = new Voluntario();
@@ -79,6 +84,7 @@ public class VoluntarioControllerTest {
         verify(voluntarioRepository).save(voluntario);
     }
 
+    // Testa busca de voluntário por ID com sucesso
     @Test
     void findVoluntarioById_Sucess() {
         String id = "123";
@@ -94,6 +100,7 @@ public class VoluntarioControllerTest {
         verify(voluntarioRepository).findById(id);
     }
 
+    // Testa busca de voluntário por ID quando não encontrado
     @Test
     void buscarVoluntarioPorIdNaoEncontrado() {
         String id = "123";
@@ -105,6 +112,7 @@ public class VoluntarioControllerTest {
         verify(voluntarioRepository).findById(id);
     }
 
+    // Testa atualização de voluntário com sucesso
     @Test
     void atualizarVoluntario_Success() {
         String id = "123";
@@ -122,6 +130,7 @@ public class VoluntarioControllerTest {
         verify(voluntarioRepository).save(voluntario);
     }
 
+    // Testa atualização de voluntário quando não encontrado
     @Test
     void atualizarVoluntario_NotFound() {
         String id = "123";
@@ -135,6 +144,7 @@ public class VoluntarioControllerTest {
         verify(voluntarioRepository).existsById(id);
     }
 
+    // Testa exclusão de voluntário com sucesso
     @Test
     void deletarVoluntario_Success() {
         String id = "123";
@@ -148,6 +158,7 @@ public class VoluntarioControllerTest {
         verify(voluntarioRepository).deleteById(id);
     }
 
+    // Testa exclusão de voluntário quando não encontrado
     @Test
     void deletarVoluntario_NotFound() {
         String id = "123";

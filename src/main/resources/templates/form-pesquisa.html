@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Criar Nova Pesquisa</title>
     <style>
+        /* Estilização global da página */
         body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Fonte moderna e legível */
+            background-color: #f4f4f4; /* Cor de fundo suave */
             padding: 20px;
         }
 
+        /* Container centralizado do formulário */
         .form-container {
             background-color: #fff;
             max-width: 800px;
@@ -20,6 +22,7 @@
             position: relative;
         }
 
+        /* Botão de voltar posicionado no topo à esquerda */
         .back-button {
             position: absolute;
             top: 20px;
@@ -34,16 +37,19 @@
             transition: background-color 0.3s;
         }
 
+        /* Efeito hover no botão de voltar */
         .back-button:hover {
             background-color: #bbb;
         }
 
+        /* Título principal do formulário */
         h2 {
             color: #2e7d64;
             text-align: center;
             margin-bottom: 30px;
         }
 
+        /* Rótulos dos campos */
         label {
             display: block;
             margin-top: 15px;
@@ -51,6 +57,7 @@
             color: #333;
         }
 
+        /* Campos de entrada, textarea e select */
         input, textarea, select {
             width: 100%;
             padding: 12px;
@@ -60,6 +67,7 @@
             box-sizing: border-box;
         }
 
+        /* Botão de salvar pesquisa */
         .button {
             background-color: #2e7d64;
             color: #fff;
@@ -75,6 +83,7 @@
             display: inline-block;
         }
 
+        /* Efeito hover no botão de salvar */
         .button:hover {
             background-color: #256d56;
         }
@@ -83,35 +92,46 @@
 <body>
 
 <div class="form-container">
+    <!-- Botão para voltar à página inicial -->
     <a href="/home" class="back-button">← Voltar</a>
 
+    <!-- Título da página de criação de pesquisa -->
     <h2>Criar Nova Pesquisa</h2>
 
+    <!-- Formulário de criação de pesquisa -->
     <form th:action="@{/pesquisas/nova}" method="post">
         <!-- CSRF Token necessário para Spring Security -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
+        <!-- Campo para o nome da pesquisa -->
         <label for="nomePesquisa">Nome da Pesquisa</label>
         <input type="text" id="nomePesquisa" name="nomePesquisa" required>
 
+        <!-- Campo para descrição da pesquisa -->
         <label for="descricao">Descrição</label>
         <textarea id="descricao" name="descricao" rows="4" required></textarea>
 
+        <!-- Campo para objetivo da pesquisa -->
         <label for="objetivo">Objetivo</label>
         <textarea id="objetivo" name="objetivo" rows="3" required></textarea>
 
+        <!-- Campo para instituição responsável -->
         <label for="instituicao">Instituição</label>
         <input type="text" id="instituicao" name="instituicao" required>
 
+        <!-- Campo para área da pesquisa -->
         <label for="areaDaPesquisa">Área da Pesquisa</label>
         <input type="text" id="areaDaPesquisa" name="areaDaPesquisa" required>
 
+        <!-- Campo para pesquisador responsável -->
         <label for="pesquisadorResponsavel">Pesquisador Responsável</label>
         <input type="text" id="pesquisadorResponsavel" name="pesquisadorResponsavel" required>
 
+        <!-- Campo para critérios de inclusão/exclusão -->
         <label for="criteriosInclusaoExclusao">Critérios de Inclusão/Exclusão</label>
         <textarea id="criteriosInclusaoExclusao" name="criteriosInclusaoExclusao" rows="3" required></textarea>
 
+        <!-- Campo para selecionar o status da pesquisa -->
         <label for="statusPesquisa">Status da Pesquisa</label>
         <select id="statusPesquisa" name="statusPesquisa" required>
             <option value="ABERTA">Aberta</option>
@@ -120,6 +140,7 @@
             <option value="CONCLUIDA">Concluída</option>
         </select>
 
+        <!-- Botão para salvar a nova pesquisa -->
         <button class="button" type="submit">Salvar Pesquisa</button>
     </form>
 </div>

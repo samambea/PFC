@@ -4,35 +4,83 @@
     <meta charset="UTF-8">
     <title>Editar Perfil - Voluntário</title>
     <style>
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f7f7f7; }
-        .container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
-        .card { background-color: #2AA184; color: white; padding: 2rem; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); width: 100%; max-width: 400px; }
-        label, input { display: block; width: 100%; margin-bottom: 1rem; }
-        input { padding: 0.5rem; border-radius: 6px; border: none; }
-        button { background: white; color: #2AA184; border: none; padding: 0.7rem; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        /* Estilização global da página */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif; /* Fonte moderna e legível */
+            background-color: #f7f7f7; /* Cor de fundo suave */
+        }
+        /* Container centralizado na tela */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        /* Card do formulário */
+        .card {
+            background-color: #2AA184; /* Cor de fundo do card */
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 400px;
+        }
+        /* Rótulos e campos do formulário */
+        label, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        /* Campos de entrada */
+        input {
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: none;
+        }
+        /* Botão de submit */
+        button {
+            background: white;
+            color: #2AA184;
+            border: none;
+            padding: 0.7rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="card">
+        <!-- Título da página de edição de perfil -->
         <h2>Editar Perfil - Voluntário</h2>
+        <!-- Formulário de edição, vinculado ao objeto 'voluntario' do backend -->
         <form th:action="@{/perfil/editar-voluntario}" th:object="${voluntario}" method="post">
 
-        <label>Nome</label>
+            <!-- Campo para o nome do voluntário -->
+            <label>Nome</label>
             <input type="text" th:field="*{nome}" required/>
 
+            <!-- Campo para o email (apenas leitura, não pode ser alterado) -->
             <label>Email</label>
             <input type="email" th:field="*{email}" readonly/>
 
+            <!-- Campo para telefone -->
             <label>Telefone</label>
             <input type="text" th:field="*{telefone}" />
 
+            <!-- Campo para endereço -->
             <label>Endereço</label>
             <input type="text" th:field="*{endereco}" />
 
+            <!-- Campo para senha, opcional para alteração -->
             <label>Senha (deixe em branco para não alterar)</label>
             <input type="password" th:field="*{senha}" />
 
+            <!-- Botão para salvar as alterações -->
             <button type="submit">Salvar Alterações</button>
         </form>
     </div>
