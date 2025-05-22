@@ -27,13 +27,13 @@ import java.util.List;
 public class UsuarioController {
 
     @Autowired
-    private VoluntarioRepository voluntarioRepository;
+    public VoluntarioRepository voluntarioRepository;
 
     @Autowired
-    private PesquisadorRepository pesquisadorRepository;
+    public PesquisadorRepository pesquisadorRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    protected PasswordEncoder passwordEncoder;
 
     @Autowired
     private PesquisaService pesquisaService;

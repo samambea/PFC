@@ -30,6 +30,9 @@ public class Usuario {
 
     public Usuario() {}
 
+    public Usuario(String usuarioId) {
+    }
+
 
     public String getUsuarioId() {
         return usuarioId;
