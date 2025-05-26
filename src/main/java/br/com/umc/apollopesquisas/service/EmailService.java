@@ -1,4 +1,4 @@
-package br.com.umc.apollopesquisas.security;
+package br.com.umc.apollopesquisas.service;
 
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;

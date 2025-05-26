@@ -2,7 +2,6 @@ package br.com.umc.apollopesquisas.service;
 
 import br.com.umc.apollopesquisas.model.Usuario;
 import br.com.umc.apollopesquisas.repository.UsuarioRepository;
-import br.com.umc.apollopesquisas.security.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

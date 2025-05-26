@@ -23,7 +23,7 @@ class EmailServiceTest {
     }
 
     @Test
-    void enviarLinkRedefinicao_shouldSendEmailWithCorrectContent() {
+    void enviarLinkRedefinicao_shouldSendEmailWithCorrectContent() throws Exception {
         // Arrange
         String destino = "user@example.com";
         String token = "abc123token";

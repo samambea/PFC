@@ -56,7 +56,7 @@ public class RedefinicaoSenhaControllerTest {
     }
 
     @Test
-    void enviarEmail_UsuarioExistente_EnvioDoEmailComToken() {
+    void enviarEmail_UsuarioExistente_EnvioDoEmailComToken() throws Exception {
         String email = "test@example.com";
         Usuario usuario = new Usuario();
         usuario.setEmail(email);
