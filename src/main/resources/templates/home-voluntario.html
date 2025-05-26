@@ -92,6 +92,10 @@
             text-align: center;
             color: #555;
         }
+        .titulo-pesquisa {
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
@@ -126,7 +130,7 @@
     <div th:each="participacao : ${participacoes}" style="margin-bottom: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
         <div th:if="${participacao.pesquisa != null}">
             <!-- Nome da pesquisa -->
-            <h3 th:text="${participacao.pesquisa.nomePesquisa}">Título da Pesquisa</h3>
+            <h3 class="titulo-pesquisa" th:text="${participacao.pesquisa.nomePesquisa}">Título da Pesquisa</h3>
             <!-- Data de inscrição -->
             <p><strong>Data de Inscrição:</strong>
                 <span th:text="${#temporals.format(participacao.dataInscricao, 'dd/MM/yyyy HH:mm')}">Data</span>
@@ -172,13 +176,13 @@
          th:if="${pesquisa.statusPesquisa.name() == 'ABERTA'}"
          style="margin-bottom: 20px; padding: 20px; border: 1px solid #bbb; border-radius: 10px;">
         <!-- Nome da pesquisa -->
-        <h3 th:text="${pesquisa.nomePesquisa}">Título da Pesquisa</h3>
+        <h3 class="titulo-pesquisa" th:text="${pesquisa.nomePesquisa}">Título da Pesquisa</h3>
         <!-- Descrição da pesquisa -->
         <p th:text="${pesquisa.descricao}">Descrição da pesquisa</p>
         <!-- Objetivo da pesquisa -->
         <p><strong>Objetivo:</strong> <span th:text="${pesquisa.objetivo}">Objetivo</span></p>
         <!-- Instituição responsável -->
-        <p><strong>Instituição:</strong> <span th:text="${pesquisa.instituicao}">Instituição</span></p>
+        <p><strong>Instituição:</strong> <span th:text="${pesquisa.nomeInstituicao}">Instituição</span></p>
         <!-- Status da pesquisa -->
         <p><strong>Status:</strong> <span th:text="${pesquisa.statusPesquisa}">Status</span></p>
         <!-- Botão para o usuário participar da pesquisa -->

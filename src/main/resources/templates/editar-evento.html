@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Evento</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .header h1 {
+            color: #2AA184;
+            margin: 0;
+        }
+
+        .header > div {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-logout {
+            background-color: #fdfdfd;
+            color: #d64545;
+            border: 2px solid #d64545;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background-color: #d64545;
+            color: white;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .form-container h2 {
+            color: #2AA184;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn-save {
+            background-color: #2AA184;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-save:hover {
+            background-color: #249170;
+        }
+
+        .btn-back {
+            background-color: #f0fdfa;
+            color: #2AA184;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #d9f4ec;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Editar Evento</h1>
+    <div>
+        <a href="/eventos" class="btn-back">Voltar para Lista</a>
+        <a href="/index.html" class="btn-logout">Sair</a>
+    </div>
+</div>
+
+<div class="form-container">
+    <h2>Atualizar Informações do Evento</h2>
+
+    <form th:action="@{'/eventos/editar/' + ${evento.eventoId}}" method="post">
+
+        <div class="form-group">
+            <label for="tituloEvento">Título</label>
+            <input type="text" id="tituloEvento" name="tituloEvento" th:value="${evento.tituloEvento}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="descricaoEvento">Descrição</label>
+            <textarea id="descricaoEvento" name="descricaoEvento" required th:text="${evento.descricaoEvento}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="dataEvento">Data</label>
+            <input type="date" id="dataEvento" name="dataEvento" th:value="${evento.dataEvento}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="localEvento">Local</label>
+            <input type="text" id="localEvento" name="localEvento" th:value="${evento.localEvento}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="link">Link</label>
+            <input type="url" id="link" name="link" th:value="${evento.link}">
+        </div>
+
+        <button type="submit" class="btn-save">Salvar Alterações</button>
+    </form>
+</div>
+
+</body>
+</html>

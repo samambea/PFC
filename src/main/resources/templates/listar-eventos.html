@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Sugestões</title>
+    <title>Lista de Eventos</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
@@ -19,9 +19,13 @@
             margin-bottom: 30px;
         }
 
-        table {
+        .container {
             width: 100%;
             max-width: 900px;
+        }
+
+        table {
+            width: 100%;
             border-collapse: collapse;
             background-color: white;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
@@ -52,7 +56,7 @@
             font-weight: bold;
             cursor: pointer;
             text-decoration: none;
-            margin-right: 5px;
+            margin-right: 8px;
         }
 
         .btn-edit {
@@ -73,6 +77,21 @@
             background-color: #f9c9c7;
         }
 
+        .btn-novo {
+            display: inline-block;
+            background-color: #2AA184;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .btn-novo:hover {
+            background-color: #23846c;
+        }
+
         .btn-voltar {
             margin-top: 30px;
             padding: 10px 20px;
@@ -88,37 +107,42 @@
             background-color: #23846c;
         }
 
-        .container {
-            width: 100%;
-            max-width: 900px;
+        .acoes {
+            display: flex;
+            flex-wrap: nowrap;
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
+
 <div class="container">
-    <h1>Sugestões de Pesquisas Médicas</h1>
+    <h1>Eventos</h1>
+
+    <a th:href="@{/eventos/novo}" class="btn-novo">+ Criar Novo Evento</a>
 
     <table>
         <thead>
         <tr>
             <th>Título</th>
-            <th>Categoria</th>
             <th>Data</th>
-            <th>Email</th>
+            <th>Local</th>
+            <th>Link</th>
             <th>Ações</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="sugestao : ${sugestoes}">
-            <td th:text="${sugestao.titulo}">Título</td>
-            <td th:text="${sugestao.categoria}">Categoria</td>
-            <td th:text="${#temporals.format(sugestao.dataCriacao, 'dd/MM/yyyy HH:mm')}">Data</td>
-            <td th:text="${sugestao.email}">Email</td>
+        <tr th:each="evento : ${eventos}">
+            <td th:text="${evento.tituloEvento}">Título</td>
+            <td th:text="${#temporals.format(evento.dataEvento, 'dd/MM/yyyy')}">Data</td>
+            <td th:text="${evento.localEvento}">Local</td>
+            <td><a th:href="${evento.link}" target="_blank">Ver Link</a></td>
             <td>
-                <a th:href="@{'/sugestoes/editar/' + ${sugestao.sugestaoId}}" class="btn btn-edit">Editar</a>
-                <a th:href="@{'/sugestoes/excluir/' + ${sugestao.sugestaoId}}"
-                   class="btn btn-delete"
-                   onclick="return confirm('Confirmar exclusão?')">Excluir</a>
+                <div class="acoes">
+                    <a th:href="@{'/eventos/editar/' + ${evento.eventoId}}" class="btn btn-edit">Editar</a>
+                    <a th:href="@{'/eventos/excluir/' + ${evento.eventoId}}" class="btn btn-delete"
+                       onclick="return confirm('Confirma exclusão?')">Excluir</a>
+                </div>
             </td>
         </tr>
         </tbody>
@@ -127,12 +151,9 @@
     <div>
         <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
            th:href="@{/admin/usuarios/lista-usuarios}"
-           class="btn-voltar">⬅ Voltar</a>
-
-        <a th:if="${#authorization.expression('hasRole(''PESQUISADOR'')')}"
-           th:href="@{/home-pesquisador}"
-           class="btn-voltar">⬅ Voltar</a>
+           class="btn-voltar">⬅ Voltar para Home</a>
     </div>
 </div>
+
 </body>
 </html>

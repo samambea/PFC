@@ -17,7 +17,8 @@ public class Pesquisa {
     private String nomePesquisa;
     private String descricao;
     private String objetivo;
-    private String instituicao;
+    private String nomeInstituicao;
+    private String instituicaoId;
     private String areaDaPesquisa;
     private String pesquisadorResponsavel;
     private String criteriosInclusaoExclusao;
@@ -78,12 +79,20 @@ public class Pesquisa {
         this.objetivo = objetivo;
     }
 
-    public String getInstituicao() {
-        return instituicao;
+    public String getNomeInstituicao() {
+        return nomeInstituicao;
     }
 
-    public void setInstituicao(String instituicao) {
-        this.instituicao = instituicao;
+    public void setNomeInstituicao(String nomeInstituicao) {
+        this.nomeInstituicao = nomeInstituicao;
+    }
+
+    public String getInstituicaoId() {
+        return instituicaoId;
+    }
+
+    public void setInstituicaoId(String instituicaoId) {
+        this.instituicaoId = instituicaoId;
     }
 
     public String getAreaDaPesquisa() {

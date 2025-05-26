@@ -56,6 +56,7 @@ public class UsuarioLogado implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return "ADMIN".equalsIgnoreCase(usuario.getRole()) || Boolean.TRUE.equals(usuario.getEmailConfirmado());
     }
+
 }

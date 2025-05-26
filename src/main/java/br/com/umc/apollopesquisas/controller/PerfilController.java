@@ -104,7 +104,6 @@ public class PerfilController {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         voluntarioExistente.setNome(voluntarioEditado.getNome());
-        voluntarioExistente.setEndereco(voluntarioEditado.getEndereco());
         voluntarioExistente.setTelefone(voluntarioEditado.getTelefone());
 
         // Atualiza a senha apenas se um novo valor for informado
@@ -124,7 +123,7 @@ public class PerfilController {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         pesquisadorExistente.setNome(pesquisadorEditado.getNome());
-        pesquisadorExistente.setCrm(pesquisadorEditado.getCrm());
+        pesquisadorExistente.setLinkLattes(pesquisadorEditado.getLinkLattes());
         pesquisadorExistente.setEspecialidade(pesquisadorEditado.getEspecialidade());
         pesquisadorExistente.setAreaDePesquisa(pesquisadorEditado.getAreaDePesquisa());
 

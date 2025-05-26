@@ -1,5 +1,6 @@
 package br.com.umc.apollopesquisas.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,12 +11,12 @@ public class Evento {
 
     @Id
     private String eventoId;
-
     private LocalDate dataEvento;
     private String localEvento;
     private String link;
     private String tituloEvento;
     private String descricaoEvento;
+
 
     public String getEventoId() {
         return eventoId;

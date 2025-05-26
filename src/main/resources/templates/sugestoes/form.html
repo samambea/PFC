@@ -117,11 +117,17 @@
         <button type="submit">Salvar</button>
     </form>
 
-    <!-- Botão comentado para voltar à lista de sugestões -->
-    <!--    <a href="/sugestoes" class="link-button">← Voltar para Lista</a>-->
+    <div>
+        <!-- Botão de voltar para Home, visível apenas para ADMIN -->
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+           th:href="@{/admin/usuarios/lista-usuarios}"
+           class="link-button">🏠 Voltar para Home</a>
 
-    <!-- Botão para voltar à página inicial -->
-    <a href="/home" class="link-button">🏠 Voltar para Home</a>
+        <!-- Botão de voltar para Home, visível apenas para PESQUISADOR -->
+        <a th:if="${#authorization.expression('hasRole(''PESQUISADOR'')')}"
+           th:href="@{/home-pesquisador}"
+           class="link-button">🏠 Voltar para Home</a>
+    </div>
 </div>
 </body>
 </html>

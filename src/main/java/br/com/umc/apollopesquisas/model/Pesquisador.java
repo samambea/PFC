@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "usuarios")
 public class Pesquisador extends Usuario {
 
-    private String crm;
+    private String linkLattes;
     private String especialidade;
     private String areaDePesquisa;
 
@@ -13,12 +13,12 @@ public class Pesquisador extends Usuario {
         this.setRole("PESQUISADOR");
     }
 
-    public String getCrm() {
-        return crm;
+    public String getLinkLattes() {
+        return linkLattes;
     }
 
-    public void setCrm(String crm) {
-        this.crm = crm;
+    public void setLinkLattes(String linkLattes) {
+        this.linkLattes = linkLattes;
     }
 
     public String getEspecialidade() {

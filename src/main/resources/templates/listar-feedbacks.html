@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Lista de Pesquisas</title>
     <meta charset="UTF-8">
+    <title>Lista de Feedbacks</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
@@ -14,7 +14,7 @@
             align-items: center;
         }
 
-        h1 {
+        h2 {
             color: #2AA184;
             margin-bottom: 30px;
         }
@@ -89,27 +89,29 @@
 </head>
 <body>
 
-<h1>Pesquisas Cadastradas</h1>
+<h2>Feedbacks Recebidos</h2>
 
 <table>
     <thead>
     <tr>
-        <th>Nome</th>
-        <th>Área</th>
-        <th>Status</th>
+        <th>Nota</th>
+        <th>Comentário</th>
+        <th>Pesquisa</th>
+        <th>Voluntário</th>
         <th>Ações</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="pesquisa : ${pesquisas}">
-        <td th:text="${pesquisa.nomePesquisa}">Nome</td>
-        <td th:text="${pesquisa.areaDaPesquisa}">Área</td>
-        <td th:text="${pesquisa.statusPesquisa}">Status</td>
+    <tr th:each="feedback : ${feedbacks}">
+        <td th:text="${feedback.nota}">5</td>
+        <td th:text="${feedback.comentario}">Muito bom!</td>
+        <td th:text="${feedback.nomePesquisa}">Pesquisa X</td>
+        <td th:text="${feedback.nomeVoluntario}">João Silva</td>
         <td>
-            <a th:href="@{'/admin/pesquisas/editar/' + ${pesquisa.pesquisaId}}" class="btn btn-edit">Editar</a>
-            <a th:href="@{'/admin/pesquisas/deletar/' + ${pesquisa.pesquisaId}}"
+            <a th:href="@{'/feedbacks/editar/' + ${feedback.feedbackId}}" class="btn btn-edit">Editar</a>
+            <a th:href="@{'/feedbacks/excluir/' + ${feedback.feedbackId}}"
                class="btn btn-delete"
-               onclick="return confirm('Tem certeza que deseja excluir esta pesquisa?')">Excluir</a>
+               onclick="return confirm('Tem certeza que deseja excluir este feedback?');">Excluir</a>
         </td>
     </tr>
     </tbody>

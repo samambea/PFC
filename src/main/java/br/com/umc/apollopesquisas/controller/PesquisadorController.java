@@ -2,6 +2,7 @@ package br.com.umc.apollopesquisas.controller;
 
 import br.com.umc.apollopesquisas.model.Pesquisador;
 import br.com.umc.apollopesquisas.repository.PesquisadorRepository;
+import br.com.umc.apollopesquisas.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,16 @@ public class PesquisadorController {
     @Autowired
     private PesquisadorRepository pesquisadorRepository;
 
+    @Autowired
+    private UsuarioService usuarioService;
     // Cria um novo pesquisador com os dados recebidos no corpo da requisição.
     // Retorna o pesquisador criado com ID gerado.
+
     @PostMapping
-    public Pesquisador criar(@RequestBody Pesquisador pesquisador) {
-        return pesquisadorRepository.save(pesquisador);
+    public ResponseEntity<Pesquisador> criar(@RequestBody Pesquisador pesquisador) {
+        // Salva o usuário com confirmação de e-mail
+        usuarioService.cadastrarComConfirmacao(pesquisador);
+        return new ResponseEntity<>(pesquisador, HttpStatus.CREATED);
     }
 
     // Retorna lista completa de todos os pesquisadores cadastrados.
@@ -60,4 +66,6 @@ public class PesquisadorController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pesquisador não encontrado");
     }
+
+
 }

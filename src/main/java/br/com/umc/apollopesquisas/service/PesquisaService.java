@@ -136,4 +136,9 @@ public class PesquisaService {
     public List<Pesquisa> buscarPesquisasDisponiveis() {
         return pesquisaRepository.findByStatusPesquisa("ABERTA");
     }
+
+    public List<Pesquisa> buscarPorInstituicaoId(String instituicaoId) {
+        return pesquisaRepository.findByInstituicaoId(instituicaoId);
+    }
+
 }

@@ -1,9 +1,11 @@
 package br.com.umc.apollopesquisas.controller;
 
 import br.com.umc.apollopesquisas.model.Pesquisa;
+import br.com.umc.apollopesquisas.service.InstituicaoService;
 import br.com.umc.apollopesquisas.service.PesquisaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,10 @@ public class AdminPesquisaController {
     // Serviço para operações com pesquisas
     @Autowired
     private PesquisaService pesquisaService;
+
+
+    @Autowired
+    private InstituicaoService instituicaoService;
 
 
     // Exibe lista de todas as pesquisas cadastradas no sistema.
@@ -91,4 +97,5 @@ public class AdminPesquisaController {
         // RETORNO: Confirmação da operação
         return ResponseEntity.ok("Status corrigidos.");
     }
+
 }

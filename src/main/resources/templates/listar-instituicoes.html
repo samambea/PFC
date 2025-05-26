@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>Lista de Instituições</title>
     <meta charset="UTF-8">
-    <title>Lista de Sugestões</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
@@ -16,7 +16,23 @@
 
         h1 {
             color: #2AA184;
+            margin-bottom: 20px;
+        }
+
+        .btn-cadastrar {
+            padding: 10px 20px;
+            background-color: #2AA184;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
             margin-bottom: 30px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-cadastrar:hover {
+            background-color: #23846c;
         }
 
         table {
@@ -52,7 +68,6 @@
             font-weight: bold;
             cursor: pointer;
             text-decoration: none;
-            margin-right: 5px;
         }
 
         .btn-edit {
@@ -73,6 +88,12 @@
             background-color: #f9c9c7;
         }
 
+        .empty-message {
+            margin-top: 20px;
+            font-style: italic;
+            color: #888;
+        }
+
         .btn-voltar {
             margin-top: 30px;
             padding: 10px 20px;
@@ -81,58 +102,45 @@
             text-decoration: none;
             border-radius: 8px;
             font-weight: bold;
-            display: inline-block;
         }
 
         .btn-voltar:hover {
             background-color: #23846c;
         }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Sugestões de Pesquisas Médicas</h1>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Título</th>
-            <th>Categoria</th>
-            <th>Data</th>
-            <th>Email</th>
-            <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="sugestao : ${sugestoes}">
-            <td th:text="${sugestao.titulo}">Título</td>
-            <td th:text="${sugestao.categoria}">Categoria</td>
-            <td th:text="${#temporals.format(sugestao.dataCriacao, 'dd/MM/yyyy HH:mm')}">Data</td>
-            <td th:text="${sugestao.email}">Email</td>
-            <td>
-                <a th:href="@{'/sugestoes/editar/' + ${sugestao.sugestaoId}}" class="btn btn-edit">Editar</a>
-                <a th:href="@{'/sugestoes/excluir/' + ${sugestao.sugestaoId}}"
-                   class="btn btn-delete"
-                   onclick="return confirm('Confirmar exclusão?')">Excluir</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<h1>Instituições Cadastradas</h1>
 
-    <div>
-        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
-           th:href="@{/admin/usuarios/lista-usuarios}"
-           class="btn-voltar">⬅ Voltar</a>
+<a href="/instituicoes/nova" class="btn-cadastrar">Cadastrar Instituição</a>
 
-        <a th:if="${#authorization.expression('hasRole(''PESQUISADOR'')')}"
-           th:href="@{/home-pesquisador}"
-           class="btn-voltar">⬅ Voltar</a>
-    </div>
-</div>
+<table th:if="${instituicoes != null and !instituicoes.isEmpty()}">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="instituicao : ${instituicoes}">
+        <td th:text="${instituicao.nomeInstituicao}">Nome da Instituição</td>
+        <td>
+            <a th:href="@{'/instituicoes/' + ${instituicao.instituicaoId} + '/editar'}" class="btn btn-edit">Editar</a>
+
+            <form th:action="@{'/instituicoes/' + ${instituicao.instituicaoId} + '/excluir'}" method="post" style="display:inline;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="btn btn-delete"
+                        onclick="return confirm('Tem certeza que deseja excluir esta instituição?')">Excluir</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p th:if="${instituicoes == null or instituicoes.isEmpty()}" class="empty-message">Nenhuma instituição cadastrada.</p>
+
+<a href="/admin/usuarios" class="btn-voltar">⬅ Voltar</a>
+
 </body>
 </html>

@@ -12,6 +12,7 @@ public class Feedback {
     private String comentario;
     private Participacao participacao;
     private String nomePesquisa;
+    private String nomeVoluntario;
 
 
     public String getFeedbackId() {
@@ -52,5 +53,13 @@ public class Feedback {
 
     public void setNomePesquisa(String nomePesquisa) {
         this.nomePesquisa = nomePesquisa;
+    }
+
+    public String getNomeVoluntario() {
+        return nomeVoluntario;
+    }
+
+    public void setNomeVoluntario(String nomeVoluntario) {
+        this.nomeVoluntario = nomeVoluntario;
     }
 }

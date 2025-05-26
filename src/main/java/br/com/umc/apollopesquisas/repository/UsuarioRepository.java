@@ -15,4 +15,7 @@ public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 
     // Busca um usuário pelo token de redefinição de senha.
     Optional<Usuario> findByResetToken(String token);
+
+    Optional<Usuario> findByTokenConfirmacao(String token);
+
 }

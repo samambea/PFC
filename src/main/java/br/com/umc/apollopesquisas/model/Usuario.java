@@ -23,15 +23,11 @@ public class Usuario {
     private String imagemPerfil;
     private String resetToken;
     private LocalDateTime tokenExpiration;
-
-
-
-
+    private Boolean emailConfirmado;
+    private String tokenConfirmacao;
+    private LocalDateTime validadeToken;
 
     public Usuario() {}
-
-    public Usuario(String usuarioId) {
-    }
 
     public String getUsuarioId() {
         return usuarioId;
@@ -40,7 +36,6 @@ public class Usuario {
     public void setUsuarioId(String usuarioId) {
         this.usuarioId = usuarioId;
     }
-
 
     public String getNome() {
         return nome;
@@ -74,7 +69,6 @@ public class Usuario {
         this.role = role;
     }
 
-
     public String getTelefone() {
         return telefone;
     }
@@ -94,7 +88,6 @@ public class Usuario {
     public String getId() {
         return this.usuarioId;
     }
-
 
     public boolean login(String email, String senha) {
         return this.email.equals(email) && this.senha.equals(senha);
@@ -123,4 +116,29 @@ public class Usuario {
     public void setTokenExpiration(LocalDateTime tokenExpiration) {
         this.tokenExpiration = tokenExpiration;
     }
+
+    public Boolean getEmailConfirmado() {
+        return emailConfirmado;
+    }
+
+    public void setEmailConfirmado(Boolean emailConfirmado) {
+        this.emailConfirmado = emailConfirmado;
+    }
+
+    public String getTokenConfirmacao() {
+        return tokenConfirmacao;
+    }
+
+    public void setTokenConfirmacao(String tokenConfirmacao) {
+        this.tokenConfirmacao = tokenConfirmacao;
+    }
+
+    public LocalDateTime getValidadeToken() {
+        return validadeToken;
+    }
+
+    public void setValidadeToken(LocalDateTime validadeToken) {
+        this.validadeToken = validadeToken;
+    }
+
 }

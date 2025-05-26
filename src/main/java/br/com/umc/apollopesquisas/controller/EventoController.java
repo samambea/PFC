@@ -3,64 +3,74 @@ package br.com.umc.apollopesquisas.controller;
 import br.com.umc.apollopesquisas.model.Evento;
 import br.com.umc.apollopesquisas.service.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
-// Controller REST responsável pelo gerenciamento de eventos.
-// Permite criação, listagem, busca, atualização e remoção de eventos.
-// Endpoints acessíveis via API REST, sem views HTML.
-
-@RestController // Marca como controller REST que retorna dados JSON
-@RequestMapping("/eventos") // Prefixo base para todas as rotas deste controller
+@Controller
+@RequestMapping("/eventos")
 public class EventoController {
 
-    // Serviço para operações com eventos
     @Autowired
     private EventoService eventoService;
 
-    // Cria um novo evento com os dados recebidos no corpo da requisição.
-    // Retorna o evento criado com ID gerado.
-    @PostMapping
-    public Evento criar(@RequestBody Evento evento) {
-        return eventoService.criar(evento);
-    }
-
-    // Retorna lista completa de todos os eventos cadastrados.
+    // Lista todos os eventos
     @GetMapping
-    public List<Evento> listarTodos() {
-        return eventoService.listarTodos();
+    public String listarEventos(Model model) {
+        model.addAttribute("eventos", eventoService.listarTodos());
+        return "listar-eventos"; // Usa o HTML de lista
     }
 
-    // Busca evento por ID.
-    // Retorna 200 com dados se encontrado, 404 se não.
-    @GetMapping("/{id}")
-    public ResponseEntity<Evento> buscarPorId(@PathVariable String id) {
+    // Formulário para criar novo evento
+    @GetMapping("/novo")
+    public String mostrarFormularioNovoEvento(Model model) {
+        model.addAttribute("evento", new Evento());
+        return "form-evento"; // Formulário de cadastro
+    }
+
+    // Processa o formulário de criação
+    @PostMapping("/salvar")
+    public String salvarEvento(@ModelAttribute Evento evento, RedirectAttributes redirectAttributes) {
+        eventoService.criar(evento);
+        redirectAttributes.addFlashAttribute("mensagem", "Evento criado com sucesso!");
+        return "redirect:/eventos";
+    }
+
+    // Formulário para editar evento (abre a página de edição)
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditarEvento(@PathVariable String id, Model model, RedirectAttributes redirectAttributes) {
         return eventoService.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .map(evento -> {
+                    model.addAttribute("evento", evento);
+                    return "editar-evento";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Evento não encontrado.");
+                    return "redirect:/eventos";
+                });
     }
 
-    // Atualiza dados de um evento existente pelo ID.
-    // Retorna 200 com dados atualizados ou 404 se não encontrado.
-    @PutMapping("/{id}")
-    public ResponseEntity<Evento> atualizar(@PathVariable String id, @RequestBody Evento novoEvento) {
-        Evento atualizado = eventoService.atualizar(id, novoEvento);
+    // Processa a edição do evento
+    @PostMapping("/editar/{id}")
+    public String atualizarEvento(@PathVariable String id, @ModelAttribute Evento evento, RedirectAttributes redirectAttributes) {
+        Evento atualizado = eventoService.atualizar(id, evento);
         if (atualizado != null) {
-            return ResponseEntity.ok(atualizado);
+            redirectAttributes.addFlashAttribute("mensagem", "Evento atualizado com sucesso!");
         } else {
-            return ResponseEntity.notFound().build();
+            redirectAttributes.addFlashAttribute("erro", "Evento não encontrado.");
         }
+        return "redirect:/eventos";
     }
 
-    // Remove evento pelo ID.
-    // Retorna 200 se removido, 404 se não encontrado.
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletar(@PathVariable String id) {
+    // Exclui evento
+    @GetMapping("/excluir/{id}")
+    public String excluirEvento(@PathVariable String id, RedirectAttributes redirectAttributes) {
         if (eventoService.deletar(id)) {
-            return ResponseEntity.ok("Evento excluído com sucesso");
+            redirectAttributes.addFlashAttribute("mensagem", "Evento excluído com sucesso!");
+        } else {
+            redirectAttributes.addFlashAttribute("erro", "Evento não encontrado.");
         }
-        return ResponseEntity.status(404).body("Evento não encontrado");
+        return "redirect:/eventos";
     }
 }

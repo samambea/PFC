@@ -21,4 +21,6 @@ public interface PesquisaRepository extends MongoRepository<Pesquisa, String> {
     // Retorna todas as pesquisas com status informado como String.
     // Atenção: pode ser redundante ou conflitar com o metodo que usa enum.
     List<Pesquisa> findByStatusPesquisa(String status);
+
+    List<Pesquisa> findByInstituicaoId(String instituicaoId);
 }

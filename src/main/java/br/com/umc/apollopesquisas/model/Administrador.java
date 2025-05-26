@@ -3,11 +3,11 @@ package br.com.umc.apollopesquisas.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "usuarios")
-public class Voluntario extends Usuario {
+public class Administrador extends Usuario {
 
-
-
-    public Voluntario() {
-        this.setRole("VOLUNTARIO");
+    public Administrador() {
+        this.setRole("ADMIN");
     }
+
+
 }

@@ -14,8 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
-  //Classe de configuração principal do Spring Security.
-  //Define todas as regras de segurança, autenticação e autorização da aplicação.
+//Classe de configuração principal do Spring Security.
+//Define todas as regras de segurança, autenticação e autorização da aplicação.
 
 @Configuration // Marca como classe de configuração Spring
 @EnableWebSecurity // Habilita as funcionalidades de segurança web do Spring Security
@@ -31,13 +31,17 @@ public class SecurityConfig {
     private UsuarioDetailsServiceImpl usuarioDetailsService;
 
 
-      //Configuração principal da cadeia de filtros de segurança.
-      //Define todas as regras de autorização, autenticação e proteções da aplicação.
+    //Configuração principal da cadeia de filtros de segurança.
+    //Define todas as regras de autorização, autenticação e proteções da aplicação.
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // ATIVAÇÃO DO CORS: Permite que as configurações definidas no WebConfig sejam aplicadas
+                .cors()
+
                 // CONFIGURAÇÃO CSRF: Proteção contra Cross-Site Request Forgery
+                .and()
                 .csrf(csrf -> csrf
                         // Ignora CSRF apenas para endpoints específicos que precisam receber uploads
                         .ignoringRequestMatchers("/perfil/perfil/upload-foto")
@@ -60,7 +64,8 @@ public class SecurityConfig {
                                 "/esqueci-senha",                      // Página "esqueci minha senha"
                                 "/esqueci-senha/**",                   // Rotas relacionadas
                                 "/redefinir-senha",                    // Página de redefinição
-                                "/redefinir-senha/**"                  // Rotas de redefinição
+                                "/redefinir-senha/**",                 // Rotas de redefinição
+                                "/auth/confirmar-email**"
                         ).permitAll()
 
                         // ROTA ESPECÍFICA: Requer apenas autenticação (qualquer usuário logado)
@@ -94,8 +99,8 @@ public class SecurityConfig {
     }
 
 
-      //Bean para codificação de senhas usando BCrypt.
-      //BCrypt é um algoritmo de hash seguro com salt automático.
+    //Bean para codificação de senhas usando BCrypt.
+    //BCrypt é um algoritmo de hash seguro com salt automático.
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -103,8 +108,8 @@ public class SecurityConfig {
     }
 
 
-      //Bean para gerenciamento de autenticação.
-      //Necessário para processos de autenticação programática.
+    //Bean para gerenciamento de autenticação.
+    //Necessário para processos de autenticação programática.
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {

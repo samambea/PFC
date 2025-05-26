@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar/Editar Evento</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #2AA184;
+            margin-bottom: 30px;
+        }
+
+        form {
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2AA184;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #23846c;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #2AA184;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h2 th:text="${evento.eventoId == null} ? 'Criar Novo Evento' : 'Editar Evento'">Evento</h2>
+
+<form th:action="@{/eventos/salvar}" th:object="${evento}" method="post">
+    <input type="hidden" th:field="*{eventoId}"/>
+
+    <label for="titulo">Título do Evento</label>
+    <input type="text" id="titulo" th:field="*{tituloEvento}" required/>
+
+    <label for="descricao">Descrição</label>
+    <textarea id="descricao" th:field="*{descricaoEvento}" rows="4"></textarea>
+
+    <label for="data">Data</label>
+    <input type="date" id="data" th:field="*{dataEvento}" required/>
+
+    <label for="local">Local</label>
+    <input type="text" id="local" th:field="*{localEvento}" required/>
+
+    <label for="link">Link</label>
+    <input type="text" id="link" th:field="*{link}" placeholder="https://..."/>
+
+    <button type="submit">Salvar</button>
+</form>
+
+<a href="/eventos">⬅ Voltar para Lista</a>
+
+</body>
+</html>

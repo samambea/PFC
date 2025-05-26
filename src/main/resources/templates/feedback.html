@@ -107,6 +107,9 @@
         <label for="nomePesquisa">Nome da Pesquisa:</label>
         <textarea id="nomePesquisa" name="nomePesquisa" th:field="*{nomePesquisa}" rows="4" required></textarea>
 
+        <label for="nomeVoluntario">Nome do Voluntário:</label>
+        <textarea id="nomeVoluntario" name="nomeVoluntario" th:field="*{nomeVoluntario}" rows="4" required></textarea>
+
         <!-- Campo oculto para o ID da participação (caso necessário para o backend) -->
         <input type="hidden" name="participacaoId" th:value="${participacaoId}" />
 

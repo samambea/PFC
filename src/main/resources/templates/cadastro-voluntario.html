@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Cadastro - Apollo Pesquisas</title>
     <style>
-        /* Estilização global da página */
         body {
             margin: 0;
-            font-family: 'Segoe UI', sans-serif; /* Fonte moderna e legível */
-            background-color: #f7f7f7; /* Cor de fundo suave */
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
         }
 
-        /* Container principal centralizado com flexbox */
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -20,7 +18,6 @@
             height: 100vh;
         }
 
-        /* Coluna da esquerda com ilustração e texto */
         .left {
             flex: 1;
             min-width: 300px;
@@ -28,22 +25,20 @@
             padding: 2rem;
         }
 
-        /* Elipse decorativa */
         .ellipse {
             width: 280px;
             height: 200px;
             background: repeating-linear-gradient(
-                    45deg,
-                    #cceeee,
-                    #cceeee 10px,
-                    #b8dada 10px,
-                    #b8dada 20px
+                45deg,
+                #cceeee,
+                #cceeee 10px,
+                #b8dada 10px,
+                #b8dada 20px
             );
             border-radius: 50% / 40%;
             margin: 0 auto 1rem;
         }
 
-        /* Texto explicativo na coluna esquerda */
         .left p {
             max-width: 400px;
             margin: 0 auto;
@@ -51,11 +46,10 @@
             color: #333;
         }
 
-        /* Coluna da direita com o formulário */
         .right {
             width: 100%;
             max-width: 420px;
-            background-color: #2AA184; /* Cor atualizada */
+            background-color: #2AA184;
             border-radius: 12px;
             padding: 2rem;
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
@@ -63,7 +57,6 @@
             box-sizing: border-box;
         }
 
-        /* Logo da plataforma */
         .logo {
             font-size: 2rem;
             font-weight: bold;
@@ -72,20 +65,29 @@
             line-height: 1.2;
         }
 
-        /* Estilo do formulário */
+        /* Estilo para alerta de erro */
+        .custom-alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 14px;
+            text-align: center;
+        }
+
         form {
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
         }
 
-        /* Rótulos dos campos */
         label {
             font-size: 14px;
             text-align: left;
         }
 
-        /* Campos de entrada do formulário e selects */
         input,
         select {
             padding: 0.5rem;
@@ -96,18 +98,15 @@
             box-sizing: border-box;
         }
 
-        /* Linha para inputs lado a lado */
         .row {
             display: flex;
             gap: 0.5rem;
         }
 
-        /* Inputs dentro de uma linha ocupam o mesmo espaço */
         .row input {
             flex: 1;
         }
 
-        /* Botão de criar conta */
         button {
             background-color: white;
             color: #2AA184;
@@ -121,33 +120,28 @@
             transition: background-color 0.3s ease;
         }
 
-        /* Efeito hover no botão */
         button:hover {
             background-color: #e6f3f1;
         }
 
-        /* Texto dos termos de uso */
         .terms {
             font-size: 11px;
             text-align: center;
             margin-top: 0.5rem;
         }
 
-        /* Link para login */
         .login-link {
             margin-top: 1rem;
             font-size: 14px;
             text-align: center;
         }
 
-        /* Estilo do link de login */
         .login-link a {
             color: white;
             font-weight: bold;
             text-decoration: none;
         }
 
-        /* Ícone de home no canto superior esquerdo */
         .home-icon {
             position: absolute;
             top: 1rem;
@@ -160,14 +154,12 @@
     </style>
 </head>
 <body>
-<!-- Ícone de home para voltar à página inicial -->
 <div class="home-icon">
     <a href="/">
-        <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home" />
     </a>
 </div>
 
-<!-- Container principal com duas colunas: esquerda (ilustração/texto) e direita (formulário) -->
 <div class="container">
     <div class="left">
         <div class="ellipse"></div>
@@ -177,64 +169,47 @@
     </div>
     <div class="right">
         <div class="logo">
-            <!-- Logo da plataforma -->
-            <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
+            <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;" />
         </div>
 
-        <!-- Exibe mensagem de feedback, se houver -->
-        <div th:if="${mensagem}" style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 1rem;">
-            <p th:text="${mensagem}"></p>
+        <!-- Alerta de erro para email já em uso -->
+        <div th:if="${errorMessage}" class="custom-alert error">
+            <span th:text="${errorMessage}"></span>
         </div>
 
-        <!-- Formulário de cadastro do voluntário, vinculado ao objeto 'usuario' do backend -->
         <form th:action="@{/auth/cadastro/voluntario}" th:object="${usuario}" method="post">
 
-            <!-- Campo nome -->
             <label>Nome:</label>
             <input type="text" th:field="*{nome}" required />
 
-            <!-- Campo e-mail -->
             <label>E-mail:</label>
             <input type="email" th:field="*{email}" required />
 
-            <!-- Campo senha -->
             <label>Senha:</label>
             <input type="password" th:field="*{senha}" required />
 
-            <!-- Campos adicionais para voluntário (telefone e endereço) exibidos apenas se o objeto for Voluntario -->
+            <!-- Campo de telefone ajustado para voluntário -->
             <div th:if="${usuario instanceof T(br.com.umc.apollopesquisas.model.Voluntario)}">
-                <div class="row">
-                    <div>
-                        <label>Telefone:</label>
-                        <input type="text" th:field="*{telefone}" required />
-                    </div>
-                    <div>
-                        <label>Endereço:</label>
-                        <input type="text" th:field="*{endereco}" required />
-                    </div>
-                </div>
+                <label>Telefone:</label>
+                <input type="text" th:field="*{telefone}" required />
             </div>
 
-            <!-- Texto de aviso sobre os termos -->
             <div class="terms">Ao se cadastrar, você precisa concordar com os termos e condições específicos da plataforma para voluntários.</div>
 
-            <!-- Botão para criar conta, exibe modal de termos antes de submeter -->
+            <!-- Campo hidden para aceitar termos -->
+            <input type="hidden" name="aceitouTermos" id="aceitouTermos" value="false" />
+
             <button type="submit">Criar Conta</button>
 
-            <!-- Link para login caso já tenha conta -->
             <div class="login-link">
                 Já tem uma conta? <a href="/auth/login">Faça seu login!</a>
             </div>
 
-            <!-- Exibe alerta em caso de mensagem de feedback -->
-            <script th:if="${mensagem}">
-                alert([[${mensagem}]]);
-            </script>
         </form>
     </div>
 </div>
-</div>
-<!-- Modal de Termos de Uso, exibido ao tentar submeter o formulário -->
+
+<!-- Modal de Termos -->
 <div id="modal-termos" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
 background:rgba(0,0,0,0.6); z-index:999; justify-content:center; align-items:center;">
     <div style="background:white; padding:20px; max-width:600px; border-radius:8px; color:#333;">
@@ -243,39 +218,37 @@ background:rgba(0,0,0,0.6); z-index:999; justify-content:center; align-items:cen
             <p>
                 Ao se cadastrar, você concorda com os seguintes termos:
                 <br><br>
-                • Você fornece informações verdadeiras.<br>
-                • A participação é voluntária.<br>
-                • Suas informações serão usadas somente para fins de pesquisa médica.<br>
-                • Você pode sair da plataforma a qualquer momento.<br>
-                • Esta plataforma é apenas um meio de conectar pesquisadores e voluntários.<br>
+                • Você fornece informações verdadeiras.<br />
+                • A participação é voluntária.<br />
+                • Suas informações serão usadas somente para fins de pesquisa médica.<br />
+                • Você pode sair da plataforma a qualquer momento.<br />
+                • Esta plataforma é apenas um meio de conectar pesquisadores e voluntários.<br />
             </p>
         </div>
-        <!-- Botão para aceitar os termos e submeter o formulário -->
         <button onclick="aceitarTermos()" style="margin-right:10px;">Aceitar</button>
-        <!-- Botão para recusar os termos e fechar o modal -->
         <button onclick="recusarTermos()">Recusar</button>
     </div>
 </div>
 
 <script>
-    // Intercepta o envio do formulário para exibir o modal de termos
     const form = document.querySelector('form');
     const modal = document.getElementById('modal-termos');
+    const inputAceitou = document.getElementById('aceitouTermos');
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         modal.style.display = 'flex';
     });
 
-    // Aceita os termos, fecha o modal e submete o formulário
     function aceitarTermos() {
         modal.style.display = 'none';
+        inputAceitou.value = 'true';  // Aqui setamos o valor para true
         form.submit();
     }
 
-    // Recusa os termos, fecha o modal
     function recusarTermos() {
         modal.style.display = 'none';
+        inputAceitou.value = 'false';
     }
 </script>
 

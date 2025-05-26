@@ -2,6 +2,7 @@ package br.com.umc.apollopesquisas.controller;
 
 import br.com.umc.apollopesquisas.model.*;
 import br.com.umc.apollopesquisas.repository.UsuarioRepository;
+import br.com.umc.apollopesquisas.service.InstituicaoService;
 import br.com.umc.apollopesquisas.service.PesquisaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,16 @@ public class PesquisaController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private InstituicaoService instituicaoService;
+
     // Exibe o formulário para criação de nova pesquisa.
     // Acesso permitido apenas para usuários com roles PESQUISADOR ou ADMIN.
     @GetMapping("/nova")
     @PreAuthorize("hasRole('PESQUISADOR') or hasRole('ADMIN')")
     public String novaPesquisaForm(Model model) {
         model.addAttribute("pesquisa", new Pesquisa());
+        model.addAttribute("instituicoes", instituicaoService.listarTodas());
         return "form-pesquisa";
     }
 

@@ -26,7 +26,6 @@
             padding: 2rem;
         }
 
-        /* Elipse decorativa */
         .ellipse {
             width: 380px;
             height: 280px;
@@ -48,7 +47,6 @@
             color: #333;
         }
 
-        /* Coluna direita com o formulário de login */
         .right {
             width: 400px;
             background-color: #2AA184;
@@ -59,7 +57,6 @@
             text-align: center;
         }
 
-        /* Logo da plataforma */
         .logo {
             font-size: 2rem;
             font-weight: bold;
@@ -67,14 +64,12 @@
             position: relative;
         }
 
-        /* Imagem da logo */
         .logo-img {
             width: 180px;
             display: block;
             margin: 0 auto;
         }
 
-        /* Formulário de login */
         form {
             display: flex;
             flex-direction: column;
@@ -82,7 +77,6 @@
             margin-top: 1rem;
         }
 
-        /* Campos de entrada */
         input[type="text"],
         input[type="password"] {
             padding: 0.7rem;
@@ -91,7 +85,6 @@
             font-size: 14px;
         }
 
-        /* Botão de login */
         button {
             background-color: white;
             color: #26A69A;
@@ -103,7 +96,6 @@
             font-size: 14px;
         }
 
-        /* Área de registro e links */
         .register {
             margin-top: 1rem;
             font-size: 14px;
@@ -115,7 +107,6 @@
             text-decoration: none;
         }
 
-        /* Ícone de home no canto superior esquerdo */
         .home-icon {
             position: absolute;
             top: 1rem;
@@ -125,61 +116,103 @@
         .home-icon img {
             width: 30px;
         }
+
+        /* Alerta de sucesso estilizado */
+        .custom-alert {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #d4edda;
+            color: #155724;
+            padding: 1rem 2rem;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            animation: fadeSlideDown 0.5s ease-out;
+        }
+
+        @keyframes fadeSlideDown {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
     </style>
 </head>
 <body>
-<!-- Mensagem de sucesso (ex: cadastro realizado) exibida dinamicamente -->
-<div th:if="${successMessage}" class="alert success">
-    <p th:text="${successMessage}"></p>
+
+<!-- Alerta de sucesso visual -->
+<div th:if="${successMessage}" class="custom-alert success">
+    <span th:text="${successMessage}"></span>
 </div>
 
-<!-- Ícone de home para voltar à página inicial -->
+<!-- Ícone de home -->
 <div class="home-icon">
     <a href="/">
         <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home">
     </a>
 </div>
 
-<!-- Container principal com duas colunas: esquerda (ilustração/texto) e direita (formulário) -->
+<!-- Login layout principal -->
 <div class="container">
     <div class="left">
         <div class="ellipse"></div>
-        <p>
-            A pesquisa começa com um login.
-        </p>
+        <p>A pesquisa começa com um login.</p>
     </div>
     <div class="right">
         <div class="logo">
-            <!-- Logo da plataforma -->
             <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" class="logo-img">
         </div>
-        <!-- Formulário de login -->
         <form th:action="@{/auth/login}" method="post">
-            <!-- Campo para e-mail do usuário -->
             <input type="text" name="username" placeholder="E-mail"/>
-            <!-- Campo para senha do usuário -->
             <input type="password" name="password" placeholder="Senha"/>
-            <!-- Botão para submeter o login -->
             <button type="submit">Acessar Minha Conta</button>
-            <!-- Mensagem de erro caso o login seja inválido -->
+
             <div th:if="${param.error}">
                 <p style="color: red;">E-mail ou senha inválidos</p>
             </div>
-            <!-- Mensagem de sucesso ao realizar logout -->
+
             <div th:if="${param.logout}">
                 <p style="color: green;">Logout realizado com sucesso.</p>
             </div>
-            <!-- Link para recuperação de senha -->
+
             <p style="margin-top: 15px; text-align: center;">
                 Esqueceu sua senha?
                 <a th:href="@{/esqueci-senha}" style="color: #2e7d64; font-weight: bold;">Clique aqui!</a>
             </p>
         </form>
-        <!-- Link para cadastro, caso o usuário ainda não tenha conta -->
         <div class="register">
             Não tem cadastro? <a href="/">Crie sua conta!</a>
         </div>
     </div>
 </div>
+
+<!-- Alerta some após 5 segundos -->
+<script>
+    window.addEventListener("load", () => {
+        const alertBox = document.querySelector(".custom-alert");
+        if (alertBox) {
+            setTimeout(() => {
+                alertBox.style.display = "none";
+            }, 5000);
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('verificacaoEmail') === 'true') {
+            alert("Para finalizar o cadastro, por favor verifique seu e-mail e confirme sua conta.");
+            setTimeout(() => {
+                window.location.href = "/auth/login";
+            }, 100);
+        }
+    });
+</script>
+
 </body>
 </html>

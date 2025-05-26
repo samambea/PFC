@@ -2,6 +2,7 @@ package br.com.umc.apollopesquisas.service;
 
 import br.com.umc.apollopesquisas.model.Evento;
 import br.com.umc.apollopesquisas.repository.EventoRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,10 @@ public class EventoService {
 
     // Cria um novo evento.
     public Evento criar(Evento evento) {
+        evento.setEventoId(null);
         return eventoRepository.save(evento);
     }
+
 
     // Retorna a lista de todos os eventos cadastrados.
     public List<Evento> listarTodos() {
@@ -30,14 +33,16 @@ public class EventoService {
         return eventoRepository.findById(id);
     }
 
+
     // Atualiza um evento existente identificado pelo ID.
     // Retorna o evento atualizado ou null se não encontrado.
     public Evento atualizar(String id, Evento novoEvento) {
-        return eventoRepository.findById(id).map(evento -> {
-            novoEvento.setEventoId(id);
-            return eventoRepository.save(novoEvento);
-        }).orElse(null);
+        Evento eventoExistente = eventoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Evento não encontrado!"));
+        novoEvento.setEventoId(id);
+        return eventoRepository.save(novoEvento);
     }
+
 
     // Deleta um evento pelo ID.
     // Retorna true se excluído com sucesso, false se não encontrado.
