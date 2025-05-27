@@ -44,6 +44,13 @@
             border-bottom: none;
         }
 
+        .acoes-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px; /* Espaço entre os botões */
+        }
+
         .btn-voltar {
             margin-top: 30px;
             padding: 10px 20px;
@@ -66,6 +73,8 @@
             font-weight: bold;
             cursor: pointer;
             text-decoration: none;
+            text-align: center;
+            display: inline-block;
         }
 
         .btn-edit {
@@ -108,10 +117,12 @@
         <td th:text="${feedback.nomePesquisa}">Pesquisa X</td>
         <td th:text="${feedback.nomeVoluntario}">João Silva</td>
         <td>
-            <a th:href="@{'/feedbacks/editar/' + ${feedback.feedbackId}}" class="btn btn-edit">Editar</a>
-            <a th:href="@{'/feedbacks/excluir/' + ${feedback.feedbackId}}"
-               class="btn btn-delete"
-               onclick="return confirm('Tem certeza que deseja excluir este feedback?');">Excluir</a>
+            <div class="acoes-container">
+                <a th:href="@{'/feedbacks/editar/' + ${feedback.feedbackId}}" class="btn btn-edit">Editar</a>
+                <a th:href="@{'/feedbacks/excluir/' + ${feedback.feedbackId}}"
+                   class="btn btn-delete"
+                   onclick="return confirm('Tem certeza que deseja excluir este feedback?');">Excluir</a>
+            </div>
         </td>
     </tr>
     </tbody>

@@ -33,6 +33,7 @@
             padding: 14px 16px;
             text-align: left;
             border-bottom: 1px solid #eaeaea;
+            vertical-align: middle;
         }
 
         th {
@@ -53,6 +54,7 @@
             cursor: pointer;
             text-decoration: none;
             margin-right: 5px;
+            display: inline-block;
         }
 
         .btn-edit {
@@ -92,6 +94,13 @@
             width: 100%;
             max-width: 900px;
         }
+
+        /* Alinhamento horizontal dos botões */
+        .btn-group {
+            display: flex;
+            gap: 8px; /* espaçamento entre os botões */
+        }
+
     </style>
 </head>
 <body>
@@ -115,10 +124,12 @@
             <td th:text="${#temporals.format(sugestao.dataCriacao, 'dd/MM/yyyy HH:mm')}">Data</td>
             <td th:text="${sugestao.email}">Email</td>
             <td>
-                <a th:href="@{'/sugestoes/editar/' + ${sugestao.sugestaoId}}" class="btn btn-edit">Editar</a>
-                <a th:href="@{'/sugestoes/excluir/' + ${sugestao.sugestaoId}}"
-                   class="btn btn-delete"
-                   onclick="return confirm('Confirmar exclusão?')">Excluir</a>
+                <div class="btn-group">
+                    <a th:href="@{'/sugestoes/editar/' + ${sugestao.sugestaoId}}" class="btn btn-edit">Editar</a>
+                    <a th:href="@{'/sugestoes/excluir/' + ${sugestao.sugestaoId}}"
+                       class="btn btn-delete"
+                       onclick="return confirm('Confirmar exclusão?')">Excluir</a>
+                </div>
             </td>
         </tr>
         </tbody>

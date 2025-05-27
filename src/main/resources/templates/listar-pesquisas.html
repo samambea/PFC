@@ -44,6 +44,14 @@
             border-bottom: none;
         }
 
+        /* Container de ações (Editar/Excluir) */
+        .acoes-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px; /* Espaçamento entre botões */
+        }
+
         .btn-voltar {
             margin-top: 30px;
             padding: 10px 20px;
@@ -66,6 +74,8 @@
             font-weight: bold;
             cursor: pointer;
             text-decoration: none;
+            text-align: center;
+            display: inline-block;
         }
 
         .btn-edit {
@@ -106,10 +116,12 @@
         <td th:text="${pesquisa.areaDaPesquisa}">Área</td>
         <td th:text="${pesquisa.statusPesquisa}">Status</td>
         <td>
-            <a th:href="@{'/admin/pesquisas/editar/' + ${pesquisa.pesquisaId}}" class="btn btn-edit">Editar</a>
-            <a th:href="@{'/admin/pesquisas/deletar/' + ${pesquisa.pesquisaId}}"
-               class="btn btn-delete"
-               onclick="return confirm('Tem certeza que deseja excluir esta pesquisa?')">Excluir</a>
+            <div class="acoes-container">
+                <a th:href="@{'/admin/pesquisas/editar/' + ${pesquisa.pesquisaId}}" class="btn btn-edit">Editar</a>
+                <a th:href="@{'/admin/pesquisas/deletar/' + ${pesquisa.pesquisaId}}"
+                   class="btn btn-delete"
+                   onclick="return confirm('Tem certeza que deseja excluir esta pesquisa?')">Excluir</a>
+            </div>
         </td>
     </tr>
     </tbody>

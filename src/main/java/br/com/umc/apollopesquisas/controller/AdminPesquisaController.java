@@ -54,11 +54,14 @@ public class AdminPesquisaController {
         if (pesquisa.isPresent()) {
             // DADOS PARA FORMULÁRIO: Preenche campos do formulário de edição
             model.addAttribute("pesquisa", pesquisa.get());
+            model.addAttribute("instituicoes", instituicaoService.listarTodas()); // <- ADICIONA AQUI
+
             return "editar-pesquisa";
         }
         // REDIRECIONAMENTO: Volta para lista se não encontrar
         return "redirect:/admin/pesquisas";
     }
+
 
 
     // Processa submissão do formulário de edição de pesquisa.
