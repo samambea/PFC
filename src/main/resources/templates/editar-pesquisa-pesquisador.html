@@ -96,8 +96,13 @@
     <textarea id="objetivo" name="objetivo" rows="2" th:text="*{objetivo}"></textarea>
 
     <!-- Campo para instituição responsável -->
-    <label for="instituicao">Instituição</label>
-    <input type="text" id="instituicao" name="instituicao" th:value="*{instituicao}" required />
+    <label for="instituicao">Instituição:</label>
+    <select id="instituicao" name="nomeInstituicao" required>
+        <option value="">Selecione...</option>
+        <th:block th:each="inst : ${instituicoes}">
+            <option th:value="${inst.nomeInstituicao}" th:text="${inst.nomeInstituicao}"></option>
+        </th:block>
+    </select>
 
     <!-- Campo para área da pesquisa -->
     <label for="areaDaPesquisa">Área da Pesquisa</label>

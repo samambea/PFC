@@ -82,12 +82,13 @@ public class PesquisaController {
 
         if (isAdmin || isDono) {
             model.addAttribute("pesquisa", pesquisa);
-            // Retorna view diferente para admin e pesquisador
+            model.addAttribute("instituicoes", instituicaoService.listarTodas()); // <--- AQUI adiciona a lista de instituições
             return isAdmin ? "editar-pesquisa" : "editar-pesquisa-pesquisador";
         }
 
         return "redirect:/pesquisas/minhas";
     }
+
 
     // Processa a atualização de uma pesquisa existente.
     // Apenas o dono da pesquisa ou administrador podem atualizar.
