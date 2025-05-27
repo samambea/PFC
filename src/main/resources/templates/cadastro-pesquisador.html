@@ -8,37 +8,38 @@
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
             background-color: #f7f7f7;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("/images/medico-pesquisador.jpeg") no-repeat center center / cover;
+            filter: grayscale(100%) opacity(0.2);
+            z-index: -1;
+        }
+
         .container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-        }
-        .left {
-            flex: 1;
-            min-width: 300px;
-            text-align: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            max-width: 100%;
             padding: 2rem;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
         }
-        .ellipse {
-            width: 280px;
-            height: 200px;
-            background: url('/images/pesquisador.jpg') no-repeat center center;
-            background-size: cover;
-            border-radius: 50% / 40%;
-            margin: 0 auto 1rem;
-        }
-        .left p {
-            max-width: 400px;
-            margin: 0 auto;
-            font-size: 14px;
-            color: #333;
-        }
+
         .right {
             width: 100%;
-            max-width: 420px;
+            max-width: 380px;
             background-color: #2AA184;
             border-radius: 12px;
             padding: 2rem;
@@ -46,34 +47,36 @@
             color: white;
             box-sizing: border-box;
         }
+
         .logo {
             font-size: 2rem;
             font-weight: bold;
             text-align: center;
             margin-bottom: 1.5rem;
-            line-height: 1.2;
         }
+
         form {
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
         }
+
         .custom-alert.error {
             background-color: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
-        }
-        .custom-alert {
             padding: 0.75rem;
             border-radius: 6px;
             margin-bottom: 1rem;
             font-size: 14px;
             text-align: center;
         }
+
         label {
             font-size: 14px;
             text-align: left;
         }
+
         input {
             padding: 0.5rem;
             border: none;
@@ -82,6 +85,7 @@
             width: 100%;
             box-sizing: border-box;
         }
+
         button {
             background-color: white;
             color: #2AA184;
@@ -94,32 +98,39 @@
             margin-top: 1rem;
             transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: #e6f3f1;
         }
+
         .terms {
             font-size: 11px;
             text-align: center;
             margin-top: 0.5rem;
         }
+
         .login-link {
             margin-top: 1rem;
             font-size: 14px;
             text-align: center;
         }
+
         .login-link a {
             color: white;
             font-weight: bold;
             text-decoration: none;
         }
+
         .home-icon {
             position: absolute;
             top: 1rem;
             left: 1rem;
         }
+
         .home-icon img {
             width: 28px;
         }
+
         #modal-termos {
             display: none;
             position: fixed;
@@ -130,6 +141,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .modal-content {
             background: white;
             color: black;
@@ -140,11 +152,13 @@
             overflow-y: auto;
             box-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
+
         .modal-buttons {
             display: flex;
             justify-content: space-between;
             margin-top: 1rem;
         }
+
         .modal-buttons button {
             background-color: #2AA184;
             color: white;
@@ -154,6 +168,7 @@
             cursor: pointer;
             font-weight: bold;
         }
+
         .modal-buttons button:hover {
             background-color: #238a70;
         }
@@ -162,22 +177,18 @@
 <body>
 
 <div class="home-icon">
-    <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home"></a>
+    <a href="javascript:void(0)" onclick="history.back()">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Voltar">
+    </a>
 </div>
 
+
 <div class="container">
-    <div class="left">
-        <div class="ellipse"></div>
-        <p>
-            Participe da ciência! Registre-se como pesquisador e contribua com seus estudos.
-        </p>
-    </div>
     <div class="right">
         <div class="logo">
             <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
         </div>
 
-        <!-- Alerta de erro -->
         <div th:if="${errorMessage}" class="custom-alert error">
             <span th:text="${errorMessage}"></span>
         </div>
@@ -219,7 +230,6 @@
     </div>
 </div>
 
-<!-- Modal de termos -->
 <div id="modal-termos">
     <div class="modal-content">
         <h3>Termos e Condições de Cadastro — Pesquisador</h3>
@@ -261,5 +271,3 @@
 
 </body>
 </html>
-
-
