@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Início - Apollo Pesquisas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Importa ícones do Font Awesome para uso visual -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
@@ -174,6 +173,59 @@
                 align-items: center;
             }
         }
+        .carousel-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .carousel-slide {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .evento-destaque {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            min-width: 100%;
+            box-sizing: border-box;
+            flex-wrap: nowrap;
+        }
+
+        .evento-imagem-container img {
+            width: 100%;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-arrow {
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            font-size: 24px;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        /* ... (seus estilos anteriores continuam intactos) ... */
     </style>
 </head>
 <body>
@@ -186,27 +238,46 @@
     </div>
 </header>
 
-<section class="hero">
-    <div class="evento-destaque">
-        <div class="evento-imagem-container">
-            <img src="/images/evento.png" alt="Evento">
+<section class="carousel-container">
+    <div class="carousel-slide" id="carousel-slide">
+        <div class="evento-destaque">
+            <div class="evento-imagem-container">
+                <img src="/images/evento.png" alt="Evento 1">
+            </div>
+            <div class="evento-info">
+                <h2>II Congresso Brasileiro de Medicina e Inovação em Saúde - II MEDCON</h2>
+                <p><i class="fa-regular fa-calendar"></i> 09/06/25 à 12/06/2025 &nbsp;
+                    <i class="fa-solid fa-location-dot"></i> Online</p>
+                <p>O objetivo central do nosso evento é promover o avanço e a integração do conhecimento nas áreas da medicina e inovação em saúde.</p>
+                <a href="https://ime.events/ii-medcon/sobre" target="_blank" style="display: inline-block; margin-top: 10px; color: #247b63; font-weight: bold; text-decoration: none;">
+                    Saiba mais &rarr;
+                </a>
+            </div>
         </div>
-        <div class="evento-info">
-            <h2>II Congresso Brasileiro de Medicina e Inovação em Saúde - II MEDCON</h2>
-            <p><i class="fa-regular fa-calendar"></i> 09/06/25 à 12/06/2025 &nbsp;
-                <i class="fa-solid fa-location-dot"></i> Online</p>
-            <p>O objetivo central do nosso evento é promover o avanço e a integração do conhecimento nas áreas da medicina e inovação em saúde, abordando as mais recentes pesquisas e tecnologias que estão transformando o cenário da saúde. </p>
-            <a href="https://ime.events/ii-medcon/sobre#:~:text=%C3%89%20com%20grande%20entusiasmo%20que,Brasileira%20de%20Eventos%20Cient%C3%ADficos%20%2D%20SOBREC"
-               target="_blank"
-               style="display: inline-block; margin-top: 10px; color: #247b63; font-weight: bold; text-decoration: none;">
-                Saiba mais &rarr;
-            </a>
+
+        <div class="evento-destaque">
+            <div class="evento-imagem-container">
+                <img src="/images/logo-congresso.jpg" alt="Evento 2">
+            </div>
+            <div class="evento-info">
+                <h2>45º Congresso da Sociedade de Cardiologia do Estado de São Paulo</h2>
+                <p><i class="fa-regular fa-calendar"></i> 19/06/2025 &nbsp;
+                    <i class="fa-solid fa-location-dot"></i> São Paulo</p>
+                <p>O maior congresso estadual de cardiologia do Brasil, promovendo educação médica, inovação e networking entre profissionais da área.</p>
+                <a href="https://socesp2025.com.br/" target="_blank" style="display: inline-block; margin-top: 10px; color: #247b63; font-weight: bold; text-decoration: none;">
+                    Saiba mais &rarr;
+                </a>
+            </div>
         </div>
+    </div>
+
+    <div class="carousel-nav">
+        <button class="carousel-arrow" onclick="moverCarrossel(-1)">&#10094;</button>
+        <button class="carousel-arrow" onclick="moverCarrossel(1)">&#10095;</button>
     </div>
 </section>
 
-<section class="listings" id="pesquisas-container">
-</section>
+<section class="listings" id="pesquisas-container"></section>
 
 <section class="cta">
     <h2>Está promovendo uma pesquisa?</h2>
@@ -271,7 +342,7 @@
                 pesquisas.forEach(p => {
                     const card = document.createElement("div");
                     card.className = "card";
-                    card.innerHTML = `
+                    card.innerHTML =
                         <p style="color: #247b63;"><i class="fa-solid fa-flask"></i> ${p.areaDaPesquisa}</p>
                         <strong>${p.nomePesquisa}</strong>
                         <small>${p.descricao || "Sem descrição."}</small><br><br>
@@ -279,13 +350,13 @@
                             style="background-color: #247b63; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">
                             Participar
                         </button>
-                    `;
+                    ;
                     container.appendChild(card);
                 });
             })
             .catch(error => {
                 console.error("Erro:", error.message);
-                document.getElementById("pesquisas-container").innerHTML = `<p>Erro ao carregar: ${error.message}</p>`;
+                document.getElementById("pesquisas-container").innerHTML = <p>Erro ao carregar: ${error.message}</p>;
             });
     });
 
@@ -310,5 +381,74 @@
         window.location.href = "/login";
     }
 </script>
+
+<script>
+    let slideIndex = 0;
+    const slide = document.getElementById("carousel-slide");
+
+    function moverCarrossel(direcao) {
+        const totalSlides = slide.children.length;
+        slideIndex = (slideIndex + direcao + totalSlides) % totalSlides;
+        slide.style.transform = `translateX(-${slideIndex * 100}%)`;
+    }
+
+    // Carregamento de pesquisas (igual ao seu script original)
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch('/pesquisas/api/abertas')
+            .then(response => {
+                if (!response.ok) throw new Error("Erro ao buscar pesquisas.");
+                return response.json();
+            })
+            .then(pesquisas => {
+                const container = document.getElementById("pesquisas-container");
+                container.innerHTML = "";
+
+                if (!pesquisas.length) {
+                    container.innerHTML = "<p>Nenhuma pesquisa aberta no momento.</p>";
+                    return;
+                }
+
+                pesquisas.forEach(p => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <p style="color: #247b63;"><i class="fa-solid fa-flask"></i> ${p.areaDaPesquisa}</p>
+                        <strong>${p.nomePesquisa}</strong><br>
+                        <small>${p.descricao || "Sem descrição."}</small><br><br>
+                        <button onclick="alertarParticipacao()"
+                            style="background-color: #247b63; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">
+                            Participar
+                        </button>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error("Erro:", error.message);
+                document.getElementById("pesquisas-container").innerHTML = `<p>Erro ao carregar: ${error.message}</p>`;
+            });
+    });
+
+    function alertarParticipacao() {
+        alert("Para participar, você precisa fazer login ou se cadastrar.");
+        window.location.href = "/login";
+    }
+
+    // Modal scripts (Quem Somos / LGPD)
+    function abrirModal() {
+        document.getElementById('modal-quem-somos').style.display = 'block';
+    }
+    function fecharModal() {
+        document.getElementById('modal-quem-somos').style.display = 'none';
+    }
+
+    function abrirModalLGPD() {
+        document.getElementById('modal-lgpd').style.display = 'block';
+    }
+    function fecharModalLGPD() {
+        document.getElementById('modal-lgpd').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>

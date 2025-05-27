@@ -8,43 +8,34 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f7f7f7;
-        }
-
-        /* Container centralizado para layout flexível */
-        .container {
-            display: flex;
             height: 100vh;
+            display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Coluna esquerda com ilustração e frase */
-        .left {
-            width: 50%;
-            text-align: center;
-            padding: 2rem;
+        /* Imagem de fundo */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("/images/scientist.jpg") no-repeat center center / cover;
+            filter: grayscale(100%) opacity(0.2);
+            z-index: -1;
         }
 
-        .ellipse {
-            width: 380px;
-            height: 280px;
-            background: repeating-linear-gradient(
-                    45deg,
-                    #cceeee,
-                    #cceeee 10px,
-                    #b8dada 10px,
-                    #b8dada 20px
-            );
-            border-radius: 50% / 40%;
-            margin: 0 auto 1rem;
-        }
-
-        .left p {
-            max-width: 400px;
-            margin: 0 auto;
-            font-size: 14px;
-            color: #333;
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            width: 100%;
+            max-width: 900px;
         }
 
         .right {
@@ -117,7 +108,6 @@
             width: 30px;
         }
 
-        /* Alerta de sucesso estilizado */
         .custom-alert {
             position: fixed;
             top: 1rem;
@@ -162,10 +152,6 @@
 
 <!-- Login layout principal -->
 <div class="container">
-    <div class="left">
-        <div class="ellipse"></div>
-        <p>A pesquisa começa com um login.</p>
-    </div>
     <div class="right">
         <div class="logo">
             <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" class="logo-img">
@@ -194,7 +180,6 @@
     </div>
 </div>
 
-<!-- Alerta some após 5 segundos -->
 <script>
     window.addEventListener("load", () => {
         const alertBox = document.querySelector(".custom-alert");
