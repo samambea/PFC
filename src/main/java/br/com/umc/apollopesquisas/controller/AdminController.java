@@ -145,10 +145,6 @@ public class AdminController {
     // Atualmente com implementação placeholder.
     @GetMapping("/sugestoes")
     public String listarSugestoes(Model model) {
-        // FUNCIONALIDADE FUTURA: Código comentado para implementação posterior
-        // opcional: adicionar sugestões no model
-        // model.addAttribute("sugestoes", sugestaoService.buscarTodas());
-
         return "sugestoes/listar"; // View em subdiretório
     }
 
