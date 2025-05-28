@@ -316,71 +316,73 @@
     <div style="background: white; padding: 30px; border-radius: 10px; max-width: 500px; margin: 10% auto; box-shadow: 0 0 15px rgba(0,0,0,0.2); text-align: center;">
         <h2>LGPD - Lei Geral de Proteção de Dados</h2>
         <p style="margin-top: 15px; font-size: 1em;">
-            A <strong>Lei Geral de Proteção de Dados (LGPD)</strong> é uma legislação brasileira que estabelece regras sobre coleta, uso, armazenamento e compartilhamento de dados pessoais. Na <strong>Apollo Pesquisas</strong>, respeitamos sua privacidade e estamos comprometidos com a segurança das suas informações. Todos os dados são tratados de forma ética, transparente e em conformidade com a LGPD.
+            A <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" style="color: inherit; text-decoration: underline;">
+            <strong>Lei Geral de Proteção de Dados (LGPD)</strong>
+        </a> é uma legislação brasileira que estabelece regras sobre coleta, uso, armazenamento e compartilhamento de dados pessoais. Na <strong>Apollo Pesquisas</strong>, respeitamos sua privacidade e estamos comprometidos com a segurança das suas informações. Todos os dados são tratados de forma ética, transparente e em conformidade com a LGPD.
         </p>
         <button onclick="fecharModalLGPD()" style="margin-top: 20px; padding: 10px 20px; background-color: #247b63; color: white; border: none; border-radius: 6px; cursor: pointer;">OK</button>
     </div>
 </div>
 
-<script>
-    // Carregamento de pesquisas
-    document.addEventListener("DOMContentLoaded", () => {
-        fetch('/pesquisas/api/abertas')
-            .then(response => {
-                if (!response.ok) throw new Error("Erro ao buscar pesquisas.");
-                return response.json();
-            })
-            .then(pesquisas => {
-                const container = document.getElementById("pesquisas-container");
-                container.innerHTML = "";
+<!--<script>-->
+<!--    // Carregamento de pesquisas-->
+<!--    document.addEventListener("DOMContentLoaded", () => {-->
+<!--        fetch('/pesquisas/api/abertas')-->
+<!--            .then(response => {-->
+<!--                if (!response.ok) throw new Error("Erro ao buscar pesquisas.");-->
+<!--                return response.json();-->
+<!--            })-->
+<!--            .then(pesquisas => {-->
+<!--                const container = document.getElementById("pesquisas-container");-->
+<!--                container.innerHTML = "";-->
 
-                if (!pesquisas.length) {
-                    container.innerHTML = "<p>Nenhuma pesquisa aberta no momento.</p>";
-                    return;
-                }
+<!--                if (!pesquisas.length) {-->
+<!--                    container.innerHTML = "<p>Nenhuma pesquisa aberta no momento.</p>";-->
+<!--                    return;-->
+<!--                }-->
 
-                pesquisas.forEach(p => {
-                    const card = document.createElement("div");
-                    card.className = "card";
-                    card.innerHTML =
-                        <p style="color: #247b63;"><i class="fa-solid fa-flask"></i> ${p.areaDaPesquisa}</p>
-                        <strong>${p.nomePesquisa}</strong>
-                        <small>${p.descricao || "Sem descrição."}</small><br><br>
-                        <button onclick="alertarParticipacao()"
-                            style="background-color: #247b63; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">
-                            Participar
-                        </button>
-                    ;
-                    container.appendChild(card);
-                });
-            })
-            .catch(error => {
-                console.error("Erro:", error.message);
-                document.getElementById("pesquisas-container").innerHTML = <p>Erro ao carregar: ${error.message}</p>;
-            });
-    });
+<!--                pesquisas.forEach(p => {-->
+<!--                    const card = document.createElement("div");-->
+<!--                    card.className = "card";-->
+<!--                    card.innerHTML =-->
+<!--                        <p style="color: #247b63;"><i class="fa-solid fa-flask"></i> ${p.areaDaPesquisa}</p>-->
+<!--                        <strong>${p.nomePesquisa}</strong>-->
+<!--                        <small>${p.descricao || "Sem descrição."}</small><br><br>-->
+<!--                        <button onclick="alertarParticipacao()"-->
+<!--                            style="background-color: #247b63; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">-->
+<!--                            Participar-->
+<!--                        </button>-->
+<!--                    ;-->
+<!--                    container.appendChild(card);-->
+<!--                });-->
+<!--            })-->
+<!--            .catch(error => {-->
+<!--                console.error("Erro:", error.message);-->
+<!--                document.getElementById("pesquisas-container").innerHTML = <p>Erro ao carregar: ${error.message}</p>;-->
+<!--            });-->
+<!--    });-->
 
-    // Modal Quem Somos
-    function abrirModal() {
-        document.getElementById('modal-quem-somos').style.display = 'block';
-    }
-    function fecharModal() {
-        document.getElementById('modal-quem-somos').style.display = 'none';
-    }
+<!--    // Modal Quem Somos-->
+<!--    function abrirModal() {-->
+<!--        document.getElementById('modal-quem-somos').style.display = 'block';-->
+<!--    }-->
+<!--    function fecharModal() {-->
+<!--        document.getElementById('modal-quem-somos').style.display = 'none';-->
+<!--    }-->
 
-    // Modal LGPD
-    function abrirModalLGPD() {
-        document.getElementById('modal-lgpd').style.display = 'block';
-    }
-    function fecharModalLGPD() {
-        document.getElementById('modal-lgpd').style.display = 'none';
-    }
+<!--    // Modal LGPD-->
+<!--    function abrirModalLGPD() {-->
+<!--        document.getElementById('modal-lgpd').style.display = 'block';-->
+<!--    }-->
+<!--    function fecharModalLGPD() {-->
+<!--        document.getElementById('modal-lgpd').style.display = 'none';-->
+<!--    }-->
 
-    function alertarParticipacao() {
-        alert("Para participar, você precisa fazer login ou se cadastrar.");
-        window.location.href = "/login";
-    }
-</script>
+<!--    function alertarParticipacao() {-->
+<!--        alert("Para participar, você precisa fazer login ou se cadastrar.");-->
+<!--        window.location.href = "/login";-->
+<!--    }-->
+<!--</script>-->
 
 <script>
     let slideIndex = 0;

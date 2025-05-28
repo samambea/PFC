@@ -10,6 +10,17 @@
         font-family: 'Segoe UI', sans-serif;
         background-color: #f7f7f7;
     }
+    body::before {
+      content: "";
+      position: absolute;
+      background: url("/static/images/admin.jpg") no-repeat center / cover;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      filter: grayscale(100%) opacity(0.2);
+      z-index: -1;
+    }
     .container {
         display: flex;
         flex-wrap: wrap;
@@ -18,10 +29,7 @@
         height: 100vh;
     }
     .left {
-        flex: 1;
-        min-width: 300px;
-        text-align: center;
-        padding: 2rem;
+    display: none;
     }
     .ellipse {
         width: 280px;
@@ -113,7 +121,7 @@
   </div>
   <div class="right">
     <div class="logo">
-      <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
+      <img src="/static/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
     </div>
 
     <form id="formCadastroAdmin" th:action="@{/admin/usuarios/cadastrar-admin}" th:object="${usuario}" method="post">

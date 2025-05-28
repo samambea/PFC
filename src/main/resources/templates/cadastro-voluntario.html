@@ -14,7 +14,7 @@
             body::before {
         content: "";
         position: absolute;
-        background: url("static/images/voluntario.jpg") no-repeat center / cover;
+        background: url("/static/images/voluntario.jpg") no-repeat center / cover;
         top: 0;
         left: 0;
         width: 100%;
@@ -153,8 +153,8 @@ box-sizing: border-box;
 </style>
 <body>
 <div class="home-icon">
-    <a href="/">
-        <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home" />
+    <a href="javascript:void(0)" onclick="if(document.referrer) {window.history.back();} else {window.location.href='index.html';}">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Voltar">
     </a>
 </div>
 
@@ -165,7 +165,7 @@ box-sizing: border-box;
     </div>
     <div class="right">
         <div class="logo">
-            <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;" />
+            <img src="/static/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;" />
         </div>
 
         <!-- Alerta de erro para email já em uso -->
