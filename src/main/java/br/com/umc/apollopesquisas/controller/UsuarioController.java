@@ -1,5 +1,3 @@
-// UsuarioController.java - atualizado
-
 package br.com.umc.apollopesquisas.controller;
 
 import br.com.umc.apollopesquisas.model.*;
@@ -44,7 +42,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Formulário genérico com tipo
+    // Formulário com tipo
     @GetMapping("/usuarios/cadastro")
     public String cadastroForm(Model model, @RequestParam(name = "tipo", required = false, defaultValue = "voluntario") String tipo) {
         Usuario usuario;
@@ -110,7 +108,7 @@ public class UsuarioController {
             @ModelAttribute Voluntario voluntario,
             @RequestParam(name = "aceitouTermos", defaultValue = "false") boolean aceitouTermos,
             RedirectAttributes redirectAttributes,
-            Model model) { // <-- adiciona Model para enviar erros na mesma página
+            Model model) { // adiciona Model para enviar erros na mesma página
 
         // Verifica se o usuário aceitou os termos
         if (!aceitouTermos) {
@@ -122,7 +120,7 @@ public class UsuarioController {
         if (usuarioService.findByEmail(voluntario.getEmail()).isPresent()) {
             model.addAttribute("errorMessage", "Este e-mail já está em uso.");
             model.addAttribute("usuario", voluntario); // manter dados preenchidos no form
-            return "cadastro-voluntario"; // exibe a view com o erro
+            return "cadastro-voluntario"; 
         }
 
         voluntario.setSenha(passwordEncoder.encode(voluntario.getSenha()));
