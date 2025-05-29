@@ -8,13 +8,12 @@
     body {
         margin: 0;
         font-family: 'Segoe UI', sans-serif;
-        background: url("static/images/voluntario.jpg") no-repeat center;
     }
 
             body::before {
         content: "";
         position: absolute;
-        background: url("/static/images/voluntario.jpg") no-repeat center / cover;
+        background: url("/images/voluntario.jpg") no-repeat center / cover;
         top: 0;
         left: 0;
         width: 100%;
@@ -23,14 +22,14 @@
         z-index: -1;
     }
 
-.container {
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-padding: 2rem; /* Isso ajuda em telas menores */
-box-sizing: border-box;
-}
+        .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 2rem;
+        box-sizing: border-box;
+        }
 
 
     .left {
@@ -165,7 +164,7 @@ box-sizing: border-box;
     </div>
     <div class="right">
         <div class="logo">
-            <img src="/static/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;" />
+            <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;" />
         </div>
 
         <!-- Alerta de erro para email já em uso -->

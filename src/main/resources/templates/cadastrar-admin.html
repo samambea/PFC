@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Cadastro Admin - Apollo Pesquisas</title>
   <style>
-    /* Use o mesmo estilo do seu formulário pesquisador para consistência */
+
     body {
         margin: 0;
         font-family: 'Segoe UI', sans-serif;
@@ -13,7 +13,7 @@
     body::before {
       content: "";
       position: absolute;
-      background: url("/static/images/admin.jpg") no-repeat center / cover;
+      background: url("/images/admin.jpg") no-repeat center / cover;
       top: 0;
       left: 0;
       width: 100%;
@@ -121,7 +121,7 @@
   </div>
   <div class="right">
     <div class="logo">
-      <img src="/static/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
+      <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
     </div>
 
     <form id="formCadastroAdmin" th:action="@{/admin/usuarios/cadastrar-admin}" th:object="${usuario}" method="post">
@@ -134,7 +134,6 @@
       <label>Senha:</label>
       <input type="password" th:field="*{senha}" required />
 
-      <!-- Você pode adicionar outros campos comuns, se quiser -->
 
       <div class="terms">Ao cadastrar um administrador, certifique-se de que essa pessoa terá permissões administrativas no sistema.</div>
 

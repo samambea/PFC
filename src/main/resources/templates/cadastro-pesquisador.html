@@ -19,7 +19,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url("/static/images/medico-pesquisador.jpeg") no-repeat center center / cover;
+            background: url("/images/medico-pesquisador.jpeg") no-repeat center center / cover;
             filter: grayscale(100%) opacity(0.2);
             z-index: -1;
         }
@@ -121,15 +121,25 @@
             text-decoration: none;
         }
 
+
         .home-icon {
             position: absolute;
             top: 1rem;
             left: 1rem;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            cursor: pointer;
         }
 
         .home-icon img {
             width: 28px;
+            height: 28px;
         }
+
 
         #modal-termos {
             display: none;
@@ -176,17 +186,15 @@
 </head>
 <body>
 
-<div class="home-icon">
-    <a href="javascript:void(0)" onclick="if(document.referrer) {window.history.back();} else {window.location.href='index.html';}">
-        <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Voltar">
-    </a>
-</div>
+<a href="javascript:void(0);" class="home-icon" onclick="voltarOuHome()">
+    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Voltar">
+</a>
 
 
 <div class="container">
     <div class="right">
         <div class="logo">
-            <img src="/static/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
+            <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
         </div>
 
         <div th:if="${errorMessage}" class="custom-alert error">
@@ -267,6 +275,15 @@
         document.getElementById("modal-termos").style.display = "none";
         alert("Você precisa aceitar os termos para continuar.");
     }
+
+    function voltarOuHome() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = "/";
+        }
+    }
+
 </script>
 
 </body>
