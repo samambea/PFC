@@ -19,7 +19,6 @@ public interface PesquisaRepository extends MongoRepository<Pesquisa, String> {
     List<Pesquisa> findByParticipantesContains(String usuarioId);
 
     // Retorna todas as pesquisas com status informado como String.
-    // Atenção: pode ser redundante ou conflitar com o metodo que usa enum.
     List<Pesquisa> findByStatusPesquisa(String status);
 
     List<Pesquisa> findByInstituicaoId(String instituicaoId);
