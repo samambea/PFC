@@ -141,7 +141,7 @@ public class AdminController {
         return "redirect:/admin/usuarios?success=deletado";
     }
 
-    // Endpoint para funcionalidade futura de sugestões.
+    // Endpoint para funcionalidade de sugestões.
     // Atualmente com implementação placeholder.
     @GetMapping("/sugestoes")
     public String listarSugestoes(Model model) {
