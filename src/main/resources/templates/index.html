@@ -225,7 +225,7 @@
             margin: 0 10px;
         }
 
-        /* ... (seus estilos anteriores continuam intactos) ... */
+
     </style>
 </head>
 <body>
@@ -324,65 +324,6 @@
     </div>
 </div>
 
-<!--<script>-->
-<!--    // Carregamento de pesquisas-->
-<!--    document.addEventListener("DOMContentLoaded", () => {-->
-<!--        fetch('/pesquisas/api/abertas')-->
-<!--            .then(response => {-->
-<!--                if (!response.ok) throw new Error("Erro ao buscar pesquisas.");-->
-<!--                return response.json();-->
-<!--            })-->
-<!--            .then(pesquisas => {-->
-<!--                const container = document.getElementById("pesquisas-container");-->
-<!--                container.innerHTML = "";-->
-
-<!--                if (!pesquisas.length) {-->
-<!--                    container.innerHTML = "<p>Nenhuma pesquisa aberta no momento.</p>";-->
-<!--                    return;-->
-<!--                }-->
-
-<!--                pesquisas.forEach(p => {-->
-<!--                    const card = document.createElement("div");-->
-<!--                    card.className = "card";-->
-<!--                    card.innerHTML =-->
-<!--                        <p style="color: #247b63;"><i class="fa-solid fa-flask"></i> ${p.areaDaPesquisa}</p>-->
-<!--                        <strong>${p.nomePesquisa}</strong>-->
-<!--                        <small>${p.descricao || "Sem descrição."}</small><br><br>-->
-<!--                        <button onclick="alertarParticipacao()"-->
-<!--                            style="background-color: #247b63; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">-->
-<!--                            Participar-->
-<!--                        </button>-->
-<!--                    ;-->
-<!--                    container.appendChild(card);-->
-<!--                });-->
-<!--            })-->
-<!--            .catch(error => {-->
-<!--                console.error("Erro:", error.message);-->
-<!--                document.getElementById("pesquisas-container").innerHTML = <p>Erro ao carregar: ${error.message}</p>;-->
-<!--            });-->
-<!--    });-->
-
-<!--    // Modal Quem Somos-->
-<!--    function abrirModal() {-->
-<!--        document.getElementById('modal-quem-somos').style.display = 'block';-->
-<!--    }-->
-<!--    function fecharModal() {-->
-<!--        document.getElementById('modal-quem-somos').style.display = 'none';-->
-<!--    }-->
-
-<!--    // Modal LGPD-->
-<!--    function abrirModalLGPD() {-->
-<!--        document.getElementById('modal-lgpd').style.display = 'block';-->
-<!--    }-->
-<!--    function fecharModalLGPD() {-->
-<!--        document.getElementById('modal-lgpd').style.display = 'none';-->
-<!--    }-->
-
-<!--    function alertarParticipacao() {-->
-<!--        alert("Para participar, você precisa fazer login ou se cadastrar.");-->
-<!--        window.location.href = "/login";-->
-<!--    }-->
-<!--</script>-->
 
 <script>
     let slideIndex = 0;
@@ -394,7 +335,7 @@
         slide.style.transform = `translateX(-${slideIndex * 100}%)`;
     }
 
-    // Carregamento de pesquisas (igual ao seu script original)
+
     document.addEventListener("DOMContentLoaded", () => {
         fetch('/pesquisas/api/abertas')
             .then(response => {
