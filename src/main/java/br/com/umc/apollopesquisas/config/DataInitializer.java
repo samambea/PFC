@@ -33,7 +33,7 @@ public class DataInitializer implements CommandLineRunner {
         // Usa Optional.isPresent() para verificar se o resultado da busca existe
         if (!usuarioRepository.findByEmail("admin@admin.com").isPresent()) {
 
-            // CRIAÇÃO DO ADMIN PADRÃO: Cria novo objeto Pesquisador que será o admin
+            // CRIAÇÃO DO ADMIN PADRÃO: Cria novo objeto Administrador que será o admin
             Administrador admin = new Administrador();
 
             // Define os dados básicos do administrador
