@@ -1,5 +1,6 @@
 package br.com.umc.apollopesquisas.config;
 
+import br.com.umc.apollopesquisas.model.Administrador;
 import br.com.umc.apollopesquisas.model.Pesquisador;
 import br.com.umc.apollopesquisas.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class DataInitializer implements CommandLineRunner {
         if (!usuarioRepository.findByEmail("admin@admin.com").isPresent()) {
 
             // CRIAÇÃO DO ADMIN PADRÃO: Cria novo objeto Pesquisador que será o admin
-            Pesquisador admin = new Pesquisador();
+            Administrador admin = new Administrador();
 
             // Define os dados básicos do administrador
             admin.setNome("Administrador");
