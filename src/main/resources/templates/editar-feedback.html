@@ -85,24 +85,37 @@
 </head>
 <body>
 <div class="container">
+    <!-- Título da página de edição de feedback -->
     <h2>Editar Feedback</h2>
+
+    <!-- Formulário para editar um feedback existente.
+         Os dados são vinculados ao objeto 'feedback' via Thymeleaf.
+         O formulário envia os dados via POST para o backend. -->
     <form th:action="@{'/feedbacks/editar/' + ${feedback.feedbackId}}" th:object="${feedback}" method="post">
 
+        <!-- Campo para editar a nota do feedback, valor entre 1 e 5 -->
         <label for="nota">Nota (1 a 5):</label>
         <input type="number" id="nota" th:field="*{nota}" min="1" max="5" required>
 
+        <!-- Campo para editar o comentário do feedback -->
         <label for="comentario">Comentário:</label>
         <textarea id="comentario" th:field="*{comentario}" rows="4" required></textarea>
 
+        <!-- Campo somente leitura que exibe o nome da pesquisa associada ao feedback -->
         <label for="nomePesquisa">Nome da Pesquisa:</label>
         <input type="text" id="nomePesquisa" th:field="*{nomePesquisa}" readonly>
 
+        <!-- Campo somente leitura que exibe o nome do voluntário que deu o feedback -->
         <label for="nomeVoluntario">Nome do Voluntário:</label>
         <input type="text" id="nomeVoluntario" th:field="*{nomeVoluntario}" readonly>
 
+        <!-- Botão para salvar as alterações feitas no feedback -->
         <button type="submit">Salvar</button>
     </form>
+
+    <!-- Link para cancelar a edição e voltar para a lista de feedbacks -->
     <a href="/feedbacks/listar" class="link-button">Cancelar</a>
 </div>
 </body>
+
 </html>

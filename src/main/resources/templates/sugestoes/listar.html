@@ -105,8 +105,10 @@
 </head>
 <body>
 <div class="container">
+    <!-- Título principal da página -->
     <h1>Sugestões de Pesquisas Médicas</h1>
 
+    <!-- Tabela que exibe a lista de sugestões de pesquisas médicas -->
     <table>
         <thead>
         <tr>
@@ -118,14 +120,22 @@
         </tr>
         </thead>
         <tbody>
+        <!-- Loop Thymeleaf para exibir cada sugestão da lista recebida do backend -->
         <tr th:each="sugestao : ${sugestoes}">
+            <!-- Exibe o título da sugestão -->
             <td th:text="${sugestao.titulo}">Título</td>
+            <!-- Exibe a categoria da sugestão -->
             <td th:text="${sugestao.categoria}">Categoria</td>
+            <!-- Exibe a data de criação formatada -->
             <td th:text="${#temporals.format(sugestao.dataCriacao, 'dd/MM/yyyy HH:mm')}">Data</td>
+            <!-- Exibe o e-mail do usuário que fez a sugestão -->
             <td th:text="${sugestao.email}">Email</td>
             <td>
+                <!-- Grupo de botões para ações de editar e excluir -->
                 <div class="btn-group">
+                    <!-- Botão para editar a sugestão -->
                     <a th:href="@{'/sugestoes/editar/' + ${sugestao.sugestaoId}}" class="btn btn-edit">Editar</a>
+                    <!-- Botão para excluir a sugestão, com confirmação -->
                     <a th:href="@{'/sugestoes/excluir/' + ${sugestao.sugestaoId}}"
                        class="btn btn-delete"
                        onclick="return confirm('Confirmar exclusão?')">Excluir</a>
@@ -136,10 +146,12 @@
     </table>
 
     <div>
+        <!-- Botão de voltar exibido apenas para usuários com papel ADMIN -->
         <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
            th:href="@{/admin/usuarios/lista-usuarios}"
            class="btn-voltar">⬅ Voltar</a>
 
+        <!-- Botão de voltar exibido apenas para usuários com papel PESQUISADOR -->
         <a th:if="${#authorization.expression('hasRole(''PESQUISADOR'')')}"
            th:href="@{/home-pesquisador}"
            class="btn-voltar">⬅ Voltar</a>

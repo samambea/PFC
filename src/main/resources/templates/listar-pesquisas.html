@@ -99,8 +99,10 @@
 </head>
 <body>
 
+<!-- Título da página que lista as pesquisas cadastradas -->
 <h1>Pesquisas Cadastradas</h1>
 
+<!-- Tabela que exibe as pesquisas -->
 <table>
     <thead>
     <tr>
@@ -111,13 +113,19 @@
     </tr>
     </thead>
     <tbody>
+    <!-- Loop Thymeleaf para listar cada pesquisa -->
     <tr th:each="pesquisa : ${pesquisas}">
+        <!-- Exibe o nome da pesquisa -->
         <td th:text="${pesquisa.nomePesquisa}">Nome</td>
+        <!-- Exibe a área da pesquisa -->
         <td th:text="${pesquisa.areaDaPesquisa}">Área</td>
+        <!-- Exibe o status da pesquisa -->
         <td th:text="${pesquisa.statusPesquisa}">Status</td>
         <td>
             <div class="acoes-container">
+                <!-- Botão para editar a pesquisa -->
                 <a th:href="@{'/admin/pesquisas/editar/' + ${pesquisa.pesquisaId}}" class="btn btn-edit">Editar</a>
+                <!-- Botão para excluir a pesquisa, com confirmação -->
                 <a th:href="@{'/admin/pesquisas/deletar/' + ${pesquisa.pesquisaId}}"
                    class="btn btn-delete"
                    onclick="return confirm('Tem certeza que deseja excluir esta pesquisa?')">Excluir</a>
@@ -127,7 +135,9 @@
     </tbody>
 </table>
 
+<!-- Link para voltar à página administrativa de usuários -->
 <a href="/admin/usuarios" class="btn-voltar">⬅ Voltar</a>
 
 </body>
+
 </html>

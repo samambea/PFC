@@ -78,17 +78,28 @@
 </head>
 <body>
 <div class="container">
+    <!-- Título da página de edição de instituição -->
     <h2>Editar Instituição</h2>
+
+    <!-- Formulário para editar uma instituição existente.
+         Os dados são vinculados ao objeto 'instituicao' via Thymeleaf.
+         O formulário envia os dados via POST para o backend. -->
     <form th:action="@{'/instituicoes/' + ${instituicao.instituicaoId} + '/editar'}" th:object="${instituicao}" method="post">
+        <!-- Campo para editar o nome da instituição -->
         <label for="nomeInstituicao">Nome da Instituição:</label>
         <input type="text" id="nomeInstituicao" th:field="*{nomeInstituicao}" required>
 
+        <!-- Campo para editar o CNPJ da instituição -->
         <label for="cnpj">CNPJ:</label>
         <input type="text" id="cnpj" th:field="*{cnpj}" required>
 
+        <!-- Botão para salvar as alterações -->
         <button type="submit">Salvar</button>
     </form>
+
+    <!-- Link para cancelar a edição e voltar para a lista de instituições -->
     <a href="/instituicoes" class="link-button">Cancelar</a>
 </div>
 </body>
+
 </html>

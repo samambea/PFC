@@ -129,47 +129,73 @@
 </head>
 <body>
 
+<!-- Cabeçalho da página de edição de evento -->
 <div class="header">
     <h1>Editar Evento</h1>
     <div>
+        <!-- Botão para voltar à lista de eventos -->
         <a href="/eventos" class="btn-back">Voltar para Lista</a>
+        <!-- Botão para sair/logout -->
         <a href="/index.html" class="btn-logout">Sair</a>
     </div>
 </div>
 
+<!-- Container do formulário de edição -->
 <div class="form-container">
     <h2>Atualizar Informações do Evento</h2>
 
+    <!-- Formulário para editar um evento existente.
+         Os campos são preenchidos automaticamente com os dados atuais do evento via Thymeleaf.
+         Ao submeter, os dados são enviados via POST para o backend. -->
     <form th:action="@{'/eventos/editar/' + ${evento.eventoId}}" method="post">
 
+        <!-- Campo para editar o título do evento -->
         <div class="form-group">
             <label for="tituloEvento">Título</label>
             <input type="text" id="tituloEvento" name="tituloEvento" th:value="${evento.tituloEvento}" required>
         </div>
 
+        <!-- Campo para editar a descrição do evento -->
         <div class="form-group">
             <label for="descricaoEvento">Descrição</label>
             <textarea id="descricaoEvento" name="descricaoEvento" required th:text="${evento.descricaoEvento}"></textarea>
         </div>
 
+        <!-- Campo para editar a data do evento -->
         <div class="form-group">
             <label for="dataEvento">Data</label>
             <input type="date" id="dataEvento" name="dataEvento" th:value="${evento.dataEvento}" required>
         </div>
 
+        <!-- Campo para editar o local do evento -->
         <div class="form-group">
             <label for="localEvento">Local</label>
             <input type="text" id="localEvento" name="localEvento" th:value="${evento.localEvento}" required>
         </div>
 
+        <!-- Campo para editar o link do evento (opcional) -->
         <div class="form-group">
             <label for="link">Link</label>
             <input type="url" id="link" name="link" th:value="${evento.link}">
         </div>
 
+        <!-- Botão para salvar as alterações -->
         <button type="submit" class="btn-save">Salvar Alterações</button>
     </form>
 </div>
 
 </body>
+Resumo das funcionalidades:
+
+Permite editar todos os dados de um evento, como título, descrição, data, local e link.
+
+Os campos do formulário são preenchidos automaticamente com os dados atuais do evento usando Thymeleaf.
+
+O botão "Salvar Alterações" envia o formulário para o backend atualizar o evento.
+
+Botões para voltar à lista de eventos e para sair/logout no topo da página.
+
+Relacionado
+Quais elementos do formulário podem facilitar a confirmação de dados antes de salvar
+
 </html>

@@ -230,6 +230,7 @@
 </head>
 <body>
 
+<!-- Cabeçalho com logo e botões de acesso/cadastro -->
 <header class="header">
     <div class="logo">Apollo <span>Pesquisas</span></div>
     <div class="header-buttons">
@@ -238,8 +239,10 @@
     </div>
 </header>
 
+<!-- Carrossel de eventos em destaque -->
 <section class="carousel-container">
     <div class="carousel-slide" id="carousel-slide">
+        <!-- Evento destaque 1 -->
         <div class="evento-destaque">
             <div class="evento-imagem-container">
                 <img src="/images/evento.png" alt="Evento 1">
@@ -254,7 +257,7 @@
                 </a>
             </div>
         </div>
-
+        <!-- Evento destaque 2 -->
         <div class="evento-destaque">
             <div class="evento-imagem-container">
                 <img src="/images/logo-congresso.jpg" alt="Evento 2">
@@ -270,21 +273,24 @@
             </div>
         </div>
     </div>
-
+    <!-- Navegação do carrossel -->
     <div class="carousel-nav">
         <button class="carousel-arrow" onclick="moverCarrossel(-1)">&#10094;</button>
         <button class="carousel-arrow" onclick="moverCarrossel(1)">&#10095;</button>
     </div>
 </section>
 
+<!-- Listagem dinâmica de pesquisas abertas (preenchida via JavaScript) -->
 <section class="listings" id="pesquisas-container"></section>
 
+<!-- Chamada para ação: cadastro de pesquisador -->
 <section class="cta">
     <h2>Está promovendo uma pesquisa?</h2>
     <p>Cadastre-se como pesquisador Apollo e faça a sua listagem!</p>
     <a class="btn-cta" href="/auth/cadastro/pesquisador">Sou Pesquisador</a>
 </section>
 
+<!-- Rodapé com links institucionais e redes sociais -->
 <footer>
     <div class="footer-links">
         <a href="#" onclick="abrirModal()">Quem Somos</a>
@@ -324,8 +330,8 @@
     </div>
 </div>
 
-
 <script>
+    // Controle do carrossel de eventos
     let slideIndex = 0;
     const slide = document.getElementById("carousel-slide");
 
@@ -335,7 +341,7 @@
         slide.style.transform = `translateX(-${slideIndex * 100}%)`;
     }
 
-
+    // Carrega pesquisas abertas via API e exibe cards na seção de listagem
     document.addEventListener("DOMContentLoaded", () => {
         fetch('/pesquisas/api/abertas')
             .then(response => {
@@ -372,12 +378,13 @@
             });
     });
 
+    // Alerta para participação, redirecionando para login
     function alertarParticipacao() {
         alert("Para participar, você precisa fazer login ou se cadastrar.");
         window.location.href = "/login";
     }
 
-    // Modal scripts (Quem Somos / LGPD)
+    // Scripts para abrir e fechar os modais institucionais
     function abrirModal() {
         document.getElementById('modal-quem-somos').style.display = 'block';
     }

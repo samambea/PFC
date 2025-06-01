@@ -142,21 +142,27 @@
 </head>
 <body>
 
+<!-- Cabeçalho da página com boas-vindas e links para funcionalidades administrativas -->
 <div class="header">
     <h1>Bem-vindo, Admin!</h1>
     <div>
+        <!-- Links para listar pesquisas, instituições, sugestões, feedbacks e eventos -->
         <a href="/admin/pesquisas" class="button">Listar Pesquisas</a>
         <a href="/instituicoes" class="button">Listar Instituições</a>
         <a href="/sugestoes" class="button">Listar Sugestões</a>
         <a href="/admin/usuarios/feedbacks" class="button">Listar Feedbacks</a>
         <a href="/eventos" class="button">Listar Eventos</a>
+        <!-- Link para cadastrar novo administrador -->
         <a href="/admin/usuarios/cadastrar-admin" class="button">Cadastrar Admin</a>
+        <!-- Botão para logout -->
         <a href="/index.html" class="btn-logout">Sair</a>
     </div>
 </div>
 
+<!-- Título da seção de usuários cadastrados -->
 <h2>Usuários cadastrados na Apollo Pesquisas</h2>
 
+<!-- Tabela que lista os usuários cadastrados -->
 <table>
     <thead>
     <tr>
@@ -167,24 +173,31 @@
     </tr>
     </thead>
     <tbody>
+    <!-- Loop Thymeleaf para listar cada usuário -->
     <tr th:each="usuario : ${usuarios}">
+        <!-- Exibe o nome do usuário -->
         <td th:text="${usuario.nome}">Nome</td>
+        <!-- Exibe o email do usuário -->
         <td th:text="${usuario.email}">Email</td>
+        <!-- Exibe o tipo/role do usuário -->
         <td th:text="${usuario.role}">Tipo</td>
         <td class="action-buttons">
-
+            <!-- Botão de editar para voluntário -->
             <a th:if="${usuario.role == 'VOLUNTARIO'}"
                th:href="@{'/admin/usuarios/editar-voluntario/' + ${usuario.usuarioId}}"
                class="btn btn-edit">Editar</a>
 
+            <!-- Botão de editar para pesquisador -->
             <a th:if="${usuario.role == 'PESQUISADOR'}"
                th:href="@{'/admin/usuarios/editar-pesquisador/' + ${usuario.usuarioId}}"
                class="btn btn-edit">Editar</a>
 
+            <!-- Botão de editar para administrador -->
             <a th:if="${usuario.role == 'ADMIN'}"
                th:href="@{'/admin/usuarios/editar-administrador/' + ${usuario.usuarioId}}"
                class="btn btn-edit">Editar</a>
 
+            <!-- Botão para excluir o usuário, com confirmação -->
             <a th:href="@{'/admin/usuarios/deletar/' + ${usuario.usuarioId}}"
                class="btn btn-delete"
                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
@@ -194,4 +207,5 @@
 </table>
 
 </body>
+
 </html>

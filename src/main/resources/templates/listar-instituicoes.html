@@ -111,10 +111,13 @@
 </head>
 <body>
 
+<!-- Título da página que lista as instituições cadastradas -->
 <h1>Instituições Cadastradas</h1>
 
+<!-- Botão para cadastrar uma nova instituição -->
 <a href="/instituicoes/nova" class="btn-cadastrar">Cadastrar Instituição</a>
 
+<!-- Tabela que exibe as instituições, exibida somente se a lista não estiver vazia -->
 <table th:if="${instituicoes != null and !instituicoes.isEmpty()}">
     <thead>
     <tr>
@@ -123,13 +126,18 @@
     </tr>
     </thead>
     <tbody>
+    <!-- Loop Thymeleaf para listar cada instituição -->
     <tr th:each="instituicao : ${instituicoes}">
+        <!-- Exibe o nome da instituição -->
         <td th:text="${instituicao.nomeInstituicao}">Nome da Instituição</td>
         <td>
+            <!-- Link para editar a instituição -->
             <a th:href="@{'/instituicoes/' + ${instituicao.instituicaoId} + '/editar'}" class="btn btn-edit">Editar</a>
 
+            <!-- Formulário para excluir a instituição com proteção CSRF -->
             <form th:action="@{'/instituicoes/' + ${instituicao.instituicaoId} + '/excluir'}" method="post" style="display:inline;">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <!-- Botão para excluir, com confirmação -->
                 <button type="submit" class="btn btn-delete"
                         onclick="return confirm('Tem certeza que deseja excluir esta instituição?')">Excluir</button>
             </form>
@@ -138,9 +146,12 @@
     </tbody>
 </table>
 
+<!-- Mensagem exibida caso não existam instituições cadastradas -->
 <p th:if="${instituicoes == null or instituicoes.isEmpty()}" class="empty-message">Nenhuma instituição cadastrada.</p>
 
+<!-- Link para voltar à página administrativa de usuários -->
 <a href="/admin/usuarios" class="btn-voltar">⬅ Voltar</a>
 
 </body>
+
 </html>

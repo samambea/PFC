@@ -138,42 +138,53 @@
 </head>
 <body>
 
-<!-- Alerta de sucesso visual -->
+<!-- Alerta de sucesso exibido quando a variável successMessage estiver presente -->
 <div th:if="${successMessage}" class="custom-alert success">
     <span th:text="${successMessage}"></span>
 </div>
 
-<!-- Ícone de home -->
+<!-- Ícone de home que redireciona para a página inicial -->
 <div class="home-icon">
     <a href="/">
         <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home">
     </a>
 </div>
 
-<!-- Login layout principal -->
+<!-- Container principal do layout de login -->
 <div class="container">
     <div class="right">
         <div class="logo">
+            <!-- Logo da aplicação -->
             <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" class="logo-img">
         </div>
+
+        <!-- Formulário de login que envia dados via POST para /auth/login -->
         <form th:action="@{/auth/login}" method="post">
+            <!-- Campo para usuário (email) -->
             <input type="text" name="username" placeholder="E-mail"/>
+            <!-- Campo para senha -->
             <input type="password" name="password" placeholder="Senha"/>
+            <!-- Botão para submeter o formulário -->
             <button type="submit">Acessar Minha Conta</button>
 
+            <!-- Mensagem de erro exibida caso o parâmetro 'error' esteja presente na URL -->
             <div th:if="${param.error}">
                 <p style="color: red;">E-mail ou senha inválidos</p>
             </div>
 
+            <!-- Mensagem de logout exibida caso o parâmetro 'logout' esteja presente na URL -->
             <div th:if="${param.logout}">
                 <p style="color: green;">Logout realizado com sucesso.</p>
             </div>
 
+            <!-- Link para recuperação de senha -->
             <p style="margin-top: 15px; text-align: center;">
                 Esqueceu sua senha?
                 <a th:href="@{/esqueci-senha}" style="color: #2e7d64; font-weight: bold;">Clique aqui!</a>
             </p>
         </form>
+
+        <!-- Link para cadastro caso o usuário não tenha conta -->
         <div class="register">
             Não tem cadastro? <a href="/">Crie sua conta!</a>
         </div>
@@ -181,6 +192,7 @@
 </div>
 
 <script>
+    // Ao carregar a página, esconde o alerta de sucesso após 5 segundos
     window.addEventListener("load", () => {
         const alertBox = document.querySelector(".custom-alert");
         if (alertBox) {
@@ -189,6 +201,7 @@
             }, 5000);
         }
 
+        // Verifica se o parâmetro 'verificacaoEmail' está na URL para alertar o usuário
         const params = new URLSearchParams(window.location.search);
         if (params.get('verificacaoEmail') === 'true') {
             alert("Para finalizar o cadastro, por favor verifique seu e-mail e confirme sua conta.");
@@ -200,4 +213,5 @@
 </script>
 
 </body>
+
 </html>

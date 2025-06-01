@@ -21,117 +21,131 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+// Configuracao das extensoes para integracao Spring e Mockito
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @SpringBootTest
-class AuthControllerTest { // Note the 'Tests' suffix
+class AuthControllerTest {
 
+    // Mock do modelo Spring MVC para adicionar atributos na view
     @Mock
     private Model model;
 
+    // Mock da autenticacao Spring Security para simular usuario logado
     @Mock
     private Authentication authentication;
 
+    // Injecao do controller de autenticacao sob teste com os mocks configurados
     @InjectMocks
     private AuthController authController;
 
+    // Configuracao inicial executada antes de cada teste
     @BeforeEach
     void setUp() {
     }
 
+    // Testa o metodo cadastro quando tipo e "pesquisador"
     @Test
     void cadastro_WhenTipoIsPesquisador_ShouldReturnPesquisador() {
-        // Arrange
+        // Configura dados de teste
         String tipo = "pesquisador";
 
-        // Act
+        // Executa o metodo sob teste
         String viewName = authController.cadastro(tipo, model);
 
-        // Assert
+        // Verifica que um objeto Pesquisador foi adicionado ao modelo
         verify(model).addAttribute(eq("usuario"), any(Pesquisador.class));
         assertEquals("cadastro", viewName);
     }
 
+    // Testa o metodo cadastro quando tipo e "voluntario"
     @Test
     void cadastro_WhenTipoIsVoluntario_ShouldReturnVoluntario() {
-        // Arrange
+        // Configura dados de teste
         String tipo = "voluntario";
 
-        // Act
+        // Executa o metodo sob teste
         String viewName = authController.cadastro(tipo, model);
 
-        // Assert
+        // Verifica que um objeto Voluntario foi adicionado ao modelo
         verify(model).addAttribute(eq("usuario"), any(Voluntario.class));
         assertEquals("cadastro", viewName);
     }
 
+    // Testa o metodo cadastro quando tipo e null - deve retornar voluntario como padrao
     @Test
     void cadastro_WhenTipoIsNull_ShouldReturnDefaultVoluntario() {
-        // Act
+        // Executa o metodo sob teste com tipo null
         String viewName = authController.cadastro(null, model);
 
-        // Assert
+        // Verifica que Voluntario e usado como padrao
         verify(model).addAttribute(eq("usuario"), any(Voluntario.class));
         assertEquals("cadastro", viewName);
     }
 
+    // Testa o metodo cadastro quando tipo e string vazia - deve retornar voluntario como padrao
     @Test
     void cadastro_WhenTipoIsEmpty_ShouldReturnDefaultVoluntario() {
-        // Act
+        // Executa o metodo sob teste com string vazia
         String viewName = authController.cadastro("", model);
 
-        // Assert
+        // Verifica que Voluntario e usado como padrao
         verify(model).addAttribute(eq("usuario"), any(Voluntario.class));
         assertEquals("cadastro", viewName);
     }
 
+    // Testa o metodo login - deve retornar a view de login
     @Test
     void login_ShouldReturnLoginView() {
-        // Act
+        // Executa o metodo sob teste
         String viewName = authController.login();
 
-        // Assert
+        // Verifica que retorna a view correta
         assertEquals("login", viewName);
     }
 
+    // Testa o metodo home - deve retornar a view index
     @Test
     void home_ShouldReturnIndexView() {
-        // Act
+        // Executa o metodo sob teste
         String viewName = authController.home();
 
-        // Assert
+        // Verifica que retorna a view correta
         assertEquals("index", viewName);
     }
 
+    // Testa o metodo isLogado quando usuario esta autenticado
     @Test
     void isLogado_WhenAuthenticated_ShouldReturnOk() {
-        // Arrange
+        // Configura mock para simular usuario autenticado
         when(authentication.isAuthenticated()).thenReturn(true);
 
-        // Act
+        // Executa o metodo sob teste
         ResponseEntity<Void> response = authController.isLogado(authentication);
 
-        // Assert
+        // Verifica que retorna status OK
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    // Testa o metodo isLogado quando usuario nao esta autenticado
     @Test
     void isLogado_WhenNotAuthenticated_ShouldReturnUnauthorized() {
-        // Arrange
+        // Configura mock para simular usuario nao autenticado
         when(authentication.isAuthenticated()).thenReturn(false);
 
-        // Act
+        // Executa o metodo sob teste
         ResponseEntity<Void> response = authController.isLogado(authentication);
 
-        // Assert
+        // Verifica que retorna status UNAUTHORIZED
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
     }
 
+    // Testa o metodo isLogado quando authentication e null
     @Test
     void isLogado_WhenAuthenticationIsNull_ShouldReturnUnauthorized() {
-        // Act
+        // Executa o metodo sob teste com authentication null
         ResponseEntity<Void> response = authController.isLogado(null);
 
-        // Assert
+        // Verifica que retorna status UNAUTHORIZED
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
     }
 }

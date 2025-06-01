@@ -96,21 +96,26 @@
 <body>
 
 <div class="form-container">
-    <!-- Botão para voltar à página anterior -->
+    <!-- Botão para voltar à página de listagem de instituições -->
     <a href="/instituicoes" class="back-button">← Voltar</a>
 
-
+    <!-- Título do formulário -->
     <h2>Cadastrar Nova Instituição</h2>
 
+    <!-- Formulário para cadastro de nova instituição -->
     <form th:action="@{/instituicoes/salvar}" method="post">
+        <!-- Token CSRF para segurança contra ataques CSRF -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
+        <!-- Campo para informar o nome da instituição -->
         <label for="nomeInstituicao">Nome:</label>
         <input type="text" id="nomeInstituicao" name="nomeInstituicao" required>
 
+        <!-- Campo para informar o CNPJ da instituição -->
         <label for="cnpj">CNPJ:</label>
         <input type="text" id="cnpj" name="cnpj" required>
 
+        <!-- Botão para enviar o formulário e salvar a instituição -->
         <button type="submit">Salvar</button>
     </form>
 </div>

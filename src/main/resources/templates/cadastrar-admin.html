@@ -113,32 +113,43 @@
 <body>
 
 <div class="container">
+  <!-- Lado esquerdo, apenas decorativo (está oculto por padrão) -->
   <div class="left">
     <div class="ellipse"></div>
     <p>
       Cadastre um novo administrador para a plataforma Apollo Pesquisas.
     </p>
   </div>
+  <!-- Lado direito: formulário de cadastro de administrador -->
   <div class="right">
     <div class="logo">
+      <!-- Logo da aplicação -->
       <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
     </div>
 
+    <!-- Formulário de cadastro de administrador.
+         Os campos são preenchidos com os dados do objeto 'usuario' via Thymeleaf.
+         Ao submeter, envia os dados via POST para o backend. -->
     <form id="formCadastroAdmin" th:action="@{/admin/usuarios/cadastrar-admin}" th:object="${usuario}" method="post">
+      <!-- Campo para nome do administrador -->
       <label>Nome:</label>
       <input type="text" th:field="*{nome}" required />
 
+      <!-- Campo para e-mail do administrador -->
       <label>E-mail:</label>
       <input type="email" th:field="*{email}" required />
 
+      <!-- Campo para senha do administrador -->
       <label>Senha:</label>
       <input type="password" th:field="*{senha}" required />
 
-
+      <!-- Aviso sobre permissões administrativas -->
       <div class="terms">Ao cadastrar um administrador, certifique-se de que essa pessoa terá permissões administrativas no sistema.</div>
 
+      <!-- Botão para submeter o formulário e cadastrar o administrador -->
       <button type="submit">Cadastrar Admin</button>
 
+      <!-- Link para login caso o usuário já tenha cadastro -->
       <div class="login-link">
         Já tem uma conta? <a href="/auth/login">Faça seu login!</a>
       </div>

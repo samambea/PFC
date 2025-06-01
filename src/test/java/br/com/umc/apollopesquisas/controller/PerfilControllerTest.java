@@ -29,7 +29,6 @@ import static org.mockito.Mockito.*;
 
 class PerfilControllerTest {
 
-
     private PerfilController perfilController;
 
     @Mock
@@ -58,84 +57,92 @@ class PerfilControllerTest {
 
     @BeforeEach
     void setUp() {
+        // Inicializa os mocks e cria a instancia do controller com as dependencias simuladas
         MockitoAnnotations.openMocks(this);
         perfilController = new PerfilController(
-        usuarioService, 
-        passwordEncoder, 
-        participacaoService
-    );
-}
+                usuarioService,
+                passwordEncoder,
+                participacaoService
+        );
+    }
 
     @Test
     void mostrarPerfil_QuandoPrincipalNull_RetornaRedirectLogin() {
+        // Simula situacao onde nao ha usuario autenticado (principal e null)
+        // Chama o metodo mostrarPerfil com principal nulo
         String resultado = perfilController.mostrarPerfil(model, null);
+        // Verifica se a resposta e o redirecionamento para a pagina de login
         assertEquals("redirect:/auth/login", resultado);
     }
 
     @Test
     void mostrarPerfil_QuandoPesquisador_RetornaViewPesquisador() {
-        // Arrange
+        // Cria um objeto Pesquisador e simula autenticacao com um email
         Pesquisador pesquisador = new Pesquisador();
         when(principal.getName()).thenReturn("pesquisador@test.com");
         when(usuarioService.findByEmail(anyString())).thenReturn(Optional.of(pesquisador));
 
-        // Act
+        // Chama o metodo mostrarPerfil com o principal simulando um pesquisador
         String resultado = perfilController.mostrarPerfil(model, principal);
 
-        // Assert
+        // Verifica se retorna a view do perfil do pesquisador
         assertEquals("perfil-pesquisador", resultado);
+        // Verifica se o modelo recebeu o objeto pesquisador para a view
         verify(model).addAttribute("usuario", pesquisador);
     }
 
     @Test
     void mostrarFormularioEditar_QuandoPesquisador_RetornaViewEditarPesquisador() {
-        // Arrange
+        // Cria um pesquisador e simula autenticacao
         Pesquisador pesquisador = new Pesquisador();
         when(principal.getName()).thenReturn("pesquisador@test.com");
         when(usuarioService.findByEmail(anyString())).thenReturn(Optional.of(pesquisador));
 
-        // Act
+        // Chama o metodo para mostrar formulario de edicao
         String resultado = perfilController.mostrarFormularioEditar(model, principal);
 
-        // Assert
+        // Verifica se retorna a view para editar perfil de pesquisador
         assertEquals("editar-perfil-pesquisador", resultado);
+        // Verifica se o modelo recebeu o pesquisador para a view
         verify(model).addAttribute("pesquisador", pesquisador);
     }
 
     @Test
     void mostrarFormularioEditar_QuandoVoluntario_RetornaViewEditarVoluntario() {
-        // Arrange
+        // Cria um voluntario e simula autenticacao
         Voluntario voluntario = new Voluntario();
         when(principal.getName()).thenReturn("voluntario@test.com");
         when(usuarioService.findByEmail(anyString())).thenReturn(Optional.of(voluntario));
 
-        // Act
+        // Chama o metodo para mostrar formulario de edicao
         String resultado = perfilController.mostrarFormularioEditar(model, principal);
 
-        // Assert
+        // Verifica se retorna a view para editar perfil de voluntario
         assertEquals("editar-perfil-voluntario", resultado);
+        // Verifica se o modelo recebeu o voluntario para a view
         verify(model).addAttribute("voluntario", voluntario);
     }
 
     @Test
     void mostrarFormularioEditar_QuandoOutroTipoUsuario_RedirecionaParaPerfil() {
-        // Arrange
+        // Cria um usuario generico e simula autenticacao
         Usuario usuarioGenerico = new Usuario();
         when(principal.getName()).thenReturn("usuario@test.com");
         when(usuarioService.findByEmail(anyString())).thenReturn(Optional.of(usuarioGenerico));
 
-        // Act
+        // Chama o metodo para mostrar formulario de edicao
         String resultado = perfilController.mostrarFormularioEditar(model, principal);
 
-        // Assert
+        // Verifica se redireciona para o perfil pois usuario nao e voluntario nem pesquisador
         assertEquals("redirect:/perfil", resultado);
+        // Garante que o modelo nao recebeu atributos para pesquisador ou voluntario
         verify(model, never()).addAttribute("pesquisador", usuarioGenerico);
         verify(model, never()).addAttribute("voluntario", usuarioGenerico);
     }
 
     @Test
     void mostrarPerfil_QuandoVoluntario_RetornaViewVoluntario() {
-        // Arrange
+        // Cria um voluntario com id e lista de participacoes vazia
         Voluntario voluntario = new Voluntario();
         voluntario.setUsuarioId("123");
         List<Participacao> participacoes = new ArrayList<>();
@@ -144,79 +151,84 @@ class PerfilControllerTest {
         when(usuarioService.findByEmail(anyString())).thenReturn(Optional.of(voluntario));
         when(participacaoService.buscarPorUsuarioId(anyString())).thenReturn(participacoes);
 
-        // Act
+        // Chama o metodo mostrarPerfil para voluntario
         String resultado = perfilController.mostrarPerfil(model, principal);
 
-        // Assert
+        // Verifica se retorna a view do perfil do voluntario
         assertEquals("perfil-voluntario", resultado);
+        // Verifica se o modelo recebeu o voluntario e suas participacoes
         verify(model).addAttribute("usuario", voluntario);
         verify(model).addAttribute("participacoes", participacoes);
     }
 
     @Test
     void processarEdicaoVoluntario_RetornaRedirectPerfil() {
-        // Arrange
+        // Cria um voluntario e simula autenticacao
         Voluntario voluntario = new Voluntario();
         when(principal.getName()).thenReturn("voluntario@test.com");
         when(usuarioService.findByEmail(anyString())).thenReturn(Optional.of(voluntario));
 
-        // Act
+        // Chama o metodo que processa edicao do voluntario
         String resultado = perfilController.processarEdicaoVoluntario(new Voluntario(), principal);
 
-        // Assert
+        // Verifica se redireciona para a pagina de perfil apos salvar
         assertEquals("redirect:/perfil", resultado);
+        // Verifica se o usuarioService salvou o voluntario editado
         verify(usuarioService).save(any(Voluntario.class));
     }
 
     @Test
     void processarEdicaoPesquisador_RetornaRedirectPerfil() {
-        // Arrange
+        // Cria um pesquisador e simula autenticacao
         Pesquisador pesquisador = new Pesquisador();
         when(principal.getName()).thenReturn("pesquisador@test.com");
         when(usuarioService.findByEmail(anyString())).thenReturn(Optional.of(pesquisador));
 
-        // Act
+        // Chama o metodo que processa edicao do pesquisador
         String resultado = perfilController.processarEdicaoPesquisador(new Pesquisador(), principal);
 
-        // Assert
+        // Verifica se redireciona para a pagina de perfil apos salvar
         assertEquals("redirect:/perfil", resultado);
+        // Verifica se o usuarioService salvou o pesquisador editado
         verify(usuarioService).save(any(Pesquisador.class));
     }
 
     @Test
     void uploadFoto_QuandoPrincipalNull_RetornaRedirectLogin() throws IOException {
-        // Arrange
+        // Simula o envio de arquivo e usuario nao autenticado (principal nulo)
         MultipartFile file = mock(MultipartFile.class);
 
-        // Act
+        // Chama o metodo uploadFoto com principal nulo
         String resultado = perfilController.uploadFoto(file, null);
 
-        // Assert
+        // Verifica se redireciona para a pagina de login
         assertEquals("redirect:/auth/login", resultado);
+        // Garante que os metodos de salvar imagem e atualizar foto nao foram chamados
         verify(usuarioService, never()).salvarImagem(any());
         verify(usuarioService, never()).atualizarFoto(anyString(), anyString());
     }
 
-
     @Test
     void listarVoluntariosInscritos_QuandoNaoPesquisador_RetornaErroAcesso() {
-        // Arrange
+        // Cria um voluntario e simula um usuario logado que nao e pesquisador
         Voluntario voluntario = new Voluntario();
         UsuarioLogado usuarioLogado = mock(UsuarioLogado.class);
         when(usuarioLogado.getUsuario()).thenReturn(voluntario);
 
-        // Act
+        // Chama o metodo listarVoluntariosInscritos com usuario nao pesquisador
         String resultado = perfilController.listarVoluntariosInscritos(model, usuarioLogado);
 
-        // Assert
+        // Verifica se retorna a view de erro de acesso
         assertEquals("erro-acesso", resultado);
+        // Garante que o modelo nao recebeu a lista de inscricoes
         verify(model, never()).addAttribute(eq("inscricoes"), any());
     }
 
     @Test
     void listarVoluntariosInscritos_QuandoUsuarioNaoLogado_LancaExcecao() {
-        // Act & Assert
+        // Chama o metodo listarVoluntariosInscritos com usuario null e verifica se lança excecao
         RuntimeException exception = assertThrows(RuntimeException.class, () -> perfilController.listarVoluntariosInscritos(model, null));
+        // Verifica se a mensagem da excecao esta correta
         assertEquals("Usuário não logado", exception.getMessage());
     }
 

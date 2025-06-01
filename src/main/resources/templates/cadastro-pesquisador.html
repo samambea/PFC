@@ -186,51 +186,65 @@
 </head>
 <body>
 
+<!-- Ícone de voltar/home fixo no topo esquerdo, que volta para a página anterior ou vai para a home -->
 <a href="javascript:void(0);" class="home-icon" onclick="voltarOuHome()">
     <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Voltar">
 </a>
 
-
 <div class="container">
     <div class="right">
         <div class="logo">
+            <!-- Logo da aplicação -->
             <img src="/images/logo-apollo.png" alt="Apollo Pesquisas" style="max-width: 180px; margin: 0 auto 1.5rem auto; display: block;">
         </div>
 
+        <!-- Alerta de erro exibido dinamicamente, caso exista uma mensagem de erro -->
         <div th:if="${errorMessage}" class="custom-alert error">
             <span th:text="${errorMessage}"></span>
         </div>
 
+        <!-- Formulário de cadastro de pesquisador -->
         <form id="formCadastroPesquisador" th:action="@{/auth/cadastro/pesquisador}" th:object="${usuario}" method="post">
+            <!-- Campo para nome do pesquisador -->
             <label>Nome:</label>
             <input type="text" th:field="*{nome}" required />
 
+            <!-- Campo para e-mail -->
             <label>E-mail:</label>
             <input type="email" th:field="*{email}" required />
 
+            <!-- Campo para senha -->
             <label>Senha:</label>
             <input type="password" th:field="*{senha}" required />
 
+            <!-- Campo para link Lattes -->
             <label>Link Lattes:</label>
             <input type="text" th:field="*{linkLattes}" required />
 
+            <!-- Campo para especialidade -->
             <label>Especialidade:</label>
             <input type="text" th:field="*{especialidade}" required />
 
+            <!-- Campo para área de pesquisa -->
             <label>Área de Pesquisa:</label>
             <input type="text" th:field="*{areaDePesquisa}" required />
 
+            <!-- Campo para telefone -->
             <label>Telefone:</label>
             <input type="text" th:field="*{telefone}" required />
 
+            <!-- Campo oculto para armazenar se o usuário aceitou os termos -->
             <input type="hidden" name="aceitouTermos" id="aceitouTermos" value="false">
 
+            <!-- Aviso sobre necessidade de aceitar os termos -->
             <div class="terms">
                 Ao se cadastrar, você precisa concordar com os termos e condições específicos da plataforma para pesquisadores.
             </div>
 
+            <!-- Botão que exibe o modal de termos ao ser clicado -->
             <button type="button" onclick="mostrarTermos()">Criar Conta</button>
 
+            <!-- Link para login caso o usuário já tenha cadastro -->
             <div class="login-link">
                 Já tem uma conta? <a href="/auth/login">Faça seu login!</a>
             </div>
@@ -238,6 +252,7 @@
     </div>
 </div>
 
+<!-- Modal de termos e condições, exibido ao tentar criar conta -->
 <div id="modal-termos">
     <div class="modal-content">
         <h3>Termos e Condições de Cadastro — Pesquisador</h3>
@@ -253,6 +268,7 @@
                 • Você pode solicitar a exclusão de sua conta a qualquer momento, mediante solicitação por e-mail.
             </p>
         </div>
+        <!-- Botões para aceitar ou recusar os termos -->
         <div class="modal-buttons">
             <button onclick="aceitarTermos()">Aceitar</button>
             <button onclick="recusarTermos()">Recusar</button>
@@ -261,21 +277,25 @@
 </div>
 
 <script>
+    // Exibe o modal de termos
     function mostrarTermos() {
         document.getElementById("modal-termos").style.display = "flex";
     }
 
+    // Ao aceitar os termos, marca o campo oculto, fecha o modal e envia o formulário
     function aceitarTermos() {
         document.getElementById("aceitouTermos").value = "true";
         document.getElementById("modal-termos").style.display = "none";
         document.getElementById("formCadastroPesquisador").submit();
     }
 
+    // Ao recusar, fecha o modal e exibe um alerta
     function recusarTermos() {
         document.getElementById("modal-termos").style.display = "none";
         alert("Você precisa aceitar os termos para continuar.");
     }
 
+    // Função para voltar à página anterior ou ir para a home se não houver histórico
     function voltarOuHome() {
         if (window.history.length > 1) {
             window.history.back();
@@ -283,7 +303,6 @@
             window.location.href = "/";
         }
     }
-
 </script>
 
 </body>

@@ -98,8 +98,10 @@
 </head>
 <body>
 
+<!-- Título da página de feedbacks recebidos -->
 <h2>Feedbacks Recebidos</h2>
 
+<!-- Tabela que lista os feedbacks -->
 <table>
     <thead>
     <tr>
@@ -111,14 +113,21 @@
     </tr>
     </thead>
     <tbody>
+    <!-- Loop Thymeleaf para listar cada feedback -->
     <tr th:each="feedback : ${feedbacks}">
+        <!-- Exibe a nota do feedback -->
         <td th:text="${feedback.nota}">5</td>
+        <!-- Exibe o comentário do feedback -->
         <td th:text="${feedback.comentario}">Muito bom!</td>
+        <!-- Exibe o nome da pesquisa associada ao feedback -->
         <td th:text="${feedback.nomePesquisa}">Pesquisa X</td>
+        <!-- Exibe o nome do voluntário que deu o feedback -->
         <td th:text="${feedback.nomeVoluntario}">João Silva</td>
         <td>
             <div class="acoes-container">
+                <!-- Botão para editar o feedback -->
                 <a th:href="@{'/feedbacks/editar/' + ${feedback.feedbackId}}" class="btn btn-edit">Editar</a>
+                <!-- Botão para excluir o feedback, com confirmação -->
                 <a th:href="@{'/feedbacks/excluir/' + ${feedback.feedbackId}}"
                    class="btn btn-delete"
                    onclick="return confirm('Tem certeza que deseja excluir este feedback?');">Excluir</a>
@@ -128,7 +137,9 @@
     </tbody>
 </table>
 
+<!-- Link para voltar à página de usuários -->
 <a href="/admin/usuarios" class="btn-voltar">⬅ Voltar</a>
 
 </body>
+
 </html>
