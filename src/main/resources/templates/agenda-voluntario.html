@@ -197,8 +197,6 @@
                     <div>D</div><div>S</div><div>T</div><div>Q</div><div>Q</div><div>S</div><div>S</div>
                 </div>
                 <div class="calendar-dates">
-                    <!-- Preenche os espaços em branco antes do primeiro dia do mês -->
-                    <div th:each="b : ${#numbers.sequence(1, offset)}"></div>
                     <!-- Exibe os dias do mês, destacando os que têm agendamento -->
                     <div th:each="dia : ${diasDoMes}"
                          th:text="${dia}"
