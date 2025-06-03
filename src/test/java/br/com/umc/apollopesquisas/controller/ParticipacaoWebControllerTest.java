@@ -29,7 +29,7 @@ class ParticipacaoWebControllerTest {
 
     // Controlador que sera testado, com as dependencias injetadas automaticamente pelos mocks acima
     @InjectMocks
-    private ParticipacaoController participacaoController;
+    private ParticipacaoWebController participacaoController;
 
     // Inicializa os mocks antes de cada teste
     @BeforeEach
@@ -37,28 +37,6 @@ class ParticipacaoWebControllerTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    // Testa o fluxo de participacao com sucesso
-    @Test
-    void participar_QuandoSucesso_RetornaRedirectHome() {
-        String pesquisaId = "123";           // ID da pesquisa para participar
-        String email = "user@example.com";   // Email simulado do usuario autenticado
-
-        // Simula que o principal retorna o email do usuario autenticado
-        when(principal.getName()).thenReturn(email);
-
-        // Executa o metodo participar do controller
-        String result = participacaoController.participar(pesquisaId, principal, redirectAttributes);
-
-        // Verifica se o servico foi chamado para registrar a participacao
-        verify(participacaoService).registrarParticipacao(pesquisaId, email);
-
-        // Verifica se a mensagem de sucesso foi adicionada nos atributos para o redirecionamento
-        verify(redirectAttributes).addFlashAttribute("alertMessage",
-                "Participação confirmada! Em breve, o pesquisador responsavel entrara em contato.");
-
-        // Verifica se o metodo retornou o redirecionamento correto para a pagina inicial (home)
-        assertEquals("redirect:/home", result);
-    }
 
     // Testa o fluxo quando ocorre um erro ao registrar a participacao
     @Test

@@ -1,8 +1,10 @@
 package br.com.umc.apollopesquisas.controller;
 
+import br.com.umc.apollopesquisas.model.Instituicao;
 import br.com.umc.apollopesquisas.model.Pesquisa;
 import br.com.umc.apollopesquisas.model.Usuario;
 import br.com.umc.apollopesquisas.repository.UsuarioRepository;
+import br.com.umc.apollopesquisas.service.InstituicaoService;
 import br.com.umc.apollopesquisas.service.PesquisaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,9 @@ public class PesquisaControllerTest {
     private UsuarioRepository usuarioRepository; // Repositório para buscar usuários
 
     @Mock
+    private InstituicaoService instituicaoService; // Serviço para listar instituições (ADICIONADO)
+
+    @Mock
     private Authentication authentication; // Simula autenticação do usuário
 
     @Mock
@@ -41,6 +46,7 @@ public class PesquisaControllerTest {
 
     private Pesquisa pesquisa; // Objeto de teste para pesquisa
     private Usuario usuario;   // Objeto de teste para usuário
+    private Instituicao instituicao; //Objeto de teste para instituição
 
     // Inicializa mocks e objetos antes de cada teste
     @BeforeEach
@@ -56,6 +62,14 @@ public class PesquisaControllerTest {
         usuario.setUsuarioId("user123");
         usuario.setEmail("teste@teste.com");
         usuario.setRole("PESQUISADOR");
+
+        instituicao = new Instituicao();
+        instituicao.setInstituicaoId("123");
+        instituicao.setNomeInstituicao("Instituição Teste");
+        instituicao.setCnpj("123");
+
+        // Mock para instituicaoService.listarTodas() para evitar NullPointerException
+        when(instituicaoService.listarTodas()).thenReturn(Arrays.asList(instituicao));
     }
 
     // Testa a exibição do formulário para nova pesquisa
@@ -65,6 +79,7 @@ public class PesquisaControllerTest {
 
         assertEquals("form-pesquisa", viewName);
         verify(model).addAttribute(eq("pesquisa"), any(Pesquisa.class));
+        verify(model).addAttribute(eq("instituicoes"), anyList());
     }
 
     // Testa criação de uma nova pesquisa com usuário válido
@@ -108,6 +123,8 @@ public class PesquisaControllerTest {
     void editarPesquisaForm_AdminSuccess() {
         when(authentication.getName()).thenReturn("admin@teste.com");
         Usuario admin = new Usuario();
+        admin.setUsuarioId("admin123");
+        admin.setEmail("admin@teste.com");
         admin.setRole("ADMIN");
         when(usuarioRepository.findByEmail("admin@teste.com")).thenReturn(Optional.of(admin));
         when(pesquisaService.buscarPorId("123")).thenReturn(Optional.of(pesquisa));
@@ -116,6 +133,7 @@ public class PesquisaControllerTest {
 
         assertEquals("editar-pesquisa", viewName);
         verify(model).addAttribute("pesquisa", pesquisa);
+        verify(model).addAttribute(eq("instituicoes"), anyList());
     }
 
     // Testa exibição do formulário de edição para pesquisador comum
@@ -129,6 +147,7 @@ public class PesquisaControllerTest {
 
         assertEquals("editar-pesquisa-pesquisador", viewName);
         verify(model).addAttribute("pesquisa", pesquisa);
+        verify(model).addAttribute(eq("instituicoes"), anyList());
     }
 
     // Testa atualização de pesquisa por usuário válido

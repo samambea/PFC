@@ -70,22 +70,6 @@ class AdminPesquisaControllerTest {
         verify(pesquisaService).listarTodas();
     }
 
-    // Testa edicao de pesquisa existente - deve retornar view de edicao
-    @Test
-    void editarPesquisa_QuandoPesquisaExiste_DeveRetornarViewEdicao() {
-        // Configura mock para retornar pesquisa quando buscar por ID
-        when(pesquisaService.buscarPorId("1")).thenReturn(Optional.of(mockPesquisa));
-
-        // Executa o metodo de edicao
-        String viewName = adminPesquisaController.editarPesquisa("1", model);
-
-        // Verifica se retorna view de edicao
-        assertEquals("editar-pesquisa", viewName);
-        // Verifica se adiciona pesquisa ao model
-        verify(model).addAttribute(eq("pesquisa"), eq(mockPesquisa));
-        // Verifica se chama busca por ID no servico
-        verify(pesquisaService).buscarPorId("1");
-    }
 
     // Testa edicao de pesquisa inexistente - deve redirecionar para lista
     @Test

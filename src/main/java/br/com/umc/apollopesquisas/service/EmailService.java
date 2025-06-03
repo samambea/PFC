@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
     @Autowired
-    private JavaMailSender mailSender;
+    JavaMailSender mailSender;
 
     @Value("${apollo.domain}")
-    private String apolloDomain;
+    String apolloDomain;
 
     public void enviarLinkRedefinicao(String destino, String token) throws Exception {
         String assunto = "Redefinição de Senha - Apollo Pesquisas";

@@ -87,7 +87,8 @@ public class UsuarioService {
 
         File diretorio = new File(DIRETORIO_IMAGENS);
         if (!diretorio.exists()) {
-            diretorio.mkdirs(); // Cria o diretório caso não exista
+            diretorio.mkdirs();
+            // Cria o diretório caso não exista
         }
 
         // Gera um nome único para o arquivo baseado no timestamp e nome original

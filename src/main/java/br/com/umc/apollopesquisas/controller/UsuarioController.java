@@ -25,19 +25,19 @@ import java.util.Optional;
 public class UsuarioController {
 
     @Autowired
-    private VoluntarioRepository voluntarioRepository;
+    VoluntarioRepository voluntarioRepository;
 
     @Autowired
-    private PesquisadorRepository pesquisadorRepository;
+    PesquisadorRepository pesquisadorRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     private PesquisaService pesquisaService;
 
     @Autowired
-    private UsuarioService usuarioService;
+    UsuarioService usuarioService;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
