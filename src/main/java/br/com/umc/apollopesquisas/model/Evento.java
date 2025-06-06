@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Document(collection = "eventos")
 public class Evento {
@@ -16,6 +17,8 @@ public class Evento {
     private String link;
     private String tituloEvento;
     private String descricaoEvento;
+    private String nomeImagem;
+    private LocalDate dataCriacao;
 
 
     public String getEventoId() {
@@ -64,5 +67,21 @@ public class Evento {
 
     public void setDescricaoEvento(String descricaoEvento) {
         this.descricaoEvento = descricaoEvento;
+    }
+
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
+
+    public void setNomeImagem(String nomeImagem) {
+        this.nomeImagem = nomeImagem;
+    }
+
+    public LocalDate getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDate dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 }
