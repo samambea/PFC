@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Início - Apollo Pesquisas</title>
@@ -12,7 +12,6 @@
             background-color: #f9f9f9;
             color: #333;
         }
-
         .header {
             background-color: #247b63;
             color: white;
@@ -21,16 +20,13 @@
             align-items: center;
             padding: 15px 30px;
         }
-
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
         }
-
         .logo span {
             color: #7fffd4;
         }
-
         .header-buttons a {
             margin-left: 10px;
             padding: 10px 18px;
@@ -38,140 +34,14 @@
             text-decoration: none;
             font-weight: bold;
         }
-
         .btn-outline {
             background: white;
             color: #247b63;
             border: 2px solid #247b63;
         }
-
         .btn-filled {
             background-color: #111;
             color: white;
-        }
-
-        .hero {
-            background: #fff;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .evento-destaque {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 1000px;
-            width: 100%;
-            flex-wrap: nowrap;
-        }
-
-        .evento-imagem-container {
-            flex: 1;
-            max-width: 400px;
-        }
-
-        .evento-imagem-container img {
-            width: 100%;
-            border-radius: 12px;
-            object-fit: cover;
-        }
-
-        .evento-info {
-            flex: 1;
-            min-width: 280px;
-        }
-
-        .listings {
-            display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            padding: 20px 40px;
-        }
-
-        .card {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            min-width: 220px;
-        }
-
-        .card small {
-            color: gray;
-        }
-
-        .cta {
-            background-color: #ddeee8;
-            text-align: center;
-            padding: 30px 20px;
-        }
-
-        .cta h2 {
-            margin-top: 0;
-        }
-
-        .btn-cta {
-            margin-top: 15px;
-            padding: 12px 24px;
-            background-color: #247b63;
-            color: white;
-            font-weight: bold;
-            border-radius: 6px;
-            text-decoration: none;
-        }
-
-        footer {
-            background-color: #f1f1f1;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            margin-right: 15px;
-            color: #333;
-            text-decoration: none;
-        }
-
-        .footer-social i {
-            margin-left: 15px;
-            color: #333;
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .header-buttons {
-                margin-top: 10px;
-            }
-
-            .evento-destaque {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .evento-imagem-container {
-                max-width: 100%;
-            }
-
-            .evento-info {
-                width: 100%;
-            }
-
-            .listings {
-                flex-direction: column;
-                align-items: center;
-            }
         }
         .carousel-container {
             max-width: 1000px;
@@ -180,12 +50,10 @@
             overflow: hidden;
             border-radius: 12px;
         }
-
         .carousel-slide {
             display: flex;
             transition: transform 0.5s ease-in-out;
         }
-
         .evento-destaque {
             display: flex;
             align-items: center;
@@ -198,13 +66,22 @@
             box-sizing: border-box;
             flex-wrap: nowrap;
         }
+        .evento-imagem-container {
+            flex: 1;
+            max-width: 400px;
+        }
 
         .evento-imagem-container img {
             width: 100%;
+            max-height: 250px;
             border-radius: 12px;
             object-fit: cover;
         }
 
+        .evento-info {
+            flex: 1;
+            min-width: 280px;
+        }
         .carousel-nav {
             position: absolute;
             top: 50%;
@@ -213,7 +90,6 @@
             justify-content: space-between;
             transform: translateY(-50%);
         }
-
         .carousel-arrow {
             background-color: rgba(0,0,0,0.5);
             color: white;
@@ -224,13 +100,83 @@
             border-radius: 50%;
             margin: 0 10px;
         }
-
-
+        .listings {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 40px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            min-width: 220px;
+        }
+        .card small {
+            color: gray;
+        }
+        .cta {
+            background-color: #ddeee8;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        .cta h2 {
+            margin-top: 0;
+        }
+        .btn-cta {
+            margin-top: 15px;
+            padding: 12px 24px;
+            background-color: #247b63;
+            color: white;
+            font-weight: bold;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+        footer {
+            background-color: #f1f1f1;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            margin-right: 15px;
+            color: #333;
+            text-decoration: none;
+        }
+        .footer-social i {
+            margin-left: 15px;
+            color: #333;
+        }
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header-buttons {
+                margin-top: 10px;
+            }
+            .evento-destaque {
+                flex-direction: column;
+                text-align: center;
+            }
+            .evento-imagem-container {
+                max-width: 100%;
+            }
+            .evento-info {
+                width: 100%;
+            }
+            .listings {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
     </style>
 </head>
 <body>
 
-<!-- Cabeçalho com logo e botões de acesso/cadastro -->
 <header class="header">
     <div class="logo">Apollo <span>Pesquisas</span></div>
     <div class="header-buttons">
@@ -239,65 +185,31 @@
     </div>
 </header>
 
-<!-- Carrossel de eventos em destaque -->
+<!-- Carrossel dinâmico de eventos -->
 <section class="carousel-container">
-    <div class="carousel-slide" id="carousel-slide">
-        <!-- Evento destaque 1 -->
-        <div class="evento-destaque">
-            <div class="evento-imagem-container">
-                <img src="/images/evento.png" alt="Evento 1">
-            </div>
-            <div class="evento-info">
-                <h2>II Congresso Brasileiro de Medicina e Inovação em Saúde - II MEDCON</h2>
-                <p><i class="fa-regular fa-calendar"></i> 09/06/25 à 12/06/2025 &nbsp;
-                    <i class="fa-solid fa-location-dot"></i> Online</p>
-                <p>O objetivo central do nosso evento é promover o avanço e a integração do conhecimento nas áreas da medicina e inovação em saúde.</p>
-                <a href="https://ime.events/ii-medcon/sobre" target="_blank" style="display: inline-block; margin-top: 10px; color: #247b63; font-weight: bold; text-decoration: none;">
-                    Saiba mais &rarr;
-                </a>
-            </div>
-        </div>
-        <!-- Evento destaque 2 -->
-        <div class="evento-destaque">
-            <div class="evento-imagem-container">
-                <img src="/images/logo-congresso.jpg" alt="Evento 2">
-            </div>
-            <div class="evento-info">
-                <h2>45º Congresso da Sociedade de Cardiologia do Estado de São Paulo</h2>
-                <p><i class="fa-regular fa-calendar"></i> 19/06/2025 &nbsp;
-                    <i class="fa-solid fa-location-dot"></i> São Paulo</p>
-                <p>O maior congresso estadual de cardiologia do Brasil, promovendo educação médica, inovação e networking entre profissionais da área.</p>
-                <a href="https://socesp2025.com.br/" target="_blank" style="display: inline-block; margin-top: 10px; color: #247b63; font-weight: bold; text-decoration: none;">
-                    Saiba mais &rarr;
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- Navegação do carrossel -->
+    <div class="carousel-slide" id="carousel-slide"></div>
     <div class="carousel-nav">
         <button class="carousel-arrow" onclick="moverCarrossel(-1)">&#10094;</button>
         <button class="carousel-arrow" onclick="moverCarrossel(1)">&#10095;</button>
     </div>
 </section>
 
-<!-- Listagem dinâmica de pesquisas abertas (preenchida via JavaScript) -->
+<!-- Listagem dinâmica de pesquisas -->
 <section class="listings" id="pesquisas-container"></section>
 
-<!-- Chamada para ação: cadastro de pesquisador -->
 <section class="cta">
     <h2>Está promovendo uma pesquisa?</h2>
     <p>Cadastre-se como pesquisador Apollo e faça a sua listagem!</p>
     <a class="btn-cta" href="/auth/cadastro/pesquisador">Sou Pesquisador</a>
 </section>
 
-<!-- Rodapé com links institucionais e redes sociais -->
 <footer>
     <div class="footer-links">
         <a href="#" onclick="abrirModal()">Quem Somos</a>
         <a href="#" onclick="abrirModalLGPD()">LGPD</a>
     </div>
     <div class="footer-social">
-        <a href="https://www.instagram.com/apollopesquisas/?igsh=MWd4ZGRrNWVmbzh3ZA%3D%3D&utm_source=qr#" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.instagram.com/apollopesquisas/" target="_blank" rel="noopener noreferrer">
             <i class="fab fa-instagram"></i>
         </a>
     </div>
@@ -331,7 +243,6 @@
 </div>
 
 <script>
-    // Controle do carrossel de eventos
     let slideIndex = 0;
     const slide = document.getElementById("carousel-slide");
 
@@ -341,13 +252,10 @@
         slide.style.transform = `translateX(-${slideIndex * 100}%)`;
     }
 
-    // Carrega pesquisas abertas via API e exibe cards na seção de listagem
     document.addEventListener("DOMContentLoaded", () => {
+        // Pesquisas
         fetch('/pesquisas/api/abertas')
-            .then(response => {
-                if (!response.ok) throw new Error("Erro ao buscar pesquisas.");
-                return response.json();
-            })
+            .then(res => res.json())
             .then(pesquisas => {
                 const container = document.getElementById("pesquisas-container");
                 container.innerHTML = "";
@@ -364,34 +272,71 @@
                         <p style="color: #247b63;"><i class="fa-solid fa-flask"></i> ${p.areaDaPesquisa}</p>
                         <strong>${p.nomePesquisa}</strong><br>
                         <small>${p.descricao || "Sem descrição."}</small><br><br>
-                        <button onclick="alertarParticipacao()"
-                            style="background-color: #247b63; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">
-                            Participar
-                        </button>
+                        <button onclick="alertarParticipacao()" style="background-color: #247b63; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">Participar</button>
                     `;
                     container.appendChild(card);
                 });
             })
-            .catch(error => {
-                console.error("Erro:", error.message);
-                document.getElementById("pesquisas-container").innerHTML = `<p>Erro ao carregar: ${error.message}</p>`;
+            .catch(err => {
+                document.getElementById("pesquisas-container").innerHTML = `<p>Erro ao carregar: ${err.message}</p>`;
             });
+
+        // Eventos
+        fetch('/eventos/recentes')
+            .then(res => res.json())
+            .then(eventos => {
+                slide.innerHTML = "";
+                eventos.forEach(e => {
+                    const div = document.createElement("div");
+                    div.className = "evento-destaque";
+
+                    const imagemSrc = e.nomeImagem ? `/uploads/imagens/${e.nomeImagem}` : "/images/padrao.png";
+                    const titulo = e.tituloEvento || "Evento";
+                    const descricao = e.descricaoEvento || "";
+                    let data = "Data não informada";
+                    if (e.dataEvento) {
+                        const date = new Date(e.dataEvento);
+                        const dia = String(date.getDate()).padStart(2, '0');
+                        const mes = String(date.getMonth() + 1).padStart(2, '0');
+                        const ano = date.getFullYear();
+                        data = `${dia}/${mes}/${ano}`;
+                    }
+
+                    const local = e.localEvento || "Local não informado";
+                    const link = e.link;
+
+                    div.innerHTML = `
+                        <div class="evento-imagem-container">
+                            <img src="${imagemSrc}" alt="${titulo}">
+                        </div>
+                        <div class="evento-info">
+                            <h2>${titulo}</h2>
+                            <p><i class="fa-regular fa-calendar"></i> ${data} &nbsp;
+                                <i class="fa-solid fa-location-dot"></i> ${local}</p>
+                            <p>${descricao}</p>
+                            ${link ? `<a href="${link}" target="_blank" style="display: inline-block; margin-top: 10px; color: #247b63; font-weight: bold; text-decoration: none;">Saiba mais &rarr;</a>` : ""}
+                        </div>
+                    `;
+                    slide.appendChild(div);
+                });
+            })
+            .catch(err => {
+                console.error("Erro ao carregar eventos:", err);
+            });
+
     });
 
-    // Alerta para participação, redirecionando para login
     function alertarParticipacao() {
         alert("Para participar, você precisa fazer login ou se cadastrar.");
         window.location.href = "/login";
     }
 
-    // Scripts para abrir e fechar os modais institucionais
     function abrirModal() {
         document.getElementById('modal-quem-somos').style.display = 'block';
     }
     function fecharModal() {
         document.getElementById('modal-quem-somos').style.display = 'none';
     }
-
     function abrirModalLGPD() {
         document.getElementById('modal-lgpd').style.display = 'block';
     }

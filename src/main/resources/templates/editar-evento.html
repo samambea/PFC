@@ -30,29 +30,6 @@
             margin: 0;
         }
 
-        .header > div {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .btn-logout {
-            background-color: #fdfdfd;
-            color: #d64545;
-            border: 2px solid #d64545;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .btn-logout:hover {
-            background-color: #d64545;
-            color: white;
-        }
-
         .form-container {
             width: 100%;
             max-width: 600px;
@@ -66,7 +43,6 @@
             color: #2AA184;
             margin-top: 0;
             margin-bottom: 20px;
-            font-weight: normal;
         }
 
         .form-group {
@@ -92,6 +68,12 @@
             min-height: 80px;
         }
 
+        .form-group img {
+            max-width: 100%;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
         .btn-save {
             background-color: #2AA184;
             color: white;
@@ -99,103 +81,99 @@
             padding: 10px 20px;
             border-radius: 6px;
             font-weight: bold;
-            font-size: 14px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
         .btn-save:hover {
             background-color: #249170;
         }
 
-        .btn-back {
-            background-color: #f0fdfa;
-            color: #2AA184;
-            border: none;
-            padding: 8px 14px;
+        .btn-back, .btn-logout {
             border-radius: 6px;
+            padding: 8px 16px;
             font-weight: bold;
             font-size: 14px;
             text-decoration: none;
-            margin-right: 10px;
-            transition: background-color 0.3s ease;
+            transition: 0.3s ease;
+        }
+
+        .btn-back {
+            background-color: #f0fdfa;
+            color: #2AA184;
         }
 
         .btn-back:hover {
             background-color: #d9f4ec;
         }
 
+        .btn-logout {
+            background-color: #fff;
+            color: #d64545;
+            border: 2px solid #d64545;
+        }
+
+        .btn-logout:hover {
+            background-color: #d64545;
+            color: white;
+        }
+
     </style>
 </head>
 <body>
 
-<!-- Cabeçalho da página de edição de evento -->
 <div class="header">
     <h1>Editar Evento</h1>
     <div>
-        <!-- Botão para voltar à lista de eventos -->
         <a href="/eventos" class="btn-back">Voltar para Lista</a>
-        <!-- Botão para sair/logout -->
         <a href="/index.html" class="btn-logout">Sair</a>
     </div>
 </div>
 
-<!-- Container do formulário de edição -->
 <div class="form-container">
     <h2>Atualizar Informações do Evento</h2>
 
-    <!-- Formulário para editar um evento existente.
-         Os campos são preenchidos automaticamente com os dados atuais do evento via Thymeleaf.
-         Ao submeter, os dados são enviados via POST para o backend. -->
-    <form th:action="@{'/eventos/editar/' + ${evento.eventoId}}" method="post">
-
-        <!-- Campo para editar o título do evento -->
+    <!-- Formulário com suporte a imagem -->
+    <form th:action="@{'/eventos/editar/' + ${evento.eventoId}}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="eventoId" th:value="${evento.eventoId}" />
+        <!--Titulo-->
         <div class="form-group">
             <label for="tituloEvento">Título</label>
             <input type="text" id="tituloEvento" name="tituloEvento" th:value="${evento.tituloEvento}" required>
         </div>
-
-        <!-- Campo para editar a descrição do evento -->
+        <!--Descrição-->
         <div class="form-group">
             <label for="descricaoEvento">Descrição</label>
             <textarea id="descricaoEvento" name="descricaoEvento" required th:text="${evento.descricaoEvento}"></textarea>
         </div>
-
-        <!-- Campo para editar a data do evento -->
+        <!--Data Evento-->
         <div class="form-group">
             <label for="dataEvento">Data</label>
             <input type="date" id="dataEvento" name="dataEvento" th:value="${evento.dataEvento}" required>
         </div>
-
-        <!-- Campo para editar o local do evento -->
+        <!--Local Evento-->
         <div class="form-group">
             <label for="localEvento">Local</label>
             <input type="text" id="localEvento" name="localEvento" th:value="${evento.localEvento}" required>
         </div>
-
-        <!-- Campo para editar o link do evento (opcional) -->
+        <!--Link -->
         <div class="form-group">
             <label for="link">Link</label>
             <input type="url" id="link" name="link" th:value="${evento.link}">
         </div>
-
-        <!-- Botão para salvar as alterações -->
+        <!--Imagem atual-->
+        <div class="form-group">
+            <label>Imagem Atual:</label>
+            <img th:if="${evento.nomeImagem}" th:src="@{'/imagens/' + ${evento.nomeImagem}}" alt="Imagem do Evento" />
+        </div>
+        <!--Nova imagem-->
+        <div class="form-group">
+            <label for="imagem">Nova Imagem (opcional)</label>
+            <input type="file" id="imagem" name="imagem" accept="image/*" />
+        </div>
+        <!--Salva alterações-->
         <button type="submit" class="btn-save">Salvar Alterações</button>
     </form>
 </div>
 
 </body>
-Resumo das funcionalidades:
-
-Permite editar todos os dados de um evento, como título, descrição, data, local e link.
-
-Os campos do formulário são preenchidos automaticamente com os dados atuais do evento usando Thymeleaf.
-
-O botão "Salvar Alterações" envia o formulário para o backend atualizar o evento.
-
-Botões para voltar à lista de eventos e para sair/logout no topo da página.
-
-Relacionado
-Quais elementos do formulário podem facilitar a confirmação de dados antes de salvar
-
 </html>

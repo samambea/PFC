@@ -79,33 +79,34 @@
 <!-- Formulário para criar ou editar um evento.
      Os dados são vinculados ao objeto 'evento' via Thymeleaf.
      O formulário envia os dados via POST para o backend. -->
-<form th:action="@{/eventos/salvar}" th:object="${evento}" method="post">
-    <!-- Campo oculto para o ID do evento (usado para edição) -->
-    <input type="hidden" th:field="*{eventoId}"/>
+<form th:action="@{/eventos/salvar}" th:object="${evento}" method="post" enctype="multipart/form-data">
 
-    <!-- Campo para o título do evento -->
+    <input type="hidden" th:field="*{eventoId}"/>
+    <!--Titulo-->
     <label for="titulo">Título do Evento</label>
     <input type="text" id="titulo" th:field="*{tituloEvento}" required/>
-
-    <!-- Campo para a descrição do evento -->
+    <!--Descrição-->
     <label for="descricao">Descrição</label>
     <textarea id="descricao" th:field="*{descricaoEvento}" rows="4"></textarea>
-
-    <!-- Campo para a data do evento -->
+    <!--Data-->
     <label for="data">Data</label>
     <input type="date" id="data" th:field="*{dataEvento}" required/>
-
-    <!-- Campo para o local do evento -->
+    <!--Local-->
     <label for="local">Local</label>
     <input type="text" id="local" th:field="*{localEvento}" required/>
-
-    <!-- Campo para link relacionado ao evento -->
+    <!--Link-->
     <label for="link">Link</label>
     <input type="text" id="link" th:field="*{link}" placeholder="https://..."/>
 
-    <!-- Botão para enviar o formulário e salvar o evento -->
+    <!--Imagem-->
+    <label for="imagem">Imagem do Evento</label>
+    <input type="file" name="imagem" id="imagem" accept="image/*"/>
+
+
+    <!--Salvar-->
     <button type="submit">Salvar</button>
 </form>
+
 
 <!-- Link para voltar à lista de eventos -->
 <a href="/eventos">⬅ Voltar para Lista</a>

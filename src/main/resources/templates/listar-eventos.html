@@ -131,6 +131,7 @@
             <th>Data</th>
             <th>Local</th>
             <th>Link</th>
+            <th>Imagem</th>
             <th>Ações</th>
         </tr>
         </thead>
@@ -145,15 +146,18 @@
             <td th:text="${evento.localEvento}">Local</td>
             <!-- Link para acessar o evento (abre em nova aba) -->
             <td><a th:href="${evento.link}" target="_blank">Ver Link</a></td>
+
+            <td>
+                <img th:src="@{'/uploads/imagens/' + ${evento.nomeImagem}}" alt="Imagem do evento" style="max-width: 200px;"/>
+            </td>
             <td>
                 <div class="acoes">
-                    <!-- Botão para editar o evento -->
                     <a th:href="@{'/eventos/editar/' + ${evento.eventoId}}" class="btn btn-edit">Editar</a>
-                    <!-- Botão para excluir o evento, com confirmação -->
                     <a th:href="@{'/eventos/excluir/' + ${evento.eventoId}}" class="btn btn-delete"
                        onclick="return confirm('Confirma exclusão?')">Excluir</a>
                 </div>
             </td>
+
         </tr>
         </tbody>
     </table>
