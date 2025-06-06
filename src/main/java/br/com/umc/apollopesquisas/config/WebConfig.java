@@ -3,28 +3,29 @@ package br.com.umc.apollopesquisas.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-  //Configuração web para aspectos relacionados ao Spring MVC.
-  //Atualmente focada na configuração de CORS (Cross-Origin Resource Sharing)
-  //para permitir requisições de diferentes origens durante desenvolvimento.
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+//Configuração web para aspectos relacionados ao Spring MVC.
+//Atualmente focada na configuração de CORS (Cross-Origin Resource Sharing)
+//para permitir requisições de diferentes origens durante desenvolvimento.
 
 @Configuration // Marca como classe de configuração Spring
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
 
+    //Configura o comportamento CORS da aplicação.
+    //CORS é necessário quando frontend e backend rodam em portas/domínios diferentes.
 
-      //Configura o comportamento CORS da aplicação.
-      //CORS é necessário quando frontend e backend rodam em portas/domínios diferentes.
-
-      //@return WebMvcConfigurer com configurações CORS personalizadas
-
+    //@return WebMvcConfigurer com configurações CORS personalizadas
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
 
-              //Define as regras de CORS para toda a aplicação.
-              //Permite que frontends em desenvolvimento acessem a API.
-
+            //Define as regras de CORS para toda a aplicação.
+            //Permite que frontends em desenvolvimento acessem a API.
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Aplica CORS a todos os endpoints da aplicação
@@ -42,6 +43,13 @@ public class WebConfig {
                         // CREDENCIAIS: Permite envio de cookies e headers de autenticação
                         // Necessário para manter sessões entre frontend e backend
                         .allowCredentials(true);
+            }
+
+            // Exposição de recursos estáticos (imagens dos eventos)
+            @Override
+            public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                registry.addResourceHandler("/uploads/imagens/**")
+                        .addResourceLocations("file:" + System.getProperty("user.dir") + "/uploads/imagens/");
             }
         };
     }
