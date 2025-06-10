@@ -57,17 +57,18 @@ public class SecurityConfig {
                                 "/auth/usuarios/cadastro",             // Endpoint de cadastro
                                 "/css/**", "/js/**", "/images/**",     // Recursos estáticos
                                 "/api/pesquisas", "/pesquisas/api/**", // APIs públicas de pesquisas
-                                "/perfil/perfil/upload-foto",          // Upload de foto de perfil
+                                "auth/perfil/perfil/upload-foto",          // Upload de foto de perfil
                                 // FUNCIONALIDADE DE RECUPERAÇÃO DE SENHA
                                 "/esqueci-senha",                      // Página "esqueci minha senha"
                                 "/esqueci-senha/**",                   // Rotas relacionadas
                                 "/redefinir-senha",                    // Página de redefinição
                                 "/redefinir-senha/**",                 // Rotas de redefinição
-                                "/auth/confirmar-email**",             // Confirmar e-mail
-                                "/eventos",                            // Página de listagem de eventos
-                                "/eventos/novo",                       // Página de criação de evento
-                                "/eventos/salvar",                     // Página de salvar evento
-                                "/eventos/recentes"                    // Evento recente
+                                "/confirmar-email**",                  // Confirmar e-mail
+                                "/auth/eventos",                       // Página de listagem de eventos
+                                "/auth/eventos/novo",                  // Página de criação de evento
+                                "/auth/eventos/salvar",                // Página de salvar evento
+                                "/eventos/recentes",                   // Evento recente
+                                "/auth/instituicoes"                   // Lista instituições
                         ).permitAll()
 
                         // ROTA ESPECÍFICA: Requer apenas autenticação (qualquer usuário logado)
